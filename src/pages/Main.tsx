@@ -1,8 +1,10 @@
 import React from 'react'
 
-export default function main() {
+const Main: React.FC = () => {
     return (
         <div>
         </div>
     )
 }
+
+export default Main

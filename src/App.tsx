@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import Main from "./pages/Main";
 import './App.css';
 
-function App() {
+const App: React.FC = () => {
   return (
     <div 
       className="App"
@@ -15,3 +15,4 @@ function App() {
 }
 
 export default App;
+

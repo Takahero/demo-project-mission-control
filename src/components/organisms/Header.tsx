@@ -1,13 +1,13 @@
 import React from 'react'
-// import Logo from '../atoms/Logo'
 import NavMenu from '../molcules/NavMenu'
+import Logo from '../atoms/Icons/Logo';
 
 const Header: React.FC = () => {
     return (
         <div
             data-testid="header"
         >
-            {/* <Logo /> */}
+            <Logo />
             <NavMenu />
         </div>
     )

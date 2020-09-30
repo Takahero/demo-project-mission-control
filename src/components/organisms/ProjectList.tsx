@@ -1,4 +1,5 @@
 import React from 'react'
+import ProfileListTitle from '../atoms/Texts/ProfileListTitle'
 import ProjectCard from '../molcules/ProjectCard'
 
 const ProjectList: React.FC = () => {
@@ -6,6 +7,7 @@ const ProjectList: React.FC = () => {
         <div
             data-testid="project-list"
         >
+            <ProfileListTitle />
             <ProjectCard />
         </div>
     )

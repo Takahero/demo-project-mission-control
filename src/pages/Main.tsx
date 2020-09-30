@@ -2,7 +2,9 @@ import React from 'react'
 
 const Main: React.FC = () => {
     return (
-        <div>
+        <div
+            data-testid="main-page"
+        >
         </div>
     )
 }

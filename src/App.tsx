@@ -7,7 +7,7 @@ const App: React.FC = () => {
   return (
     <div 
       className="App"
-      data-testid="App"
+      data-testid="app"
     >
       <Main />
     </div>

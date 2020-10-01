@@ -1,9 +1,6 @@
 import { projectDateRange } from './date';
+import { mockProjectDates } from './mockProjectsData'
 
-const mockProjectDates = {
-    startDate: new Date(2020, 9, 1),
-    endDate: new Date(2020, 11, 12),
-}
 
 it('creates project date range string', () => {
 

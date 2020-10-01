@@ -1,5 +1,5 @@
 import React from 'react'
-import ProjectListTitle from '../atoms/Texts/ProjectListTitle'
+import ProjectListTitle from '../atoms/Texts/ProjectListTitle';
 import ProjectCard from '../molecules/ProjectCard'
 import { mockProjects } from '../../utils/mockProjectsData'
 import { shortFullName } from '../../utils/name';

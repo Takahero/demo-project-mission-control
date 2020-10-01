@@ -13,3 +13,8 @@ export const mockProjects = [
         requiredResults: []
     },
 ]
+
+export const mockProjectDates = {
+    startDate: new Date(2020, 9, 1),
+    endDate: new Date(2020, 11, 12),
+}

@@ -1,4 +1,5 @@
 import React from 'react'
+import DashboardProjectCardTitle from '../atoms/Texts/DashboardProjectCardTitle';
 
 interface Props {
     name: string;
@@ -7,12 +8,18 @@ interface Props {
     accomplishmentStatement: string;
 }
 
-const DashboardProjectCard: React.FC<Props> = () => {
+const DashboardProjectCard: React.FC<Props> = ({
+    name,
+    author,
+    dateRange,
+    accomplishmentStatement
+}) => {
     return (
         <div
             data-testid="dashboard-project-card"
         >
-            DashboardProjectCard
+            <DashboardProjectCardTitle title={name} />
+            
         </div>
     )
 }

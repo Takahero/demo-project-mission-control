@@ -1,5 +1,6 @@
 import React from 'react'
 import DashboardProjectCard from '../molecules/DashboardProjectCard'
+import RequiredResultsSection from '../molecules/RequiredResultsSection'
 
 const ProjectDashboard: React.FC = () => {
     return (
@@ -7,6 +8,7 @@ const ProjectDashboard: React.FC = () => {
             data-testid="project-dashboard"
         >
             <DashboardProjectCard />
+            <RequiredResultsSection />
         </div>
     )
 }

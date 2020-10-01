@@ -1,5 +1,5 @@
 import React from 'react'
-import ProfileCardText from '../atoms/Texts/ProfileCardText'
+import ProfileCardTitle from '../atoms/Texts/ProfileCardTitle'
 
 interface Props {
     name: string;
@@ -26,7 +26,7 @@ const ProjectCard: React.FC<Props> = ({
             { endDate.toString() } 
             { author.firstName }
             { author.lastName }
-            <ProfileCardText />
+            <ProfileCardTitle title={name} />
         </div>
     )
 }

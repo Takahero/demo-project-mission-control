@@ -4,6 +4,7 @@ import React from 'react'
 interface Props {
     text: string
 }
+
 const ProjectCardText: React.FC<Props> = ({
     text
 }) => {

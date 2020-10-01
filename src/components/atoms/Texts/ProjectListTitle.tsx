@@ -6,7 +6,7 @@ const ProjectListTitle: React.FC = () => {
         <div
             data-testid="project-list-title"
         >
-            ProjectListTitle
+            People's Projects
         </div>
     )
 }

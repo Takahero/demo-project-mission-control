@@ -1,8 +1,9 @@
 import React from 'react'
-import ProfileListTitle from '../atoms/Texts/ProfileListTitle'
+import ProjectListTitle from '../atoms/Texts/ProjectListTitle'
 import ProjectCard from '../molecules/ProjectCard'
 import { mockProjects } from '../../utils/mockProjectsData'
 import { shortFullName } from '../../utils/name';
+import { projectDateRange } from '../../utils/date';
 
 
 
@@ -12,10 +13,11 @@ const ProjectList: React.FC = () => {
         <div
             data-testid="project-list"
         >
-            <ProfileListTitle />
+            <ProjectListTitle />
             <ProjectCard 
                 name={mockProjects[0].name}
                 authorName={shortFullName(author.firstName, author.lastName )}
+                dateRange={projectDateRange(mockProjects[0].startDate, mockProjects[0].endDate)}
             />
         </div>
     )

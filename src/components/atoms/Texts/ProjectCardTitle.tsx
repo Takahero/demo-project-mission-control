@@ -4,16 +4,16 @@ import React from 'react'
 interface Props {
     title: string
 }
-const ProfileCardTitle: React.FC<Props> = ({
+const ProjectCardTitle: React.FC<Props> = ({
     title
 }) => {
     return (
         <div
-            data-testid="profile-card-title"
+            data-testid="project-card-title"
         >
             {title}
         </div>
     )
 }
 
-export default ProfileCardTitle
+export default ProjectCardTitle

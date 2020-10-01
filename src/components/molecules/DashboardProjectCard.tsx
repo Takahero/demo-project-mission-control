@@ -1,6 +1,13 @@
 import React from 'react'
 
-const DashboardProjectCard: React.FC = () => {
+interface Props {
+    name: string;
+    author: string;
+    dateRange: string;
+    accomplishmentStatement: string;
+}
+
+const DashboardProjectCard: React.FC<Props> = () => {
     return (
         <div
             data-testid="dashboard-project-card"

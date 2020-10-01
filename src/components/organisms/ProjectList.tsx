@@ -18,7 +18,7 @@ const ProjectList: React.FC = () => {
                     <ProjectCard 
                         key={i}
                         name={mockProject.name}
-                        authorName={shortFullName(mockProject.author.firstName, mockProject.author.lastName )}
+                        authorName={shortFullName(mockProject.author.firstName, mockProject.author.lastName)}
                         dateRange={projectDateRange(mockProject.startDate, mockProject.endDate)}
                     />
                 )

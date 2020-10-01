@@ -1,5 +1,5 @@
 import React from 'react'
-import DashboardProjectCard from '../molcules/DashboardProjectCard'
+import DashboardProjectCard from '../molecules/DashboardProjectCard'
 
 const ProjectDashboard: React.FC = () => {
     return (

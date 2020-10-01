@@ -1,5 +1,5 @@
 import React from 'react'
-import NavMenu from '../molcules/NavMenu'
+import NavMenu from '../molecules/NavMenu'
 import Logo from '../atoms/Icons/Logo';
 
 const Header: React.FC = () => {

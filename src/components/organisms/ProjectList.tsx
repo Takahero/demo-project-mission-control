@@ -1,6 +1,6 @@
 import React from 'react'
 import ProfileListTitle from '../atoms/Texts/ProfileListTitle'
-import ProjectCard from '../molcules/ProjectCard'
+import ProjectCard from '../molecules/ProjectCard'
 
 const ProjectList: React.FC = () => {
     return (

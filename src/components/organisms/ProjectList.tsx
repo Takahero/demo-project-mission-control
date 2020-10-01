@@ -13,8 +13,6 @@ const ProjectList: React.FC = () => {
             <ProfileListTitle />
             <ProjectCard 
                 name={mockProjects[0].name}
-                startDate={mockProjects[0].startDate}
-                endDate={mockProjects[0].endDate}
                 author={mockProjects[0].author}
             />
         </div>

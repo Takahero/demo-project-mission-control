@@ -1,5 +1,6 @@
 import React from 'react'
 import Header from '../organisms/Header'
+import ProjectDashboard from '../organisms/ProjectDashboard'
 import ProjectList from '../organisms/ProjectList'
 
 const DashboardLayout: React.FC = () => {
@@ -9,6 +10,7 @@ const DashboardLayout: React.FC = () => {
         >
             <Header />
             <ProjectList />
+            <ProjectDashboard />
         </div>
     )
 }

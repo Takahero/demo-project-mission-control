@@ -5,22 +5,19 @@ import ProfileCardTitle from '../atoms/Texts/ProfileCardTitle'
 interface Props {
     name: string;
     // dateRange: string;
-    author: {
-        firstName: string;
-        lastName: string;
-    }
+    authorName: string;
 }
 
 const ProjectCard: React.FC<Props> = ({
     name,
-    author
+    authorName
 }) => {
     return (
         <div
             data-testid="project-card"
         >
             <ProfileCardTitle title={name} />
-            <ProfileCardText text={`${author.firstName} ${author.lastName}`} />
+            <ProfileCardText text={authorName} />
         </div>
     )
 }

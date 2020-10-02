@@ -1,6 +1,6 @@
 import React from 'react'
-import DashboardProjectCardTitle from '../atoms/Texts/DashboardProjectCardTitle';
-import ProjectCardText from '../atoms/Texts/ProjectCardText';
+import Title from '../atoms/Texts/Title';
+import Text from '../atoms/Texts/Text';
 
 interface Props {
     name: string;
@@ -19,10 +19,10 @@ const DashboardProjectCard: React.FC<Props> = ({
         <div
             data-testid="dashboard-project-card"
         >
-            <DashboardProjectCardTitle title={name} />
-            <ProjectCardText text={author} />
-            <ProjectCardText text={dateRange} />
-            <ProjectCardText text={accomplishmentStatement} />
+            <Title title={name} />
+            <Text text={author} />
+            <Text text={dateRange} />
+            <Text text={accomplishmentStatement} />
         </div>
     )
 }

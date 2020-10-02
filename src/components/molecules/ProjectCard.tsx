@@ -1,7 +1,7 @@
 import React from 'react'
-import ProjectCardDateRange from '../atoms/Texts/ProjectCardDateRange'
-import ProjectCardText from '../atoms/Texts/ProjectCardText'
-import ProjectCardTitle from '../atoms/Texts/ProjectCardTitle'
+import DateRange from '../atoms/Texts/DateRange'
+import Text from '../atoms/Texts/Text'
+import Title from '../atoms/Texts/Title'
 
 interface Props {
     name: string;
@@ -18,9 +18,9 @@ const ProjectCard: React.FC<Props> = ({
         <div
             data-testid="project-card"
         >
-            <ProjectCardDateRange dateRange={dateRange} />
-            <ProjectCardTitle title={name} />
-            <ProjectCardText text={authorName} />
+            <DateRange dateRange={dateRange} />
+            <Title title={name} />
+            <Text text={authorName} />
         </div>
     )
 }

@@ -5,16 +5,16 @@ interface Props {
     text: string
 }
 
-const ProjectCardText: React.FC<Props> = ({
+const Text: React.FC<Props> = ({
     text
 }) => {
     return (
         <div
-            data-testid="project-card-text"
+            data-testid="text"
         >
             {text}
         </div>
     )
 }
 
-export default ProjectCardText
+export default Text

@@ -1,12 +1,13 @@
 import React from 'react'
 import RequiredResultCard from './RequiredResultCard';
+import Title from '../atoms/Texts/Title';
 
 const RequiredResultsSection: React.FC = () => {
     return (
         <div
             data-testid="required-results-section"
         >
-            RequiredResultsSection
+            <Title title={"Required Results"} />
             <RequiredResultCard />
         </div>
     )

@@ -1,11 +1,23 @@
 import React from 'react'
 import RequiredResultCard from './RequiredResultCard';
 import Title from '../atoms/Texts/Title';
-import { mockProjects } from '../../utils/mockProjectsData';
 import { projectDateRange } from '../../utils/date';
 
-const RequiredResultsSection: React.FC = () => {
-    const { requiredResults } = mockProjects[0]
+interface Props {
+    requiredResults: Array<{
+        name: string;
+        startDate: Date;
+        endDate: Date;
+        toDos: Array<{
+            name: string;
+            completed: boolean;
+        }>;
+    }>;
+}
+
+const RequiredResultsSection: React.FC<Props> = ({
+    requiredResults
+}) => {
     return (
         <div
             data-testid="required-results-section"

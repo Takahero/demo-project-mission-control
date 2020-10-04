@@ -2,7 +2,10 @@ import React from 'react'
 import Dashboard from "./pages/Dashboard"
 import Auth from "./pages/Auth"
 import './App.css';
-import { Route } from 'react-router-dom'
+import { 
+  Route,
+  Redirect
+} from 'react-router-dom'
 
 
 const App: React.FC = () => {
@@ -23,6 +26,9 @@ const App: React.FC = () => {
           path="/login" 
           component={Auth}
       />
+      <Route exact path="/">
+        <Redirect to="/project" /> 
+      </Route>
     </div>
   )
 }

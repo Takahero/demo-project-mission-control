@@ -2,17 +2,17 @@ const navData = {
     unauthed: [
         {
             text: "Login",
-            path: "login"
+            path: "/login"
         },
         {
             text: "Sign up",
-            path: "signup"
+            path: "/signup"
         }
     ],
     authed: [
         {
             text: "Sign out",
-            path: ""
+            path: "/"
         }
     ]
 }

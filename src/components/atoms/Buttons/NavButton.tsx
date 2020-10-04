@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 interface Props {
     text: string;
@@ -10,11 +11,12 @@ const NavButton: React.FC<Props> = ({
     path
 }) => {
     return (
-        <div
+        <Link
             data-testid="nav-button"
+            to={path}
         >
             {text}
-        </div>
+        </Link>
     )
 }
 

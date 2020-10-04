@@ -1,12 +1,10 @@
 import React from 'react'
-import Title from '../atoms/Texts/Title';
+import Title from '../atoms/Texts/Title'
 import ProjectCard from '../molecules/ProjectCard'
 import { mockProjects } from '../../utils/mockProjectsData'
-import { shortFullName } from '../../utils/name';
-import { projectDateRange } from '../../utils/date';
-import {
-    Link,
-  } from 'react-router-dom';
+import { shortFullName } from '../../utils/name'
+import { projectDateRange } from '../../utils/date'
+import { Link } from 'react-router-dom'
 
 const ProjectList: React.FC = () => {
     return (

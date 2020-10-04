@@ -6,12 +6,9 @@ import {
     BrowserRouter,
     Route,
   } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../store'
+
 
 const DashboardLayout: React.FC = () => {
-    const user = useSelector((state: RootState) => state.user)
-    console.log(user)
     return (
         <BrowserRouter>
             <div

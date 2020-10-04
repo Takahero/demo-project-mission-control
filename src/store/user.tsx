@@ -6,6 +6,6 @@ const userSlice = createSlice({
     reducers: {}
 })
 
-const { actions, reducer} = userSlice
+const { actions, reducer } = userSlice
 
 export default reducer

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render } from '../../../utils/testUtils'
 import DateRange from './DateRange';
 import { mockProjectDates } from '../../../utils/mockProjectsData'
 import { projectDateRange } from '../../../utils/date';

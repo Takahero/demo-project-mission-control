@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render } from '../../../utils/testUtils'
 import Logo from './Logo';
 
 it('renders Logo', () => {

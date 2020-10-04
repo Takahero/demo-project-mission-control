@@ -1,12 +1,8 @@
 import React from 'react';
 import Main from "./pages/Main";
 import './App.css';
-import { useSelector } from 'react-redux'
-import { RootState } from './store'
 
 const App: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user)
-  console.log(user)
   return (
     <div 
       className="App"
@@ -15,7 +11,6 @@ const App: React.FC = () => {
       <Main />
     </div>
   )
-  
 }
 
 export default App;

@@ -1,6 +1,7 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render } from '../../utils/testUtils'
 import DashboardLayout from './DashboardLayout';
+
 
 
 it('renders Dashboard layout ', () => {

@@ -1,6 +1,9 @@
-import React from 'react';
-import Main from "./pages/Main";
+import React from 'react'
+import Dashboard from "./pages/Dashboard"
+import Auth from "./pages/Auth"
 import './App.css';
+import { Route } from 'react-router-dom'
+
 
 const App: React.FC = () => {
   return (
@@ -8,7 +11,18 @@ const App: React.FC = () => {
       className="App"
       data-testid="app"
     >
-      <Main />
+      <Route
+          path="/project" 
+          component={Dashboard}
+      />
+      <Route
+          path="/signup" 
+          component={Auth}
+      />
+      <Route
+          path="/login" 
+          component={Auth}
+      />
     </div>
   )
 }

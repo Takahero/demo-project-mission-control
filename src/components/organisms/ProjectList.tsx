@@ -15,7 +15,7 @@ const ProjectList: React.FC = () => {
             {
                 mockProjects.map( (mockProject, i) => 
                     <Link 
-                        to={mockProject.id}
+                        to={`/project/${mockProject.id}`}
                         key={i}
                     >
                         <ProjectCard 

@@ -1,14 +1,14 @@
 import React from 'react'
 import DashboardLayout from '../components/templates/DashboardLayout'
 
-const Main: React.FC = () => {
+const Dashboard: React.FC = () => {
     return (
         <div
-            data-testid="main-page"
+            data-testid="dashboard-page"
         >
-            <DashboardLayout />
+             <DashboardLayout />
         </div>
     )
 }
 
-export default Main
+export default Dashboard

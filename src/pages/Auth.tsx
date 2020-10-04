@@ -2,14 +2,14 @@ import React from 'react'
 import AuthLayout from '../components/templates/AuthLayout'
 
 
-const DashboardLayout: React.FC = () => {
+const Auth: React.FC = () => {
     return (
         <div
-            data-testid="signup-page"
+            data-testid="auth-page"
         >
             <AuthLayout />
         </div>
     )
 }
 
-export default DashboardLayout
+export default Auth

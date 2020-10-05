@@ -4,6 +4,7 @@ import { Provider } from "react-redux"
 import store from "../store";
 import { Router } from "react-router-dom"
 import history from './history'
+import { Formik } from 'formik';
 
 export interface WrapperProps {
   children: ReactElement;
@@ -14,7 +15,7 @@ export const render = (ui: ReactElement, renderOptions?: RenderOptions) => {
     return (
       <Provider store={store}>
         <Router history={history}>
-            {children}
+          {children}
         </Router>
       </Provider>
     );

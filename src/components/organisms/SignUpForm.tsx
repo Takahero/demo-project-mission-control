@@ -1,8 +1,15 @@
 import React from 'react'
-import { Formik, Field, Form, FormikHelpers } from 'formik'
+import { 
+    Formik, 
+    Field, 
+    Form, 
+    FormikHelpers,
+    ErrorMessage
+} from 'formik'
 import signUpFormData from '../../utils/signUpFormData'
 import SubmitButton from '../atoms/Form/SubmitButton'
 import Label from '../atoms/Form/Label'
+import * as Yup from 'yup'
 
 interface Values {
     firstName: string;
@@ -10,6 +17,22 @@ interface Values {
     email: string;
     password: string;
   }
+
+  const SignupSchema = Yup.object().shape({
+    firstName: Yup.string()
+      .min(2, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Required'),
+    lastName: Yup.string()
+      .min(2, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Required'),
+    email: Yup.string().email('Invalid email').required('Required'),
+    password: Yup.string()
+      .min(6, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Required'),
+  });
 
 const SignUpForm: React.FC = () => {
     return (
@@ -23,6 +46,7 @@ const SignUpForm: React.FC = () => {
                     email: '',
                     password: '',
                 }}
+                validationSchema={SignupSchema}
                 onSubmit={(
                     values: Values,
                     { setSubmitting }: FormikHelpers<Values>
@@ -33,24 +57,27 @@ const SignUpForm: React.FC = () => {
                     }, 500);
                 }}
             >
-                <Form>
-                    { signUpFormData.map( (signUpFormDatum, i) => 
-                        <div key={i}>
-                            <Label 
-                                label={signUpFormDatum.label}
-                                value={signUpFormDatum.value}
-                            />
-                            <Field 
-                            data-testid="field"
-                            id={signUpFormDatum.value}
-                            name={signUpFormDatum.value}
-                            placeholder={signUpFormDatum.placeholder}
-                            type={signUpFormDatum.type}
-                            />
-                        </div>
-                    )}
-                    <SubmitButton text="Submit" />
-                </Form>
+                {({ errors, touched }) => (
+                    <Form>
+                        { signUpFormData.map( (signUpFormDatum, i) => 
+                            <div key={i}>
+                                <Label 
+                                    label={signUpFormDatum.label}
+                                    value={signUpFormDatum.value}
+                                />
+                                <Field 
+                                data-testid="field"
+                                id={signUpFormDatum.value}
+                                name={signUpFormDatum.value}
+                                placeholder={signUpFormDatum.placeholder}
+                                type={signUpFormDatum.type}
+                                />
+                                <ErrorMessage name={signUpFormDatum.value}/>
+                            </div>
+                        )}
+                        <SubmitButton text="Submit" />
+                    </Form>
+                )}
             </Formik>
 
         </div>

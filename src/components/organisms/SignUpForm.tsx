@@ -1,8 +1,8 @@
 import React from 'react'
 import { Formik, Field, Form, FormikHelpers } from 'formik'
 import signUpFormData from '../../utils/signUpFormData'
-import SubmitButton from '../atoms/Form/SubmitButton';
-import Label from '../atoms/Form/Label';
+import SubmitButton from '../atoms/Form/SubmitButton'
+import Label from '../atoms/Form/Label'
 
 interface Values {
     firstName: string;

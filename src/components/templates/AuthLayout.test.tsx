@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '../../utils/testUtils'
-import AuthLayout from './AuthLayout';
+import AuthLayout from './AuthLayout'
 
 
 

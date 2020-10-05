@@ -1,12 +1,12 @@
 import React from 'react'
 import DashboardProjectCard from '../molecules/DashboardProjectCard'
 import RequiredResultsSection from '../molecules/RequiredResultsSection'
-import { projectDateRange } from '../../utils/date';
-import { fullName } from '../../utils/name';
-import { mockProjects } from '../../utils/mockProjectsData';
+import { projectDateRange } from '../../utils/date'
+import { fullName } from '../../utils/name'
+import { mockProjects } from '../../utils/mockProjectsData'
 
 interface Props {
-    projectId: string;
+    projectId?: string;
 }
 
 const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
@@ -27,8 +27,9 @@ const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
                 />
             </div>
         )
-    } 
+    }
     return <></>
+    
 }
 
 export default ProjectDashboard

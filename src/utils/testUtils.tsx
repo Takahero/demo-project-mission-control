@@ -3,7 +3,7 @@ import { render as rtlRender, RenderOptions } from "@testing-library/react"
 import { Provider } from "react-redux"
 import store from "../store";
 import { Router } from "react-router-dom"
-import { createMemoryHistory } from 'history'
+import history from './history'
 
 export interface WrapperProps {
   children: ReactElement;
@@ -11,7 +11,6 @@ export interface WrapperProps {
 
 export const render = (ui: ReactElement, renderOptions?: RenderOptions) => {
   const Wrapper = ({ children }: WrapperProps): ReactElement => {
-    const history=createMemoryHistory()
     return (
       <Provider store={store}>
         <Router history={history}>

@@ -1,10 +1,9 @@
 import React from 'react'
 import Header from '../organisms/Header'
-// import ProjectDashboard from '../organisms/ProjectDashboard'
-// import ProjectList from '../organisms/ProjectList'
-// import { Route } from 'react-router-dom'
+import SignUpForm from '../organisms/SignUpForm'
+import SignInSection from '../organisms/SignInSection'
 import NavButton from '../atoms/Buttons/NavButton'
-
+import { Route } from 'react-router-dom'
 
 const DashboardLayout: React.FC = () => {
     return (
@@ -12,18 +11,18 @@ const DashboardLayout: React.FC = () => {
             data-testid="auth-layout"
         >
             <Header />
-            <div>Auth page</div>
+            <Route
+                exact path="/signup"
+                component={SignUpForm}
+            />
+            <Route
+                exact path="/signin"
+                component={SignInSection}
+            />
             <NavButton 
                 text="Go back to home"
                 path="/"
             />
-            {/* <ProjectList />
-            <Route 
-                path="/:projectId"
-                render={({ match: { params: { projectId } } }) => 
-                    <ProjectDashboard projectId={projectId} />
-                }
-            /> */}
         </div>
     )
 }

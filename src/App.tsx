@@ -19,11 +19,7 @@ const App: React.FC = () => {
           component={Dashboard}
       />
       <Route
-          path="/signup" 
-          component={Auth}
-      />
-      <Route
-          path="/login" 
+          path={["/signup", "/signin"]} 
           component={Auth}
       />
       <Route exact path="/">
@@ -33,5 +29,5 @@ const App: React.FC = () => {
   )
 }
 
-export default App;
+export default App
 

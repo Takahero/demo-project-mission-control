@@ -10,6 +10,9 @@ import signUpFormData from '../../utils/signUpFormData'
 import SubmitButton from '../atoms/Form/SubmitButton'
 import Label from '../atoms/Form/Label'
 import * as Yup from 'yup'
+import { useDispatch } from 'react-redux'
+import { setCurrentUser } from '../../store/user'
+import { pushHistoryTo } from '../../utils/history'
 
 interface Values {
     firstName: string;
@@ -35,6 +38,7 @@ interface Values {
   });
 
 const SignUpForm: React.FC = () => {
+    const dispatch = useDispatch()
     return (
         <div
             data-testid="sign-up-form"
@@ -51,33 +55,33 @@ const SignUpForm: React.FC = () => {
                     values: Values,
                     { setSubmitting }: FormikHelpers<Values>
                 ) => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                    }, 500);
+                    dispatch(setCurrentUser({ 
+                        id: "randomID",
+                        firstName: values.firstName,
+                        lastName: values.lastName,
+                    }))
+                    pushHistoryTo('/')
                 }}
             >
-                {({ errors, touched }) => (
-                    <Form>
-                        { signUpFormData.map( (signUpFormDatum, i) => 
-                            <div key={i}>
-                                <Label 
-                                    label={signUpFormDatum.label}
-                                    value={signUpFormDatum.value}
-                                />
-                                <Field 
-                                data-testid="field"
-                                id={signUpFormDatum.value}
-                                name={signUpFormDatum.value}
-                                placeholder={signUpFormDatum.placeholder}
-                                type={signUpFormDatum.type}
-                                />
-                                <ErrorMessage name={signUpFormDatum.value}/>
-                            </div>
-                        )}
-                        <SubmitButton text="Submit" />
-                    </Form>
-                )}
+                <Form>
+                    { signUpFormData.map( (signUpFormDatum, i) => 
+                        <div key={i}>
+                            <Label 
+                                label={signUpFormDatum.label}
+                                value={signUpFormDatum.value}
+                            />
+                            <Field 
+                            data-testid="field"
+                            id={signUpFormDatum.value}
+                            name={signUpFormDatum.value}
+                            placeholder={signUpFormDatum.placeholder}
+                            type={signUpFormDatum.type}
+                            />
+                            <ErrorMessage name={signUpFormDatum.value}/>
+                        </div>
+                    )}
+                    <SubmitButton text="Submit" />
+                </Form>
             </Formik>
 
         </div>

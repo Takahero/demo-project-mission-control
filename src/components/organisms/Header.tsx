@@ -1,20 +1,18 @@
 import React from 'react'
-import NavMenu from '../molecules/NavMenu'
+import UnauthedNavMenu from '../molecules/UnauthedNavMenu'
 import Logo from '../atoms/Icons/Logo'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
-import navData from '../../utils/navData'
+import SignOutButton from '../atoms/Buttons/SignOutButton';
 
 const Header: React.FC = () => {
-    let user = useSelector((state: RootState) => state.user)
+    let { user } = useSelector((state: RootState) => state.user)
     return (
         <div
             data-testid="header"
         >
             <Logo />
-            <NavMenu 
-              navData={user ? navData.authed : navData.unauthed} 
-            />
+            { user ? <SignOutButton /> : <UnauthedNavMenu />}
         </div>
     )
 }

@@ -13,6 +13,7 @@ import * as Yup from 'yup'
 import { useDispatch } from 'react-redux'
 import { setCurrentUser } from '../../store/user'
 import { pushHistoryTo } from '../../utils/history'
+import { auth } from '../../firebase'
 
 interface Values {
     firstName: string;
@@ -51,10 +52,20 @@ const SignUpForm: React.FC = () => {
                     password: '',
                 }}
                 validationSchema={SignupSchema}
-                onSubmit={(
+                onSubmit={ async (
                     values: Values,
                     { setSubmitting }: FormikHelpers<Values>
                 ) => {
+                    
+                    const res = await auth.createUserWithEmailAndPassword(values.email, values.password)
+                    // auth.onAuthStateChanged((user: any) => {
+                    //     user.firstName = values.firstName
+                    //     user.lastName = values.lastName
+                    //     console.log(user)
+                    // }) 
+
+
+
                     dispatch(setCurrentUser({ 
                         id: "randomID",
                         firstName: values.firstName,
@@ -71,11 +82,11 @@ const SignUpForm: React.FC = () => {
                                 value={signUpFormDatum.value}
                             />
                             <Field 
-                            data-testid="field"
-                            id={signUpFormDatum.value}
-                            name={signUpFormDatum.value}
-                            placeholder={signUpFormDatum.placeholder}
-                            type={signUpFormDatum.type}
+                                data-testid="field"
+                                id={signUpFormDatum.value}
+                                name={signUpFormDatum.value}
+                                placeholder={signUpFormDatum.placeholder}
+                                type={signUpFormDatum.type}
                             />
                             <ErrorMessage name={signUpFormDatum.value}/>
                         </div>

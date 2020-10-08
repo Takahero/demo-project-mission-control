@@ -42,38 +42,41 @@ const SignUpForm: React.FC = () => {
 					password: "",
 				}}
 				validationSchema={SignupSchema}
-				onSubmit={(
+				onSubmit={async (
 					values: Values,
 					{ setSubmitting }: FormikHelpers<Values>
 				) => {
-					firebase
+					await firebase
 						.createUser({
 							email: values.email,
 							password: values.password,
 						})
 						.catch((e) => console.error(e))
+
 					pushHistoryTo("/")
 				}}
 			>
-				<Form>
-					{signUpFormData.map((signUpFormDatum, i) => (
-						<div key={i}>
-							<Label
-								label={signUpFormDatum.label}
-								value={signUpFormDatum.value}
-							/>
-							<Field
-								data-testid="field"
-								id={signUpFormDatum.value}
-								name={signUpFormDatum.value}
-								placeholder={signUpFormDatum.placeholder}
-								type={signUpFormDatum.type}
-							/>
-							<ErrorMessage name={signUpFormDatum.value} />
-						</div>
-					))}
-					<SubmitButton text="Submit" />
-				</Form>
+				{({ isSubmitting }) => (
+					<Form>
+						{signUpFormData.map((signUpFormDatum, i) => (
+							<div key={i}>
+								<Label
+									label={signUpFormDatum.label}
+									value={signUpFormDatum.value}
+								/>
+								<Field
+									data-testid="field"
+									id={signUpFormDatum.value}
+									name={signUpFormDatum.value}
+									placeholder={signUpFormDatum.placeholder}
+									type={signUpFormDatum.type}
+								/>
+								<ErrorMessage name={signUpFormDatum.value} />
+							</div>
+						))}
+						<SubmitButton text={isSubmitting ? "Loading..." : "Sign Up"} />
+					</Form>
+				)}
 			</Formik>
 		</div>
 	)

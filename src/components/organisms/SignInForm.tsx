@@ -4,10 +4,8 @@ import { signInFormData } from "../../utils/formData"
 import SubmitButton from "../atoms/Form/SubmitButton"
 import Label from "../atoms/Form/Label"
 import * as Yup from "yup"
-import { useDispatch } from "react-redux"
-import { setCurrentUser } from "../../store/user"
 import { pushHistoryTo } from "../../utils/history"
-import { auth } from "../../firebase"
+import { useFirebase } from "react-redux-firebase"
 
 interface Values {
 	email: string
@@ -23,7 +21,8 @@ const SignInSchema = Yup.object().shape({
 })
 
 const SignInForm: React.FC = () => {
-	const dispatch = useDispatch()
+	const firebase = useFirebase()
+
 	return (
 		<div data-testid="sing-in-form">
 			<Formik
@@ -32,24 +31,17 @@ const SignInForm: React.FC = () => {
 					password: "",
 				}}
 				validationSchema={SignInSchema}
-				onSubmit={async (
+				onSubmit={(
 					values: Values,
 					{ setSubmitting }: FormikHelpers<Values>
 				) => {
-					const { user }: any = await auth
-						.signInWithEmailAndPassword(values.email, values.password)
-						.catch((error) => {
-							console.error(error)
+					firebase
+						.login({
+							email: values.email,
+							password: values.password,
 						})
-					if (user) {
-						dispatch(
-							setCurrentUser({
-								id: user.uuid,
-								firstName: user.firstName,
-								lastName: user.lastName,
-							})
-						)
-					}
+						.catch((e) => console.error(e))
+
 					pushHistoryTo("/")
 				}}
 			>
@@ -78,3 +70,9 @@ const SignInForm: React.FC = () => {
 }
 
 export default SignInForm
+
+// firebase.login({
+// 	email: values.email,
+// 	password: values.password,
+// })
+// .catch(e => console.error(e))

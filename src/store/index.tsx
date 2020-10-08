@@ -1,12 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit'
-import userReducer from './user'
-import { firebaseReducer } from 'react-redux-firebase'
+import { configureStore, combineReducers } from "@reduxjs/toolkit"
+import { firebaseReducer, FirebaseReducer } from "react-redux-firebase"
+
+interface FirebaseState {
+  firebase: FirebaseReducer.Reducer
+}
+
+const firebaseRootReducer = combineReducers<FirebaseState>({
+  firebase: firebaseReducer,
+})
 
 const store = configureStore({
-    reducer: {
-        user: userReducer,
-        firebase: firebaseReducer,
-    }
+  reducer: firebaseRootReducer,
 })
 
 export type RootState = ReturnType<typeof store.getState>

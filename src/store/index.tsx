@@ -9,7 +9,7 @@ import {
 	getFirebase,
 	actionTypes as rrfActionTypes,
 } from "react-redux-firebase"
-import firebase from "firebase/app"
+import { firebase } from "../firebase"
 import { constants as rfConstants } from "redux-firestore"
 
 interface FirebaseState {

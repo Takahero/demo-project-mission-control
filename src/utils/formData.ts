@@ -23,4 +23,22 @@ const signUpFormData = [
     },
 ];
 
-export default signUpFormData
+const signInFormData = [
+    {
+        label: "Email",
+        value: "email",
+        placeholder: "Type your email",
+        type: "email"
+    },
+    {
+        label: "Password",
+        value: "password",
+        placeholder: "Type your password",
+        type: "password"
+    },
+];
+
+export {
+    signUpFormData,
+    signInFormData
+}

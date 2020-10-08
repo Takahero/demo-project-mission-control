@@ -6,7 +6,7 @@ import {
     FormikHelpers,
     ErrorMessage
 } from 'formik'
-import signUpFormData from '../../utils/signUpFormData'
+import { signUpFormData } from '../../utils/formData'
 import SubmitButton from '../atoms/Form/SubmitButton'
 import Label from '../atoms/Form/Label'
 import * as Yup from 'yup'

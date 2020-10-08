@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../organisms/Header'
 import SignUpForm from '../organisms/SignUpForm'
-import SignInSection from '../organisms/SignInSection'
+import SignInForm from '../organisms/SignInForm'
 import NavButton from '../atoms/Buttons/NavButton'
 import { Route } from 'react-router-dom'
 
@@ -17,7 +17,7 @@ const DashboardLayout: React.FC = () => {
             />
             <Route
                 exact path="/signin"
-                component={SignInSection}
+                component={SignInForm}
             />
             <NavButton 
                 text="Go back to home"

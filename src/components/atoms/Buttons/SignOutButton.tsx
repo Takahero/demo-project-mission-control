@@ -1,5 +1,4 @@
 import React from "react"
-import { clearCurrentUser } from "../../../store/user"
 import { pushHistoryTo } from "../../../utils/history"
 import { useFirebase } from "react-redux-firebase"
 

@@ -50,7 +50,7 @@ const store = configureStore({
 })
 
 const rrfConfig = {
-	userProfile: "users",
+	// userProfile: "users",
 	// useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
 }
 

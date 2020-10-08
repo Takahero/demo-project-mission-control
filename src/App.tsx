@@ -11,7 +11,7 @@ const App: React.FC = () => {
   const auth = useSelector((state: RootState) => state.firebase.auth)
   const isInitializing = useSelector((state: RootState) => state.firebase.isInitializing)
 	if (!isLoaded(auth) || isInitializing) {
-		return <div>loading...</div>
+		return <div data-testid="app">loading...</div>
 	}
 	return (
 		<div className="App" data-testid="app">

@@ -5,7 +5,12 @@ import SubmitButton from "../atoms/Form/SubmitButton"
 import Label from "../atoms/Form/Label"
 import * as Yup from "yup"
 import { pushHistoryTo } from "../../utils/history"
-import { useFirebase } from "react-redux-firebase"
+import { 
+	useFirebase, 
+	isEmpty } from "react-redux-firebase"
+import { useSelector } from "react-redux"
+import { RootState } from "../../store"
+import { Redirect } from "react-router-dom"
 
 interface Values {
 	email: string
@@ -21,7 +26,12 @@ const SignInSchema = Yup.object().shape({
 })
 
 const SignInForm: React.FC = () => {
+	const auth = useSelector((state: RootState) => state.firebase.auth)
 	const firebase = useFirebase()
+
+	if (!isEmpty(auth)) {
+		return <Redirect to="/" />
+	}
 
 	return (
 		<div data-testid="sing-in-form">

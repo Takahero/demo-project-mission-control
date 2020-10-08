@@ -10,14 +10,26 @@ import {
 	actionTypes as rrfActionTypes,
 } from "react-redux-firebase"
 import { firebase } from "../firebase"
-import { constants as rfConstants } from "redux-firestore"
+import {
+	constants as rfConstants,
+	createFirestoreInstance,
+	firestoreReducer,
+} from "redux-firestore"
+
+interface ProfileType {
+	firstName: string
+	lastName: string
+}
 
 interface FirebaseState {
-	firebase: FirebaseReducer.Reducer
+	firebase: FirebaseReducer.Reducer<ProfileType>
+	// redux-firestore issue
+	firestore: any
 }
 
 const firebaseRootReducer = combineReducers<FirebaseState>({
 	firebase: firebaseReducer,
+	firestore: firestoreReducer,
 })
 
 const extraArgument = {
@@ -50,15 +62,15 @@ const store = configureStore({
 })
 
 const rrfConfig = {
-	// userProfile: "users",
-	// useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
+	userProfile: "users",
+	useFirestoreForProfile: true, // Firestore for Profile instead of Realtime DB
 }
 
 const rrfProps = {
 	firebase,
 	config: rrfConfig,
 	dispatch: store.dispatch,
-	// createFirestoreInstance // <- needed if using firestore
+	createFirestoreInstance,
 }
 
 export type RootState = ReturnType<typeof store.getState>

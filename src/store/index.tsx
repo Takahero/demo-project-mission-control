@@ -55,6 +55,7 @@ const middleware = [
 		thunk: {
 			extraArgument,
 		},
+		immutableCheck: false,
 	}),
 ]
 

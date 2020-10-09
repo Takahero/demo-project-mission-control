@@ -3,7 +3,6 @@ import DashboardProjectCard from '../molecules/DashboardProjectCard'
 import RequiredResultsSection from '../molecules/RequiredResultsSection'
 import { projectDateRange } from '../../utils/date'
 import { fullName } from '../../utils/name'
-import { mockProjects } from '../../utils/mockProjectsData'
 import { isEmpty } from "react-redux-firebase"
 import { useSelector } from "react-redux"
 import { RootState } from "../../store"
@@ -25,7 +24,6 @@ const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
     }
 
     if (project) {
-        console.log(project)
         return (
             <div
                 data-testid="project-dashboard"
@@ -42,7 +40,7 @@ const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
             </div>
         )
     }
-    return <></>
+    return <div data-testid="project-dashboard"></div>
 
 }
 

@@ -1,14 +1,12 @@
 import React from "react"
 import Title from "../atoms/Texts/Title"
 import ProjectCard from "../molecules/ProjectCard"
-import { mockProjects } from "../../utils/mockProjectsData"
 import { shortFullName } from "../../utils/name"
 import { projectDateRange } from "../../utils/date"
 import { Link } from "react-router-dom"
 import { isEmpty } from "react-redux-firebase"
 import { useSelector } from "react-redux"
 import { RootState } from "../../store"
-import { Redirect } from "react-router-dom"
 import NavButton from "../atoms/Buttons/NavButton"
 import fromFirestoreObjToArr from '../../utils/fromFirestoreObjToArr';
 

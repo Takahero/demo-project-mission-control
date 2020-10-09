@@ -6,20 +6,27 @@ import {
     Route,
     Redirect
 } from 'react-router-dom'
-import { mockProjects } from '../../utils/mockProjectsData';
 import ProjectForm from '../organisms/ProjectForm';
-
-const firstProjectId = mockProjects[0].id
+import { useSelector } from "react-redux"
+import { RootState } from "../../store"
 
 const DashboardLayout: React.FC = () => {
+    const { projects } = useSelector((state: RootState) => state.firestore.data)
+
+    let firstProjectId
+    if (projects) {
+        firstProjectId = Object.keys(projects)[0]
+    }
     return (
         <div
             data-testid="dashboard-layout"
         >
-            <Redirect
-                exact from="/project"
-                to={`/project/${firstProjectId}`}
-            />
+            { firstProjectId &&
+                <Redirect
+                    exact from="/project"
+                    to={`/project/${firstProjectId}`}
+                />
+            }
 
             <Header />
             <ProjectList />

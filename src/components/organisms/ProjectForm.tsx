@@ -46,7 +46,8 @@ const PropjectSchema = Yup.object().shape({
 
 const ProjectForm: React.FC = () => {
 
-	const { auth, profile } = useSelector((state: RootState) => state.firebase)
+	const auth = useSelector((state: RootState) => state.firebase.auth)
+	const profile = useSelector((state: RootState) => state.firebase.profile)
 	const firestore = useFirestore()
 
 	if (isEmpty(auth)) {

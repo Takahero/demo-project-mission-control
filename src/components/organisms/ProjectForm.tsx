@@ -12,7 +12,6 @@ import Label from "../atoms/Form/Label"
 import * as Yup from "yup"
 import { pushHistoryTo } from "../../utils/history"
 import {
-	useFirebase,
 	isEmpty,
 	useFirestore,
 } from "react-redux-firebase"
@@ -46,7 +45,8 @@ const PropjectSchema = Yup.object().shape({
 })
 
 const ProjectForm: React.FC = () => {
-	const auth = useSelector((state: RootState) => state.firebase.auth)
+
+	const { auth, profile } = useSelector((state: RootState) => state.firebase)
 	const firestore = useFirestore()
 
 	if (isEmpty(auth)) {
@@ -67,7 +67,16 @@ const ProjectForm: React.FC = () => {
 					values: Values,
 					{ setSubmitting }: FormikHelpers<Values>,
 				) => {
-					await firestore.add({ collection: 'projects' }, values)
+					await firestore.add({ collection: 'projects' }, {
+						...values,
+						author: {
+							uid: auth.uid,
+							firstName: profile.firstName,
+							lastName: profile.lastName,
+						},
+						completed: false,
+						createdAt: firestore.FieldValue.serverTimestamp(),
+					}).catch(e => console.error(e))
 					pushHistoryTo("/")
 				}}
 			>

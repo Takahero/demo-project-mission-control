@@ -12,26 +12,28 @@ import { Redirect } from "react-router-dom"
 
 interface Values {
 	projectName: string;
-	startDate: Date;
-	endDate: Date;
+	startDate: string;
+	endDate: string;
 	accomplishmentStatement: string;
 }
 
-// const SignupSchema = Yup.object().shape({
-// 	firstName: Yup.string()
-// 		.min(2, "Too Short!")
-// 		.max(50, "Too Long!")
-// 		.required("Required"),
-// 	lastName: Yup.string()
-// 		.min(2, "Too Short!")
-// 		.max(50, "Too Long!")
-// 		.required("Required"),
-// 	email: Yup.string().email("Invalid email").required("Required"),
-// 	password: Yup.string()
-// 		.min(6, "Too Short!")
-// 		.max(50, "Too Long!")
-// 		.required("Required"),
-// })
+const PropjectSchema = Yup.object().shape({
+	projectName: Yup.string()
+		.min(2, "Too Short!")
+		.max(50, "Too Long!")
+		.required("Required"),
+	startDate: Yup.date()
+		.required("Required"),
+	endDate: Yup.date()
+	.min(Yup.ref('startDate'), "End date should be after start date")
+	.required("Required"),
+	accomplishmentStatement: Yup.string()
+		.min(6, "Too Short!")
+		.max(50, "Too Long!")
+		.required("Required"),
+})
+
+
 
 const ProjectForm: React.FC = () => {
 	const auth = useSelector((state: RootState) => state.firebase.auth)
@@ -46,15 +48,16 @@ const ProjectForm: React.FC = () => {
 			<Formik
 				initialValues={{
 					projectName: "",
-					startDate: new Date(),
-					endDate: new Date(),
+					startDate: "",
+					endDate: "",
 					accomplishmentStatement: "",
 				}}
-				// validationSchema={SignupSchema}
+				validationSchema={PropjectSchema}
 				onSubmit={async (
 					values: Values,
-					{ setSubmitting }: FormikHelpers<Values>
+					{ setSubmitting }: FormikHelpers<Values>,
 				) => {
+					console.log(values)
 					pushHistoryTo("/")
 				}}
 			>

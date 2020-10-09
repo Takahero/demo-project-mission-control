@@ -2,11 +2,12 @@ import React from 'react'
 import Header from '../organisms/Header'
 import ProjectDashboard from '../organisms/ProjectDashboard'
 import ProjectList from '../organisms/ProjectList'
-import { 
+import {
     Route,
     Redirect
 } from 'react-router-dom'
 import { mockProjects } from '../../utils/mockProjectsData';
+import ProjectForm from '../organisms/ProjectForm';
 
 const firstProjectId = mockProjects[0].id
 
@@ -15,18 +16,24 @@ const DashboardLayout: React.FC = () => {
         <div
             data-testid="dashboard-layout"
         >
-            <Header />
-            <ProjectList />
-            <Route 
-                path="/project/:projectId"
-                render={({ match: { params: { projectId } } }) => 
-                    <ProjectDashboard projectId={projectId} />
-                }
-            />
             <Redirect
                 exact from="/project"
                 to={`/project/${firstProjectId}`}
             />
+
+            <Header />
+            <ProjectList />
+            <Route
+                path="/project/:projectId"
+                render={({ match: { params: { projectId } } }) =>
+                    <ProjectDashboard projectId={projectId} />
+                }
+            />
+            <Route
+                path="/project/create"
+                component={ProjectForm}
+            />
+
         </div>
     )
 }

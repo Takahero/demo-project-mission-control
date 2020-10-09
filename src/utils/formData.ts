@@ -38,7 +38,34 @@ const signInFormData = [
     },
 ];
 
+const projectFormData = [
+    {
+        label: "Project Name",
+        value: "projectName",
+        placeholder: "Type Your Project Name",
+    },
+    {
+        label: "Start Date",
+        value: "startDate",
+        placeholder: "Choose Your Start Date",
+        type: "Date"
+    },
+    {
+        label: "End Date",
+        value: "endDate",
+        placeholder: "Choose Your End Date",
+        type: "Date"
+    },
+    {
+        label: "Accomplishment Statement",
+        value: "accomplishmentStatement",
+        placeholder: "Type Your Accomplishment Statement",
+        as: "textarea"
+    },
+];
+
 export {
     signUpFormData,
-    signInFormData
+    signInFormData,
+    projectFormData,
 }

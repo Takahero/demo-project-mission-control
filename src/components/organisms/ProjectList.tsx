@@ -10,10 +10,16 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../store"
 import { Redirect } from "react-router-dom"
 import NavButton from "../atoms/Buttons/NavButton"
+import fromFirestoreObjToArr from '../../utils/fromFirestoreObjToArr';
 
 const ProjectList: React.FC = () => {
 	const auth = useSelector((state: RootState) => state.firebase.auth)
+	const { projects } = useSelector((state: RootState) => state.firestore.data)
 
+	let projectArr: any = null
+	if (projects) {
+		projectArr = fromFirestoreObjToArr(projects)
+	}
 	return (
 		<div data-testid="project-list">
 			<Title title={"People's Projects"} />
@@ -25,17 +31,17 @@ const ProjectList: React.FC = () => {
 				/>
 			}
 
-			{mockProjects.map((mockProject, i) => (
-				<Link to={`/project/${mockProject.id}`} key={i}>
+			{ projectArr && projectArr.map((project: any, i: string) => (
+				<Link to={`/project/${project.id}`} key={i}>
 					<ProjectCard
-						name={mockProject.name}
+						name={project.projectName}
 						authorName={shortFullName(
-							mockProject.author.firstName,
-							mockProject.author.lastName
+							project.author.firstName,
+							project.author.lastName
 						)}
 						dateRange={projectDateRange(
-							mockProject.startDate,
-							mockProject.endDate
+							project.startDate,
+							project.endDate
 						)}
 					/>
 				</Link>

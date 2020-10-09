@@ -5,9 +5,7 @@ import SubmitButton from "../atoms/Form/SubmitButton"
 import Label from "../atoms/Form/Label"
 import * as Yup from "yup"
 import { pushHistoryTo } from "../../utils/history"
-import { 
-	useFirebase, 
-	isEmpty } from "react-redux-firebase"
+import { useFirebase, isEmpty } from "react-redux-firebase"
 import { useSelector } from "react-redux"
 import { RootState } from "../../store"
 import { Redirect } from "react-router-dom"
@@ -58,10 +56,16 @@ const SignUpForm: React.FC = () => {
 					{ setSubmitting }: FormikHelpers<Values>
 				) => {
 					await firebase
-						.createUser({
-							email: values.email,
-							password: values.password,
-						})
+						.createUser(
+							{
+								email: values.email,
+								password: values.password,
+							},
+							{
+								firstName: values.firstName,
+								lastName: values.lastName,
+							}
+						)
 						.catch((e) => console.error(e))
 
 					pushHistoryTo("/")

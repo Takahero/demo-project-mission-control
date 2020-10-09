@@ -14,6 +14,7 @@ import {
 	constants as rfConstants,
 	createFirestoreInstance,
 	firestoreReducer,
+	getFirestore
 } from "redux-firestore"
 
 interface ProfileType {
@@ -34,6 +35,7 @@ const firebaseRootReducer = combineReducers<FirebaseState>({
 
 const extraArgument = {
 	getFirebase,
+	getFirestore,
 }
 
 const middleware = [

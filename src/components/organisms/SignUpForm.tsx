@@ -1,11 +1,20 @@
 import React from "react"
-import { Formik, Field, Form, FormikHelpers, ErrorMessage } from "formik"
+import {
+	Formik,
+	Field,
+	Form,
+	FormikHelpers,
+	ErrorMessage
+} from "formik"
 import { signUpFormData } from "../../utils/formData"
 import SubmitButton from "../atoms/Form/SubmitButton"
 import Label from "../atoms/Form/Label"
 import * as Yup from "yup"
 import { pushHistoryTo } from "../../utils/history"
-import { useFirebase, isEmpty } from "react-redux-firebase"
+import {
+	useFirebase,
+	isEmpty
+} from "react-redux-firebase"
 import { useSelector } from "react-redux"
 import { RootState } from "../../store"
 import { Redirect } from "react-router-dom"

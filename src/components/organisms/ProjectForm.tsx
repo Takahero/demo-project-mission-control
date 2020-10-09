@@ -1,11 +1,21 @@
 import React from "react"
-import { Formik, Field, Form, FormikHelpers, ErrorMessage } from "formik"
+import {
+	Formik,
+	Field,
+	Form,
+	FormikHelpers,
+	ErrorMessage
+} from "formik"
 import { projectFormData } from "../../utils/formData"
 import SubmitButton from "../atoms/Form/SubmitButton"
 import Label from "../atoms/Form/Label"
 import * as Yup from "yup"
 import { pushHistoryTo } from "../../utils/history"
-import { useFirebase, isEmpty } from "react-redux-firebase"
+import {
+	useFirebase,
+	isEmpty,
+	useFirestore,
+} from "react-redux-firebase"
 import { useSelector } from "react-redux"
 import { RootState } from "../../store"
 import { Redirect } from "react-router-dom"
@@ -57,7 +67,7 @@ const ProjectForm: React.FC = () => {
 					values: Values,
 					{ setSubmitting }: FormikHelpers<Values>,
 				) => {
-					console.log(values)
+					await firestore.add({ collection: 'projects' }, values)
 					pushHistoryTo("/")
 				}}
 			>

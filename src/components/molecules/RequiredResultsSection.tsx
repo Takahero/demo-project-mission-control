@@ -15,7 +15,7 @@ interface Props {
     }>;
 }
 
-const RequiredResultsSection: React.FC<Props> = ({
+const RequiredResultsSection: React.FC<Props | null> = ({
     requiredResults
 }) => {
     return (
@@ -24,7 +24,7 @@ const RequiredResultsSection: React.FC<Props> = ({
         >
             <Title title={"Required Results"} />
             {
-                requiredResults.map((requiredResult, i) => 
+                requiredResults && requiredResults.map((requiredResult, i) => 
                     <RequiredResultCard
                         name={requiredResult.name}
                         dateRange={projectDateRange(requiredResult.startDate, requiredResult.endDate)}

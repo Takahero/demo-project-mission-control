@@ -18,8 +18,12 @@ interface Values {
 }
 
 const SignInSchema = Yup.object().shape({
-	email: Yup.string().email("Invalid email").required("Required"),
+	email: Yup.string()
+		.trim()
+		.email("Invalid email")
+		.required("Required"),
 	password: Yup.string()
+		.trim()
 		.min(6, "Too Short!")
 		.max(50, "Too Long!")
 		.required("Required"),

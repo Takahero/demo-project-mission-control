@@ -19,25 +19,25 @@ interface Values {
 
 const PropjectSchema = Yup.object().shape({
 	projectName: Yup.string()
+		.trim()
 		.min(2, "Too Short!")
 		.max(50, "Too Long!")
 		.required("Required"),
 	startDate: Yup.date()
 		.required("Required"),
 	endDate: Yup.date()
-	.min(Yup.ref('startDate'), "End date should be after start date")
-	.required("Required"),
+		.min(Yup.ref('startDate'), "End date should be after start date")
+		.required("Required"),
 	accomplishmentStatement: Yup.string()
+		.trim()
 		.min(6, "Too Short!")
 		.max(50, "Too Long!")
 		.required("Required"),
 })
 
-
-
 const ProjectForm: React.FC = () => {
 	const auth = useSelector((state: RootState) => state.firebase.auth)
-	const firebase = useFirebase()
+	const firestore = useFirestore()
 
 	if (isEmpty(auth)) {
 		return <Redirect to="/" />

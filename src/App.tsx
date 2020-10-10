@@ -29,9 +29,15 @@ const FirebaseLoaded: React.FC<{ children: any }>= ({ children }) => {
 const App: React.FC = () => {
 	const firestore = useFirestore()
 	if (firestore) {
-		firestore.get({ collection: "projects" })
+		firestore.get({
+			collection: "projects",
+			orderBy: ['createdAt', 'desc'],
+		})
 		firestore.setListeners([
-			{ collection: 'projects' },
+			{ 
+				collection: "projects",
+				orderBy: ['createdAt', 'desc']
+			},
 		])
 	}
 

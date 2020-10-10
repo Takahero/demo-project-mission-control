@@ -7,7 +7,7 @@ const authSelector = createSelector(
 )
 
 const projectsSelector = createSelector(
-    (state: RootState) => state.firestore.data.projects,
+    (state: RootState) => state.firestore.ordered.projects,
     projects => projects
 )
 

@@ -5,7 +5,6 @@ import { projectDateRange } from '../../utils/date'
 import { fullName } from '../../utils/name'
 import { isEmpty } from "react-redux-firebase"
 import { useSelector } from "react-redux"
-import { RootState } from "../../store"
 import fromFirestoreObjToArr from '../../utils/fromFirestoreObjToArr';
 import { projectsSelector, authSelector } from '../../store/selector'
 

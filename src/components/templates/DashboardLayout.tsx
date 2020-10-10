@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom'
 import ProjectForm from '../organisms/ProjectForm';
 import { useSelector } from "react-redux"
-import { RootState } from "../../store"
 import { projectsSelector } from '../../store/selector'
 
 const DashboardLayout: React.FC = () => {

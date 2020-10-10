@@ -69,7 +69,7 @@ const ProjectForm: React.FC = () => {
 					values: Values,
 					{ setSubmitting }: FormikHelpers<Values>,
 				) => {
-					await firestore.add({ collection: 'projects' }, {
+					const result: any = await firestore.add({ collection: 'projects' }, {
 						...values,
 						author: {
 							uid: auth.uid,
@@ -79,7 +79,8 @@ const ProjectForm: React.FC = () => {
 						completed: false,
 						createdAt: firestore.FieldValue.serverTimestamp(),
 					}).catch(e => console.error(e))
-					pushHistoryTo("/")
+					const newProjectId = result.w_.path.segments[1]
+					pushHistoryTo(`/project/${newProjectId}`)
 				}}
 			>
 				{({ isSubmitting }) => (

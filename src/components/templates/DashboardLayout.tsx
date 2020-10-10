@@ -8,23 +8,31 @@ import {
 } from 'react-router-dom'
 import ProjectForm from '../organisms/ProjectForm';
 import { useSelector } from "react-redux"
-import { projectsSelector } from '../../store/selector'
+import { authSelector, projectsSelector } from '../../store/selector'
+import { isEmpty } from 'react-redux-firebase';
 
 const DashboardLayout: React.FC = () => {
+    const auth = useSelector(authSelector)
     const projects = useSelector(projectsSelector)
 
-    let firstProjectId
+    let newestProjectId
     if (projects) {
-        firstProjectId = Object.keys(projects)[0]
+        if (!isEmpty(auth)) {
+            const newestUserProject: any = projects.find((project: any) => project.author.uid === auth.uid)
+            newestProjectId = newestUserProject.id || projects[0].id
+        } else {
+            newestProjectId = projects[0].id
+        }
     }
+
     return (
         <div
             data-testid="dashboard-layout"
         >
-            { firstProjectId &&
+            { newestProjectId &&
                 <Redirect
                     exact from="/project"
-                    to={`/project/${firstProjectId}`}
+                    to={`/project/${newestProjectId}`}
                 />
             }
 

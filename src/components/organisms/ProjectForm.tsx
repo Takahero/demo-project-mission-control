@@ -15,9 +15,10 @@ import {
 	isEmpty,
 	useFirestore,
 } from "react-redux-firebase"
-import { useSelector } from "react-redux"
+import { useSelector, shallowEqual } from "react-redux"
 import { RootState } from "../../store"
 import { Redirect } from "react-router-dom"
+import { authSelector } from "../../store/selector"
 
 interface Values {
 	projectName: string;
@@ -46,8 +47,8 @@ const PropjectSchema = Yup.object().shape({
 
 const ProjectForm: React.FC = () => {
 
-	const auth = useSelector((state: RootState) => state.firebase.auth)
-	const profile = useSelector((state: RootState) => state.firebase.profile)
+	const auth = useSelector(authSelector)
+	const profile = useSelector((state: RootState) => state.firebase.profile, shallowEqual)
 	const firestore = useFirestore()
 
 	if (isEmpty(auth)) {

@@ -9,9 +9,10 @@ import {
 import ProjectForm from '../organisms/ProjectForm';
 import { useSelector } from "react-redux"
 import { RootState } from "../../store"
+import { projectsSelector } from '../../store/selector'
 
 const DashboardLayout: React.FC = () => {
-    const { projects } = useSelector((state: RootState) => state.firestore.data)
+    const projects = useSelector(projectsSelector)
 
     let firstProjectId
     if (projects) {

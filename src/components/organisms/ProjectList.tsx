@@ -9,10 +9,11 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../store"
 import NavButton from "../atoms/Buttons/NavButton"
 import fromFirestoreObjToArr from '../../utils/fromFirestoreObjToArr';
+import { projectsSelector, authSelector } from "../../store/selector"
 
 const ProjectList: React.FC = () => {
-	const auth = useSelector((state: RootState) => state.firebase.auth)
-	const { projects } = useSelector((state: RootState) => state.firestore.data)
+	const auth = useSelector(authSelector)
+	const projects = useSelector(projectsSelector)
 
 	let projectArr: any = null
 	if (projects) {

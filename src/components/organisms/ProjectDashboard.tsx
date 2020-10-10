@@ -7,14 +7,15 @@ import { isEmpty } from "react-redux-firebase"
 import { useSelector } from "react-redux"
 import { RootState } from "../../store"
 import fromFirestoreObjToArr from '../../utils/fromFirestoreObjToArr';
+import { projectsSelector, authSelector } from '../../store/selector'
 
 interface Props {
     projectId?: string;
 }
 
 const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
-    const auth = useSelector((state: RootState) => state.firebase.auth)
-    const { projects } = useSelector((state: RootState) => state.firestore.data)
+    const auth = useSelector(authSelector)
+    const projects = useSelector(projectsSelector)
 
 	let projectArr: any = null
 	let project: any = null

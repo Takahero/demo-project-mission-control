@@ -5,10 +5,11 @@ import SignOutButton from '../atoms/Buttons/SignOutButton'
 import { isEmpty } from 'react-redux-firebase'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
+import { authSelector } from '../../store/selector'
 
 
 const Header: React.FC = () => {
-    const auth = useSelector((state: RootState) => state.firebase.auth)
+    const auth = useSelector(authSelector)
     return (
         <div
             data-testid="header"

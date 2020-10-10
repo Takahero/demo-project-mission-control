@@ -21,18 +21,19 @@ const FirebaseLoaded: React.FC<{ children: any }>= ({ children }) => {
 	const isInitializing = useSelector((state: RootState) => state.firebase.isInitializing)
 
 	if (!isLoaded(auth) || isInitializing || !isLoaded(projects)) {
-		return <div data-testid="app">loading...</div>
+		return <div>loading...</div>
 	}
 	return children
 }
 
 const App: React.FC = () => {
 	const firestore = useFirestore()
-
-	firestore.get({ collection: "projects" })
-	firestore.setListeners([
-		{ collection: 'projects' },
-	])
+	if (firestore) {
+		firestore.get({ collection: "projects" })
+		firestore.setListeners([
+			{ collection: 'projects' },
+		])
+	}
 
 	return (
 		<div className="App" data-testid="app">

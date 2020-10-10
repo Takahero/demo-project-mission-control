@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../organisms/Header'
 import ProjectDashboard from '../organisms/ProjectDashboard'
-import ProjectList from '../organisms/ProjectList'
+import ProjectList from '../organisms/ProjectListSection'
 import {
     Route,
     Redirect

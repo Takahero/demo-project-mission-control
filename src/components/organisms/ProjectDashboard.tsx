@@ -40,7 +40,7 @@ const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
                     completed={project.completed}
                     handleInputChange={(e: Event) => completeProject(e, project.id, project.completed)}
                     authed={authed}
-                    editPath={`/project/${project.id}/edit`}
+                    projectId={project.id}
                 />
                 <RequiredResultsSection
                     requiredResults={project.requiredResults}

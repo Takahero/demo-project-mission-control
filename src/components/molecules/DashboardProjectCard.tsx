@@ -3,6 +3,8 @@ import Title from '../atoms/Texts/Title';
 import Text from '../atoms/Texts/Text';
 import CompleteCheckbox from './CompleteCheckbox';
 import NavButton from '../atoms/Buttons/NavButton';
+import DeleteProjectButton from '../atoms/Buttons/DeleteProjectButton';
+import { projectDateRange } from '../../utils/date';
 
 interface Props {
     name: string;
@@ -12,7 +14,7 @@ interface Props {
     completed: boolean;
     handleInputChange: any;
     authed: boolean;
-    editPath: string;
+    projectId: string;
 }
 
 const DashboardProjectCard: React.FC<Props> = ({
@@ -23,7 +25,7 @@ const DashboardProjectCard: React.FC<Props> = ({
     completed,
     handleInputChange,
     authed,
-    editPath
+    projectId
 }) => {
     return (
         <div
@@ -43,8 +45,9 @@ const DashboardProjectCard: React.FC<Props> = ({
                     />
                     <NavButton
                         text="Edit Project"
-                        path={editPath}
+                        path={`/project/${projectId}/edit`}
                     />
+                    <DeleteProjectButton projectId={projectId} />
                 </>
             }
 

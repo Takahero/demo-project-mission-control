@@ -42,4 +42,4 @@ const ProjectList: React.FC<Props> = ({ projects, listTitle, auth }) => {
 	)
 }
 
-export default ProjectList
+export default React.memo(ProjectList)

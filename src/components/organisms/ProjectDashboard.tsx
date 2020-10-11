@@ -1,6 +1,6 @@
 import React from 'react'
 import DashboardProjectCard from '../molecules/DashboardProjectCard'
-import RequiredResultsSection from '../molecules/RequiredResultsSection'
+import RequiredResultsSection from './RequiredResultsSection'
 import { projectDateRange } from '../../utils/date'
 import { fullName } from '../../utils/name'
 import { useFirestore } from "react-redux-firebase"
@@ -8,7 +8,7 @@ import { useSelector } from "react-redux"
 import { projectsSelector, authSelector } from '../../store/selector'
 
 interface Props {
-    projectId?: string;
+    projectId: string;
 }
 
 const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
@@ -19,6 +19,25 @@ const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
 	let project: any = null
 	if (projects && projects.length > 0) {
         project = projects.find( (project: any) => project.id === projectId )
+    }
+
+    if (firestore) {
+        firestore.get({
+			collection: 'projects',
+			doc: projectId,
+			subcollections: [{ collection: 'requiredResults' }],
+            storeAs: `requiredResults/${projectId}`,
+            orderBy: ['createdAt', 'asc']
+        })
+        firestore.setListeners([
+			{
+                collection: "projects",
+                doc: projectId,
+                subcollections: [{ collection: 'requiredResults' }],
+                storeAs: `requiredResults/${projectId}`,
+				orderBy: ['createdAt', 'asc']
+			},
+		])
     }
 
     const completeProject = (e: Event, id: string, completed: boolean) => {
@@ -43,7 +62,8 @@ const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
                     projectId={project.id}
                 />
                 <RequiredResultsSection
-                    requiredResults={project.requiredResults}
+                    projectId={project.id}
+                    authed={authed}
                 />
             </div>
         )

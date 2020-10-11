@@ -40,4 +40,4 @@ const ProjectListSection: React.FC = () => {
 	)
 }
 
-export default ProjectListSection
+export default React.memo(ProjectListSection)

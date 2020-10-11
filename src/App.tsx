@@ -34,7 +34,7 @@ const App: React.FC = () => {
 			orderBy: ['createdAt', 'desc'],
 		})
 		firestore.setListeners([
-			{ 
+			{
 				collection: "projects",
 				orderBy: ['createdAt', 'desc']
 			},

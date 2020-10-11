@@ -11,7 +11,14 @@ const projectsSelector = createSelector(
     projects => projects
 )
 
+const requiredResultsSelector = createSelector(
+    (state: RootState, projectId: string) => state.firestore.ordered,
+    (state: RootState, projectId: string) => projectId,
+    (ordered, projectId) => ordered[`requiredResults/${projectId}`]
+)
+
 export {
     authSelector,
-    projectsSelector
+    projectsSelector,
+    requiredResultsSelector
 }

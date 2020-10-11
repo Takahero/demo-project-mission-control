@@ -64,8 +64,29 @@ const projectFormData = [
     },
 ];
 
+const requiredResultFormData = [
+    {
+        label: "Required Result Name",
+        value: "name",
+        placeholder: "Type Your Required Result Name",
+    },
+    {
+        label: "Start Date",
+        value: "startDate",
+        placeholder: "Choose Your Start Date",
+        type: "Date"
+    },
+    {
+        label: "End Date",
+        value: "endDate",
+        placeholder: "Choose Your End Date",
+        type: "Date"
+    },
+];
+
 export {
     signUpFormData,
     signInFormData,
     projectFormData,
+    requiredResultFormData
 }

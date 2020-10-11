@@ -24,7 +24,7 @@ const RequiredResultCard: React.FC<Props> = ({
             <Title title={name} />
             <DateRange dateRange={dateRange} /> 
             {
-                toDos.map((toDo, i) => 
+                toDos && toDos.map((toDo, i) => 
                     <Text 
                         text={toDo.name} 
                         key={i}

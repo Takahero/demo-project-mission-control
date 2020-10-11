@@ -1,6 +1,6 @@
 import React from "react"
 import { pushHistoryTo } from "../../../utils/history"
-import { useFirebase, useFirestore } from "react-redux-firebase"
+import { useFirestore } from "react-redux-firebase"
 
 interface Props {
 	projectId: string;

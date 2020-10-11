@@ -5,7 +5,13 @@ import { mockProjects } from '../../utils/mockProjectsData';
 
 const { requiredResults } = mockProjects[0]
 it('renders RequiredResultsSection', () => {
-    const { getByTestId } = render(<RequiredResultsSection requiredResults={requiredResults} />)
+    const { getByTestId } = render(
+        <RequiredResultsSection
+            requiredResults={requiredResults}
+            projectId="projectId"
+            authed={true}
+        />
+    )
 
     expect(getByTestId('required-results-section')).toBeTruthy()
 })

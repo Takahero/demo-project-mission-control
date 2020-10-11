@@ -4,7 +4,6 @@ import Text from '../atoms/Texts/Text';
 import CompleteCheckbox from './CompleteCheckbox';
 import NavButton from '../atoms/Buttons/NavButton';
 import DeleteProjectButton from '../atoms/Buttons/DeleteProjectButton';
-import { projectDateRange } from '../../utils/date';
 
 interface Props {
     name: string;
@@ -35,7 +34,7 @@ const DashboardProjectCard: React.FC<Props> = ({
             <Text text={author} />
             <Text text={dateRange} />
             <Text text={accomplishmentStatement} />
-            {authed &&
+            { authed &&
                 <>
                     <CompleteCheckbox
                         label="Complete"

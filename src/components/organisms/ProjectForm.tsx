@@ -18,7 +18,11 @@ import {
 import { useSelector, shallowEqual } from "react-redux"
 import { RootState } from "../../store"
 import { Redirect } from "react-router-dom"
-import { authSelector } from "../../store/selector"
+import { authSelector, projectsSelector } from "../../store/selector"
+
+interface Props {
+	projectId?: string;
+}
 
 interface Values {
 	projectName: string;
@@ -45,42 +49,63 @@ const PropjectSchema = Yup.object().shape({
 		.required("Required"),
 })
 
-const ProjectForm: React.FC = () => {
+const ProjectForm: React.FC<Props> = ({ projectId }) => {
 
 	const auth = useSelector(authSelector)
 	const profile = useSelector((state: RootState) => state.firebase.profile, shallowEqual)
 	const firestore = useFirestore()
+	const projects = useSelector(projectsSelector)
+
+	const project = projects.find( (project: any) => project.id === projectId )
 
 	if (isEmpty(auth)) {
 		return <Redirect to="/" />
 	}
 
+	const addProject = async (values: any) => {
+		const result: any = await firestore.add({ collection: 'projects' }, {
+			...values,
+			author: {
+				uid: auth.uid,
+				firstName: profile.firstName,
+				lastName: profile.lastName,
+			},
+			completed: false,
+			createdAt: firestore.FieldValue.serverTimestamp(),
+		}).catch(e => console.error(e))
+		const newProjectId = result.w_.path.segments[1]
+		pushHistoryTo(`/project/${newProjectId}`)
+	}
+
+	const updateProject = async (values: Values, projectId: string ) => {
+		await firestore.update({ collection: 'projects', doc: projectId }, {
+			...values,
+		}).catch(e => console.error(e))
+		pushHistoryTo(`/project/${projectId}`)
+	}
+
+	const initialValues = projectId ? {
+		projectName: project.projectName,
+		startDate: project.startDate,
+		endDate: project.endDate,
+		accomplishmentStatement: project.accomplishmentStatement,
+	} : {
+		projectName: "",
+		startDate: "",
+		endDate: "",
+		accomplishmentStatement: "",
+	}
+
 	return (
 		<div data-testid="project-form">
 			<Formik
-				initialValues={{
-					projectName: "",
-					startDate: "",
-					endDate: "",
-					accomplishmentStatement: "",
-				}}
+				initialValues={initialValues}
 				validationSchema={PropjectSchema}
 				onSubmit={async (
 					values: Values,
 					{ setSubmitting }: FormikHelpers<Values>,
 				) => {
-					const result: any = await firestore.add({ collection: 'projects' }, {
-						...values,
-						author: {
-							uid: auth.uid,
-							firstName: profile.firstName,
-							lastName: profile.lastName,
-						},
-						completed: false,
-						createdAt: firestore.FieldValue.serverTimestamp(),
-					}).catch(e => console.error(e))
-					const newProjectId = result.w_.path.segments[1]
-					pushHistoryTo(`/project/${newProjectId}`)
+					projectId ? updateProject(values, projectId) : addProject(values)
 				}}
 			>
 				{({ isSubmitting }) => (
@@ -102,7 +127,10 @@ const ProjectForm: React.FC = () => {
 								<ErrorMessage name={projectFormDatum.value} />
 							</div>
 						))}
-						<SubmitButton text={isSubmitting ? "Loading..." : "Create"} />
+						<SubmitButton text={
+							isSubmitting ? "Loading..." :
+								projectId? "Update" : "Create"
+						} />
 					</Form>
 				)}
 			</Formik>

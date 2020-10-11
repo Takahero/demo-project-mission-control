@@ -39,9 +39,15 @@ const DashboardLayout: React.FC = () => {
             <Header />
             <ProjectList />
             <Route
-                path="/project/:projectId"
+                exact path="/project/:projectId"
                 render={({ match: { params: { projectId } } }) =>
                     <ProjectDashboard projectId={projectId} />
+                }
+            />
+            <Route
+                exact path="/project/:projectId/edit"
+                render={({ match: { params: { projectId } } }) =>
+                    <ProjectForm projectId={projectId} />
                 }
             />
             <Route

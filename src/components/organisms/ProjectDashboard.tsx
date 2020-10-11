@@ -3,7 +3,7 @@ import DashboardProjectCard from '../molecules/DashboardProjectCard'
 import RequiredResultsSection from '../molecules/RequiredResultsSection'
 import { projectDateRange } from '../../utils/date'
 import { fullName } from '../../utils/name'
-import { isEmpty, useFirestore } from "react-redux-firebase"
+import { useFirestore } from "react-redux-firebase"
 import { useSelector } from "react-redux"
 import fromFirestoreObjToArr from '../../utils/fromFirestoreObjToArr';
 import { projectsSelector, authSelector } from '../../store/selector'
@@ -43,6 +43,7 @@ const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
                     completed={project.completed}
                     handleInputChange={(e: Event) => completeProject(e, project.id, project.completed)}
                     authed={authed}
+                    editPath={`/project/${project.id}/edit`}
                 />
                 <RequiredResultsSection
                     requiredResults={project.requiredResults}

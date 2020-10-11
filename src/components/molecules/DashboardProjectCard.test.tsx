@@ -12,6 +12,7 @@ it('renders DashboardProjectCard', () => {
             completed={false}
             handleInputChange={() => {}}
             authed={true}
+            editPath={"/editPath"}
         />
     )
 

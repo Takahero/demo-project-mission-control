@@ -2,6 +2,7 @@ import React from 'react'
 import Title from '../atoms/Texts/Title';
 import Text from '../atoms/Texts/Text';
 import CompleteCheckbox from './CompleteCheckbox';
+import NavButton from '../atoms/Buttons/NavButton';
 
 interface Props {
     name: string;
@@ -11,6 +12,7 @@ interface Props {
     completed: boolean;
     handleInputChange: any;
     authed: boolean;
+    editPath: string;
 }
 
 const DashboardProjectCard: React.FC<Props> = ({
@@ -20,7 +22,8 @@ const DashboardProjectCard: React.FC<Props> = ({
     accomplishmentStatement,
     completed,
     handleInputChange,
-    authed
+    authed,
+    editPath
 }) => {
     return (
         <div
@@ -30,15 +33,21 @@ const DashboardProjectCard: React.FC<Props> = ({
             <Text text={author} />
             <Text text={dateRange} />
             <Text text={accomplishmentStatement} />
-            {
-                authed && 
+            {authed &&
+                <>
                     <CompleteCheckbox
                         label="Complete"
                         value="completed"
                         checked={completed}
                         handleInputChange={handleInputChange}
                     />
+                    <NavButton
+                        text="Edit Project"
+                        path={editPath}
+                    />
+                </>
             }
+
 
         </div>
     )

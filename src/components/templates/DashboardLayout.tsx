@@ -16,10 +16,10 @@ const DashboardLayout: React.FC = () => {
     const projects = useSelector(projectsSelector)
 
     let newestProjectId
-    if (projects) {
+    if (projects && projects.length > 0) {
         if (!isEmpty(auth)) {
             const newestUserProject: any = projects.find((project: any) => project.author.uid === auth.uid)
-            newestProjectId = newestUserProject.id || projects[0].id
+            newestProjectId = newestUserProject ? newestUserProject.id : projects[0].id
         } else {
             newestProjectId = projects[0].id
         }

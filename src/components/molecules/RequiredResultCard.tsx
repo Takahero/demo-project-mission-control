@@ -6,6 +6,7 @@ import RequiredResultForm from '../organisms/RequiredResultForm';
 import Button from '../atoms/Buttons/Button';
 import { useFirestore } from 'react-redux-firebase';
 import CompleteCheckbox from './CompleteCheckbox';
+import { completeRequiredResult, deleteRequiredResult } from '../../utils/requiredResultsFirestore';
 
 interface Props {
     requiredResultId: string;
@@ -31,32 +32,6 @@ const RequiredResultCard: React.FC<Props> = ({
 }) => {
     const [showingForm, setShowingForm] = useState(false)
     const firestore = useFirestore()
-
-    const deleteRequiredResult = () => {
-        firestore.delete({
-			collection: 'projects',
-			doc: projectId,
-			subcollections: [{
-				collection: 'requiredResults',
-				doc: requiredResultId
-			}],
-			storeAs: 'requiredResults'
-		}).catch(e => console.error(e))
-    }
-
-    const completeRequiredResult = () => {
-        firestore.update({
-			collection: 'projects',
-			doc: projectId,
-			subcollections: [{
-				collection: 'requiredResults',
-				doc: requiredResultId
-			}],
-			storeAs: 'requiredResults'
-		}, {
-            completed: !completed
-        }).catch(e => console.error(e))
-    }
 
     return (
         <div
@@ -86,7 +61,7 @@ const RequiredResultCard: React.FC<Props> = ({
                                 label="Complete"
                                 value="completed"
                                 checked={completed}
-                                handleInputChange={() => completeRequiredResult()}
+                                handleInputChange={() => completeRequiredResult(firestore, projectId, requiredResultId, completed)}
                             />
                             <Button
                                 text="Update Required Result"
@@ -94,7 +69,7 @@ const RequiredResultCard: React.FC<Props> = ({
                             />
                             <Button
                                 text="Delete"
-                                handleClick={() => deleteRequiredResult()}
+                                handleClick={() => deleteRequiredResult(firestore, projectId, requiredResultId)}
                             />
                         </>
                 ) : null

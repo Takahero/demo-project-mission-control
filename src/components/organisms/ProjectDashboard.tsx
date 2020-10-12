@@ -7,6 +7,7 @@ import { useFirestore } from "react-redux-firebase"
 import { useSelector } from "react-redux"
 import { projectSelectorById, authSelector } from '../../store/selector'
 import { RootState } from '../../store'
+import { getAndListenRequiredResults } from '../../utils/requiredResultsFirestore'
 
 interface Props {
     projectId: string;
@@ -18,22 +19,7 @@ const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
     const firestore = useFirestore()
 
     if (firestore) {
-        firestore.get({
-			collection: 'projects',
-			doc: projectId,
-			subcollections: [{ collection: 'requiredResults' }],
-            storeAs: `requiredResults/${projectId}`,
-            orderBy: ['createdAt', 'asc']
-        })
-        firestore.setListeners([
-			{
-                collection: "projects",
-                doc: projectId,
-                subcollections: [{ collection: 'requiredResults' }],
-                storeAs: `requiredResults/${projectId}`,
-				orderBy: ['createdAt', 'asc']
-			},
-		])
+        getAndListenRequiredResults(firestore, projectId)
     }
 
     const completeProject = () => {

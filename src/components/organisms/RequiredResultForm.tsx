@@ -19,6 +19,7 @@ import { useSelector } from "react-redux"
 import { Redirect } from "react-router-dom"
 import { authSelector, requiredResultSelectorById } from "../../store/selector"
 import { RootState } from "../../store"
+import { addRequiredResult, updateRequiredResult } from "../../utils/requiredResultsFirestore"
 
 interface Props {
 	requiredResultId?: string;
@@ -58,35 +59,6 @@ const RequiredResultForm: React.FC<Props> = ({
 		return <Redirect to="/" />
 	}
 
-	const addRequiredResult = async (values: any) => {
-		firestore.add({
-			collection: 'projects',
-			doc: projectId,
-			subcollections: [{ collection: 'requiredResults' }],
-			storeAs: 'requiredResults'
-		}, {
-			...values,
-			completed: false,
-			createdAt: firestore.FieldValue.serverTimestamp(),
-		}).catch(e => console.error(e))
-		setShowingForm()
-	}
-
-	const updateRequiredResult = async (values: Values) => {
-		firestore.update({
-			collection: 'projects',
-			doc: projectId,
-			subcollections: [{
-				collection: 'requiredResults',
-				doc: requiredResultId
-			}],
-			storeAs: 'requiredResults'
-		}, {
-			...values,
-		}).catch(e => console.error(e))
-		setShowingForm()
-	}
-
 	const initialValues = requiredResultId ? {
 		name: requiredResult.name,
 		startDate: requiredResult.startDate,
@@ -106,7 +78,8 @@ const RequiredResultForm: React.FC<Props> = ({
 					values: Values,
 					{ setSubmitting }: FormikHelpers<Values>,
 				) => {
-					requiredResultId ? updateRequiredResult(values) : addRequiredResult(values)
+					requiredResultId ? updateRequiredResult(firestore, projectId, requiredResultId, values) : addRequiredResult(firestore, projectId, values)
+					setShowingForm()
 				}}
 			>
 				{({ isSubmitting }) => (

@@ -7,6 +7,7 @@ import Button from '../atoms/Buttons/Button';
 import { useFirestore } from 'react-redux-firebase';
 import CompleteCheckbox from './CompleteCheckbox';
 import { completeRequiredResult, deleteRequiredResult } from '../../utils/requiredResultsFirestore';
+import ToDoCheckList from './ToDoCheckList';
 
 interface Props {
     requiredResultId: string;
@@ -37,16 +38,6 @@ const RequiredResultCard: React.FC<Props> = ({
         <div
             data-testid="required-result-card"
         >
-            <Title title={name} />
-            <DateRange dateRange={dateRange} />
-            {
-                toDos && toDos.map((toDo, i) =>
-                    <Text
-                        text={toDo.name}
-                        key={i}
-                    />
-                )
-            }
             {
                 authed ? (
                     showingForm ?
@@ -57,6 +48,8 @@ const RequiredResultCard: React.FC<Props> = ({
                         />
                     :
                         <>
+                            <Title title={name} />
+                            <DateRange dateRange={dateRange} />
                             <CompleteCheckbox
                                 label="Complete"
                                 value="completed"
@@ -74,6 +67,12 @@ const RequiredResultCard: React.FC<Props> = ({
                         </>
                 ) : null
             }
+            <ToDoCheckList
+                requiredResultId={requiredResultId}
+                projectId={projectId}
+                toDos={toDos}
+                authed={authed}
+            />
         </div>
     )
 }

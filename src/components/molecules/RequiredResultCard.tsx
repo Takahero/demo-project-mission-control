@@ -4,6 +4,8 @@ import Text from '../atoms/Texts/Text';
 import DateRange from '../atoms/Texts/DateRange';
 import RequiredResultForm from '../organisms/RequiredResultForm';
 import Button from '../atoms/Buttons/Button';
+import { useFirestore } from 'react-redux-firebase';
+import CompleteCheckbox from './CompleteCheckbox';
 
 interface Props {
     requiredResultId: string;
@@ -15,6 +17,7 @@ interface Props {
         completed: boolean;
     }>;
     authed: boolean;
+    completed: boolean;
 }
 
 const RequiredResultCard: React.FC<Props> = ({
@@ -23,9 +26,38 @@ const RequiredResultCard: React.FC<Props> = ({
     name,
     dateRange,
     toDos,
-    authed
+    authed,
+    completed
 }) => {
     const [showingForm, setShowingForm] = useState(false)
+    const firestore = useFirestore()
+
+    const deleteRequiredResult = () => {
+        firestore.delete({
+			collection: 'projects',
+			doc: projectId,
+			subcollections: [{
+				collection: 'requiredResults',
+				doc: requiredResultId
+			}],
+			storeAs: 'requiredResults'
+		}).catch(e => console.error(e))
+    }
+
+    const completeRequiredResult = () => {
+        firestore.update({
+			collection: 'projects',
+			doc: projectId,
+			subcollections: [{
+				collection: 'requiredResults',
+				doc: requiredResultId
+			}],
+			storeAs: 'requiredResults'
+		}, {
+            completed: !completed
+        }).catch(e => console.error(e))
+    }
+
     return (
         <div
             data-testid="required-result-card"
@@ -49,10 +81,22 @@ const RequiredResultCard: React.FC<Props> = ({
                             setShowingForm={() => setShowingForm(false)}
                         />
                     :
-                        <Button
-                            text="Update Required Result"
-                            handleClick={() => setShowingForm(true)}
-                        />
+                        <>
+                            <CompleteCheckbox
+                                label="Complete"
+                                value="completed"
+                                checked={completed}
+                                handleInputChange={() => completeRequiredResult()}
+                            />
+                            <Button
+                                text="Update Required Result"
+                                handleClick={() => setShowingForm(true)}
+                            />
+                            <Button
+                                text="Delete"
+                                handleClick={() => deleteRequiredResult()}
+                            />
+                        </>
                 ) : null
             }
         </div>

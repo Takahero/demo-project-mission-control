@@ -18,7 +18,10 @@ const Checkbox: React.FC<Props> = ({
             type="checkbox"
             name={name}
             checked={checked}
-            onChange={handleInputChange}
+            onChange={e => {
+                e.preventDefault()
+                handleInputChange()
+            }}
         />
     )
 }

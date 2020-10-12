@@ -35,6 +35,7 @@ const RequiredResultsSection: React.FC<Props | null> = ({
                             toDos={requiredResult.toDos}
                             key={i}
                             authed={authed}
+                            completed={requiredResult.completed}
                         />
                     )
             }

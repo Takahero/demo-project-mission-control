@@ -36,9 +36,8 @@ const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
 		])
     }
 
-    const completeProject = (e: Event, id: string, completed: boolean) => {
-        e.preventDefault()
-        firestore.update({ collection: "projects", doc: id }, { completed: !completed })
+    const completeProject = () => {
+        firestore.update({ collection: "projects", doc: projectId }, { completed: !project.completed })
     }
 
     if (project) {
@@ -53,7 +52,7 @@ const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
                     dateRange={projectDateRange(project.startDate, project.endDate)}
                     accomplishmentStatement={project.accomplishmentStatement}
                     completed={project.completed}
-                    handleInputChange={(e: Event) => completeProject(e, project.id, project.completed)}
+                    handleInputChange={() => completeProject()}
                     authed={authed}
                     projectId={project.id}
                 />

@@ -93,9 +93,3 @@ const SignInForm: React.FC = () => {
 }
 
 export default SignInForm
-
-// firebase.login({
-// 	email: values.email,
-// 	password: values.password,
-// })
-// .catch(e => console.error(e))

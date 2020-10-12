@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import RequiredResultCard from '../molecules/RequiredResultCard';
 import Title from '../atoms/Texts/Title';
 import { projectDateRange } from '../../utils/date';
-import CreateRequiredResultButton from '../atoms/Buttons/CreateRequiredResultButton';
+import RequiredResultButton from '../atoms/Buttons/RequiredResultButton';
 import RequiredResultForm from './RequiredResultForm';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
@@ -17,9 +17,8 @@ const RequiredResultsSection: React.FC<Props | null> = ({
     projectId,
     authed
 }) => {
-    const [creatingRequiredResult, setCreatingRequiredResult] = useState(false)
+    const [showingForm, setShowingForm] = useState(false)
     const requiredResults = useSelector((state: RootState) => requiredResultsSelector(state, projectId))
-
     return (
         <div
             data-testid="required-results-section"
@@ -29,23 +28,27 @@ const RequiredResultsSection: React.FC<Props | null> = ({
                 requiredResults && requiredResults.length > 0 &&
                     requiredResults.map((requiredResult: any, i: string) =>
                         <RequiredResultCard
+                            requiredResultId={requiredResult.id}
+                            projectId={projectId}
                             name={requiredResult.name}
                             dateRange={projectDateRange(requiredResult.startDate, requiredResult.endDate)}
                             toDos={requiredResult.toDos}
                             key={i}
+                            authed={authed}
                         />
                     )
             }
             {
                 authed ? (
-                    creatingRequiredResult ?
+                    showingForm ?
                         <RequiredResultForm
                             projectId={projectId}
-                            setCreatingRequiredResult={() => setCreatingRequiredResult(false)}
+                            setShowingForm={() => setShowingForm(false)}
                         />
                     :
-                        <CreateRequiredResultButton
-                            handleClick={() => setCreatingRequiredResult(true)}
+                        <RequiredResultButton
+                            text="Create Required Result"
+                            setShowingForm={() => setShowingForm(true)}
                         />
                 ) : null
             }

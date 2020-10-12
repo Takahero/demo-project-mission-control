@@ -5,7 +5,8 @@ import { projectDateRange } from '../../utils/date'
 import { fullName } from '../../utils/name'
 import { useFirestore } from "react-redux-firebase"
 import { useSelector } from "react-redux"
-import { projectsSelector, authSelector } from '../../store/selector'
+import { projectSelectorById, authSelector } from '../../store/selector'
+import { RootState } from '../../store'
 
 interface Props {
     projectId: string;
@@ -13,13 +14,8 @@ interface Props {
 
 const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
     const auth = useSelector(authSelector)
-    const projects = useSelector(projectsSelector)
+    const project = useSelector((state: RootState) => projectSelectorById(state, projectId))
     const firestore = useFirestore()
-
-	let project: any = null
-	if (projects && projects.length > 0) {
-        project = projects.find( (project: any) => project.id === projectId )
-    }
 
     if (firestore) {
         firestore.get({

@@ -18,7 +18,7 @@ import {
 import { useSelector, shallowEqual } from "react-redux"
 import { RootState } from "../../store"
 import { Redirect } from "react-router-dom"
-import { authSelector, projectsSelector } from "../../store/selector"
+import { authSelector, projectSelectorById } from "../../store/selector"
 
 interface Props {
 	projectId?: string;
@@ -53,10 +53,8 @@ const ProjectForm: React.FC<Props> = ({ projectId }) => {
 
 	const auth = useSelector(authSelector)
 	const profile = useSelector((state: RootState) => state.firebase.profile, shallowEqual)
+    const project = useSelector((state: RootState) => projectId ? projectSelectorById(state, projectId) : null)
 	const firestore = useFirestore()
-	const projects = useSelector(projectsSelector)
-
-	const project = projects.find( (project: any) => project.id === projectId )
 
 	if (isEmpty(auth)) {
 		return <Redirect to="/" />
@@ -77,7 +75,7 @@ const ProjectForm: React.FC<Props> = ({ projectId }) => {
 		pushHistoryTo(`/project/${newProjectId}`)
 	}
 
-	const updateProject = async (values: Values, projectId: string ) => {
+	const updateProject = async (values: Values) => {
 		await firestore.update({ collection: 'projects', doc: projectId }, {
 			...values,
 		}).catch(e => console.error(e))
@@ -105,7 +103,7 @@ const ProjectForm: React.FC<Props> = ({ projectId }) => {
 					values: Values,
 					{ setSubmitting }: FormikHelpers<Values>,
 				) => {
-					projectId ? updateProject(values, projectId) : addProject(values)
+					projectId ? updateProject(values) : addProject(values)
 				}}
 			>
 				{({ isSubmitting }) => (

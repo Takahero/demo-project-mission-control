@@ -11,14 +11,29 @@ const projectsSelector = createSelector(
     projects => projects
 )
 
+const projectSelectorById = createSelector(
+    (state: RootState, projectId: string) => state.firestore.ordered.projects,
+    (state: RootState, projectId: string) => projectId,
+    (projects, projectId) => projects.find( (project: any) => project.id === projectId )
+)
+
 const requiredResultsSelector = createSelector(
     (state: RootState, projectId: string) => state.firestore.ordered,
     (state: RootState, projectId: string) => projectId,
     (ordered, projectId) => ordered[`requiredResults/${projectId}`]
 )
 
+const requiredResultSelectorById = createSelector(
+    (state: RootState, projectId: string, requiredResultId: string) => state.firestore.ordered,
+    (state: RootState, projectId: string, requiredResultId: string) => projectId,
+    (state: RootState, projectId: string, requiredResultId: string) => requiredResultId,
+    (ordered, projectId, requiredResultId) => ordered[`requiredResults/${projectId}`].find( (requiredResult: any) => requiredResult.id === requiredResultId )
+)
+
 export {
     authSelector,
     projectsSelector,
-    requiredResultsSelector
+    projectSelectorById,
+    requiredResultsSelector,
+    requiredResultSelectorById
 }

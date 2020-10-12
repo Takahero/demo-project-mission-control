@@ -17,11 +17,13 @@ import {
 } from "react-redux-firebase"
 import { useSelector } from "react-redux"
 import { Redirect } from "react-router-dom"
-import { authSelector } from "../../store/selector"
+import { authSelector, requiredResultSelectorById } from "../../store/selector"
+import { RootState } from "../../store"
 
 interface Props {
+	requiredResultId?: string;
 	projectId: string;
-	setCreatingRequiredResult: any;
+	setShowingForm: any;
 }
 
 interface Values {
@@ -43,13 +45,14 @@ const RequiredResultSchema = Yup.object().shape({
 		.required("Required"),
 })
 
-const RequiredResultForm: React.FC<Props> = ({ 
+const RequiredResultForm: React.FC<Props> = ({
+	requiredResultId,
 	projectId,
-	setCreatingRequiredResult
+	setShowingForm
 }) => {
-
 	const auth = useSelector(authSelector)
 	const firestore = useFirestore()
+	const requiredResult = useSelector((state: RootState) => requiredResultId ? requiredResultSelectorById(state, projectId, requiredResultId) : null)
 
 	if (isEmpty(auth)) {
 		return <Redirect to="/" />
@@ -66,17 +69,29 @@ const RequiredResultForm: React.FC<Props> = ({
 			completed: false,
 			createdAt: firestore.FieldValue.serverTimestamp(),
 		}).catch(e => console.error(e))
-		setCreatingRequiredResult()
+		setShowingForm()
 	}
 
-	// const updateProject = async (values: Values, projectId: string ) => {
-	// 	await firestore.update({ collection: 'projects', doc: projectId }, {
-	// 		...values,
-	// 	}).catch(e => console.error(e))
-	// 	pushHistoryTo(`/project/${projectId}`)
-	// }
+	const updateRequiredResult = async (values: Values) => {
+		await firestore.update({
+			collection: 'projects',
+			doc: projectId,
+			subcollections: [{
+				collection: 'requiredResults',
+				doc: requiredResultId
+			}],
+			storeAs: 'requiredResults'
+		}, {
+			...values,
+		}).catch(e => console.error(e))
+		setShowingForm()
+	}
 
-	const initialValues = {
+	const initialValues = requiredResultId ? {
+		name: requiredResult.name,
+		startDate: requiredResult.startDate,
+		endDate: requiredResult.endDate,
+	} : {
 		name: "",
 		startDate: "",
 		endDate: "",
@@ -90,8 +105,8 @@ const RequiredResultForm: React.FC<Props> = ({
 				onSubmit={async (
 					values: Values,
 					{ setSubmitting }: FormikHelpers<Values>,
-				) => { addRequiredResult(values)
-					// projectId ? updateProject(values, projectId) : addProject(values)
+				) => {
+					requiredResultId ? updateRequiredResult(values) : addRequiredResult(values)
 				}}
 			>
 				{({ isSubmitting }) => (
@@ -113,8 +128,8 @@ const RequiredResultForm: React.FC<Props> = ({
 							</div>
 						))}
 						<SubmitButton text={
-							isSubmitting ? "Loading..." : "Create"
-								// projectId? "Update" : "Create"
+							isSubmitting ? "Loading..." :
+								requiredResultId ? "Update" : "Create"
 						} />
 					</Form>
 				)}

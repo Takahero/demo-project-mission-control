@@ -5,9 +5,9 @@ import RequiredResultForm from './RequiredResultForm';
 
 it('renders RequiredResultForm', () => {
     const { getByTestId } = render(
-        <RequiredResultForm 
-            projectId="projectId" 
-            setCreatingRequiredResult={() => {}}
+        <RequiredResultForm
+            projectId="projectId"
+            setShowingForm={() => {}}
         />
     )
 

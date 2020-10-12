@@ -13,6 +13,7 @@ const DeleteProjectButton: React.FC<Props> = ({ projectId }) => {
 			data-testid="delete-propject-button"
 			onClick={(e) => {
 				e.preventDefault()
+				// Due to firestore feature, although collection gets deleted, subcollections won't be deleted
 				firestore.delete({ collection: "projects", doc: projectId })
 				pushHistoryTo("/")
 			}}

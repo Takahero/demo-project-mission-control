@@ -3,7 +3,9 @@ import Title from '../atoms/Texts/Title';
 import Text from '../atoms/Texts/Text';
 import CompleteCheckbox from './CompleteCheckbox';
 import NavButton from '../atoms/Buttons/NavButton';
-import DeleteProjectButton from '../atoms/Buttons/DeleteProjectButton';
+import Button from '../atoms/Buttons/Button';
+import { useFirestore } from 'react-redux-firebase';
+import { pushHistoryTo } from '../../utils/history';
 
 interface Props {
     name: string;
@@ -26,6 +28,7 @@ const DashboardProjectCard: React.FC<Props> = ({
     authed,
     projectId
 }) => {
+    const firestore = useFirestore()
     return (
         <div
             data-testid="dashboard-project-card"
@@ -46,7 +49,14 @@ const DashboardProjectCard: React.FC<Props> = ({
                         text="Edit Project"
                         path={`/project/${projectId}/edit`}
                     />
-                    <DeleteProjectButton projectId={projectId} />
+                    <Button
+                        text="Delete"
+                        handleClick={() => {
+                            // Due to firestore feature, although collection gets deleted, subcollections won't be deleted
+                            firestore.delete({ collection: "projects", doc: projectId })
+                            pushHistoryTo("/")
+                        }}
+                    />
                 </>
             }
 

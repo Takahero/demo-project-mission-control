@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import RequiredResultCard from '../molecules/RequiredResultCard';
 import Title from '../atoms/Texts/Title';
 import { projectDateRange } from '../../utils/date';
-import RequiredResultButton from '../atoms/Buttons/RequiredResultButton';
 import RequiredResultForm from './RequiredResultForm';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { requiredResultsSelector } from '../../store/selector';
+import Button from '../atoms/Buttons/Button';
 
 interface Props {
     projectId: string;
@@ -46,9 +46,9 @@ const RequiredResultsSection: React.FC<Props | null> = ({
                             setShowingForm={() => setShowingForm(false)}
                         />
                     :
-                        <RequiredResultButton
+                        <Button
                             text="Create Required Result"
-                            setShowingForm={() => setShowingForm(true)}
+                            handleClick={() => setShowingForm(true)}
                         />
                 ) : null
             }

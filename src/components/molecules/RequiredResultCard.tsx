@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import Title from '../atoms/Texts/Title';
 import Text from '../atoms/Texts/Text';
 import DateRange from '../atoms/Texts/DateRange';
-import RequiredResultButton from '../atoms/Buttons/RequiredResultButton';
 import RequiredResultForm from '../organisms/RequiredResultForm';
+import Button from '../atoms/Buttons/Button';
 
 interface Props {
     requiredResultId: string;
@@ -49,9 +49,9 @@ const RequiredResultCard: React.FC<Props> = ({
                             setShowingForm={() => setShowingForm(false)}
                         />
                     :
-                        <RequiredResultButton
+                        <Button
                             text="Update Required Result"
-                            setShowingForm={() => setShowingForm(true)}
+                            handleClick={() => setShowingForm(true)}
                         />
                 ) : null
             }

@@ -59,7 +59,7 @@ const RequiredResultForm: React.FC<Props> = ({
 	}
 
 	const addRequiredResult = async (values: any) => {
-		await firestore.add({
+		firestore.add({
 			collection: 'projects',
 			doc: projectId,
 			subcollections: [{ collection: 'requiredResults' }],
@@ -73,7 +73,7 @@ const RequiredResultForm: React.FC<Props> = ({
 	}
 
 	const updateRequiredResult = async (values: Values) => {
-		await firestore.update({
+		firestore.update({
 			collection: 'projects',
 			doc: projectId,
 			subcollections: [{

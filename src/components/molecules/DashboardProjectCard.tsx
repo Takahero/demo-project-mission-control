@@ -6,6 +6,10 @@ import NavButton from '../atoms/Buttons/NavButton';
 import Button from '../atoms/Buttons/Button';
 import { useFirestore } from 'react-redux-firebase';
 import { pushHistoryTo } from '../../utils/history';
+import { requiredResultsSelector } from '../../store/selector';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { deleteRequiredResult } from '../../utils/requiredResultsFirestore';
 
 interface Props {
     name: string;
@@ -29,6 +33,7 @@ const DashboardProjectCard: React.FC<Props> = ({
     projectId
 }) => {
     const firestore = useFirestore()
+    const requiredResults = useSelector((state: RootState) => requiredResultsSelector(state, projectId))
     return (
         <div
             data-testid="dashboard-project-card"
@@ -52,7 +57,11 @@ const DashboardProjectCard: React.FC<Props> = ({
                     <Button
                         text="Delete"
                         handleClick={() => {
-                            // Due to firestore feature, although collection gets deleted, subcollections won't be deleted
+                            // Due to firestore feature, although collection gets deleted, subcollections won't be deleted.
+                            // Manually calling to delete each requiredResult
+                            requiredResults.forEach((requredResult:any) => {
+                                deleteRequiredResult(firestore, projectId, requredResult.id)
+                            })
                             firestore.delete({ collection: "projects", doc: projectId })
                             pushHistoryTo("/")
                         }}

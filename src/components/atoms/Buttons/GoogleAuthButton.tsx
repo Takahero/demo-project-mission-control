@@ -8,26 +8,29 @@ interface Props {
 
 const GoogleAuthButton: React.FC<Props> = ({
 	firebase
- }) => {
+}) => {
 	return (
-		<>
-			<StyledFirebaseAuth
-				uiConfig={{
-					signInFlow: 'popup',
-					signInSuccessUrl: '/signedIn',
-					signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-					callbacks: {
-					signInSuccessWithAuthResult: (authResult, redirectUrl: string) => {
-						firebase.handleRedirectResult(authResult).then(() => {
-							pushHistoryTo(redirectUrl)
-						});
-						return false;
-					},
-					},
-				}}
-				firebaseAuth={firebase.auth()}
-	        />
-		</>
+		<StyledFirebaseAuth
+			uiConfig={{
+				signInFlow: 'popup',
+				signInSuccessUrl: '/signedIn',
+				signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+				callbacks: {
+				signInSuccessWithAuthResult: (authResult, redirectUrl: string) => {
+					firebase.handleRedirectResult(authResult).then(() => {
+						authResult.additionalUserInfo.isNewUser &&
+							firebase.updateProfile({
+								firstName: authResult.additionalUserInfo.profile.given_name,
+								lastName: authResult.additionalUserInfo.profile.family_name,
+							})
+						pushHistoryTo(redirectUrl)
+					});
+					return false;
+				},
+				},
+			}}
+			firebaseAuth={firebase.auth()}
+		/>
 	)
 }
 

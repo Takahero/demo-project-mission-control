@@ -4,6 +4,8 @@ import Button from '../atoms/Buttons/Button';
 import { useFirestore } from 'react-redux-firebase';
 import { nanoid } from 'nanoid'
 import ToDoForm from './ToDoForm';
+import Checkbox from '../atoms/Form/Checkbox';
+import ToDoListItem from './ToDoListItem';
 
 interface Props {
     requiredResultId: string;
@@ -43,58 +45,67 @@ const ToDoCheckList: React.FC<Props> = ({
             toDos: firestore.FieldValue.arrayUnion({
                 name,
                 completed: false,
-                id: nanoid()
+                id: nanoid(),
+                createdAt: new Date()
             })
         }).catch((e: Error) => console.error(e))
     }
 
-    // const updateToDo = async (name: string, toDo: any) => {
+    const updateToDo = async (name: string, toDo: any) => {
+        await toDo && firestore.update({
+            collection: 'projects',
+            doc: projectId,
+            subcollections: [{
+                collection: 'requiredResults',
+                doc: requiredResultId
+            }],
+            storeAs: 'requiredResults'
+        }, {
+            toDos: firestore.FieldValue.arrayRemove(toDo)
+        }).catch((e: Error) => console.error(e))
+        await firestore.update({
+            collection: 'projects',
+            doc: projectId,
+            subcollections: [{
+                collection: 'requiredResults',
+                doc: requiredResultId
+            }],
+            storeAs: 'requiredResults'
+        }, {
+            toDos: firestore.FieldValue.arrayUnion({
+                ...toDo,
+                name
+            })
+        }).catch((e: Error) => console.error(e))
+    }
 
-    //         await toDo && firestore.update({
-    //             collection: 'projects',
-    //             doc: projectId,
-    //             subcollections: [{
-    //                 collection: 'requiredResults',
-    //                 doc: requiredResultId
-    //             }],
-    //             storeAs: 'requiredResults'
-    //         }, {
-    //             toDos: firestore.FieldValue.arrayRemove(toDo)
-    //         }).catch((e: Error) => console.error(e))
-    //         await firestore.update({
-    //             collection: 'projects',
-    //             doc: projectId,
-    //             subcollections: [{
-    //                 collection: 'requiredResults',
-    //                 doc: requiredResultId
-    //             }],
-    //             storeAs: 'requiredResults'
-    //         }, {
-    //             toDos: firestore.FieldValue.arrayUnion({
-    //                 name,
-    //                 completed: toDo.completed,
-    //                 id: toDo.id
-    //             })
-    //         }).catch((e: Error) => console.error(e))
-
-    // }
-
-    // const completeToDo = (completed: boolean, toDoId: string) => {
-    //     firestore.update({
-    //         collection: 'projects',
-    //         doc: projectId,
-    //         subcollections: [{
-    //             collection: 'requiredResults',
-    //             doc: requiredResultId
-    //         }],
-    //         storeAs: 'requiredResults'
-    //     }, {
-    //         toDos: firestore.FieldValue.arrayUnion({
-    //             completed: !completed,
-    //             id: toDoId
-    //         })
-    //     }).catch((e: Error) => console.error(e))
-    // }
+    const completeToDo = async (toDo: any) => {
+        await toDo && firestore.update({
+            collection: 'projects',
+            doc: projectId,
+            subcollections: [{
+                collection: 'requiredResults',
+                doc: requiredResultId
+            }],
+            storeAs: 'requiredResults'
+        }, {
+            toDos: firestore.FieldValue.arrayRemove(toDo)
+        }).catch((e: Error) => console.error(e))
+        firestore.update({
+            collection: 'projects',
+            doc: projectId,
+            subcollections: [{
+                collection: 'requiredResults',
+                doc: requiredResultId
+            }],
+            storeAs: 'requiredResults'
+        }, {
+            toDos: firestore.FieldValue.arrayUnion({
+                ...toDo,
+                completed: !toDo.completed,
+            })
+        }).catch((e: Error) => console.error(e))
+    }
 
     return (
         <div
@@ -102,10 +113,12 @@ const ToDoCheckList: React.FC<Props> = ({
         >
             {
                 toDos && toDos.map((toDo, i) =>
-                <Text
-                    text={toDo.name}
-                    key={i}
-                />
+                    <ToDoListItem
+                        key={i}
+                        toDo={toDo}
+                        completeToDo={() => completeToDo(toDo)}
+                        updateToDo={() => {}}
+                    />
                 )
             }
             {

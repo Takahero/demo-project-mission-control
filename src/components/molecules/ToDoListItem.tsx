@@ -13,30 +13,25 @@ interface Props {
     completeToDo: any;
 }
 
-const ToDoInput = React.forwardRef<HTMLInputElement, Props>(({
+const ToDoListItem: React.FC<Props> = ({
     toDo,
     updateToDo,
     completeToDo,
-}, ref )=> {
+})=> {
     return (
         <div
-            data-testid="to-do-input"
+            data-testid="to-do-list-item"
         >
-            {/* <Checkbox
-                name={value}
-                checked={checked}
+            <Checkbox
+                name={toDo.id}
+                checked={toDo.completed}
                 handleInputChange={completeToDo}
-            /> */}
-            <input
-                ref={ref}
-                value={toDo.name}
-                onChange={async (e:any) => {
-                    await updateToDo(e.target.value, toDo)
-                }
-                }
+            />
+            <Text
+                text={toDo.name}
             />
         </div>
     )
-})
+}
 
-export default ToDoInput
+export default ToDoListItem

@@ -54,10 +54,10 @@ const ToDoListItem: React.FC<Props> = ({
                                     text="Edit"
                                     handleClick={() => setShowInput(true)}
                                 />
-                                {/* <Button
+                                <Button
                                     text="Delete"
                                     handleClick={() => deleteToDo(firestore, projectId, requiredResultId, toDo)}
-                                /> */}
+                                />
                             </>
                         }
                     </>

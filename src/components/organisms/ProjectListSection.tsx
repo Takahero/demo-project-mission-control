@@ -1,7 +1,10 @@
 import React from "react"
 import { isEmpty } from "react-redux-firebase"
 import { useSelector } from "react-redux"
-import { projectsSelector, authSelector } from "../../store/selector"
+import { 
+	projectsSelector, 
+	authSelector 
+} from "../../store/selector"
 import ProjectList from "../molecules/ProjectList"
 import authProjectsArraySplitter from '../../utils/authProjectsArraySplitter';
 
@@ -34,7 +37,6 @@ const ProjectListSection: React.FC = () => {
 						projects={projects}
 						listTitle="People's Projects"
 					/>
-
 			}
 		</div>
 	)

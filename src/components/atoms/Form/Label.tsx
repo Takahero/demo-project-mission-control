@@ -5,6 +5,7 @@ interface Props {
     label: string;
     value: string;
 }
+
 const Label: React.FC<Props> = ({
     label,
     value

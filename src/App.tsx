@@ -12,7 +12,10 @@ import {
 } from "react-redux-firebase"
 import { useSelector } from "react-redux"
 import { RootState } from "./store"
-import { projectsSelector, authSelector } from "./store/selector"
+import { 
+	projectsSelector, 
+	authSelector 
+} from "./store/selector"
 
 
 const FirebaseLoaded: React.FC<{ children: any }>= ({ children }) => {

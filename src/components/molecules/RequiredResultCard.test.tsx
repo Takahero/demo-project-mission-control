@@ -12,7 +12,8 @@ it('renders RequiredResultCard', () => {
             toDos={[
                 {
                     name: '30 days of 100 pushups',
-                    completed: false
+                    completed: false,
+                    id: "id",
                 }
             ]}
             authed={true}

@@ -1,4 +1,3 @@
-
 const getAndListenRequiredResults = (firestore: any, projectId: string) => {
     firestore.get({
         collection: 'projects',
@@ -70,7 +69,6 @@ const deleteRequiredResult = (firestore: any, projectId: string, requiredResultI
         storeAs: 'requiredResults'
     }).catch((e: Error) => console.error(e))
 }
-
 
 export {
     getAndListenRequiredResults,

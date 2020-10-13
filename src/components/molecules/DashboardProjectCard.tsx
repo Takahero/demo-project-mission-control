@@ -68,8 +68,6 @@ const DashboardProjectCard: React.FC<Props> = ({
                     />
                 </>
             }
-
-
         </div>
     )
 }

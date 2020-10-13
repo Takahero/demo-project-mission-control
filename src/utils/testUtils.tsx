@@ -1,10 +1,12 @@
 import React, { ReactElement } from "react";
-import { render as rtlRender, RenderOptions } from "@testing-library/react"
+import { 
+  render as rtlRender, 
+  RenderOptions 
+} from "@testing-library/react"
 import { Provider } from "react-redux"
 import store from "../store";
 import { Router } from "react-router-dom"
 import history from './history'
-import { Formik } from 'formik';
 
 export interface WrapperProps {
   children: ReactElement;

@@ -80,7 +80,6 @@ const SignUpForm: React.FC = () => {
 							}
 						)
 						.catch((e) => console.error(e))
-
 					pushHistoryTo("/")
 				}}
 			>

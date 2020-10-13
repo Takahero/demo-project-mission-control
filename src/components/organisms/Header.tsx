@@ -8,7 +8,6 @@ import Button from '../atoms/Buttons/Button';
 import { useFirebase } from 'react-redux-firebase';
 import { pushHistoryTo } from '../../utils/history'
 
-
 const Header: React.FC = () => {
     const auth = useSelector(authSelector)
     const firebase = useFirebase()

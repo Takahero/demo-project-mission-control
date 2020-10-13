@@ -5,13 +5,14 @@ import ToDoInput from './ToDoListItem';
 it('renders ToDoInput', () => {
     const { getByTestId } = render(
         <ToDoInput
+            projectId="projectId"
+            requiredResultId="requiredResultId"
+            authed={true}
             toDo={{
                 id: "id",
                 name: "name",
                 completed: false,
             }}
-            completeToDo={() => {}}
-            updateToDo={() => {}}
         />
     )
 

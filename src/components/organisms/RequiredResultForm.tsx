@@ -10,16 +10,21 @@ import { requiredResultFormData } from "../../utils/formData"
 import SubmitButton from "../atoms/Form/SubmitButton"
 import Label from "../atoms/Form/Label"
 import * as Yup from "yup"
-import { pushHistoryTo } from "../../utils/history"
 import {
 	isEmpty,
 	useFirestore,
 } from "react-redux-firebase"
 import { useSelector } from "react-redux"
 import { Redirect } from "react-router-dom"
-import { authSelector, requiredResultSelectorById } from "../../store/selector"
+import { 
+	authSelector, 
+	requiredResultSelectorById 
+} from "../../store/selector"
 import { RootState } from "../../store"
-import { addRequiredResult, updateRequiredResult } from "../../utils/requiredResultsFirestore"
+import { 
+	addRequiredResult, 
+	updateRequiredResult 
+} from "../../utils/requiredResultsFirestore"
 import Button from "../atoms/Buttons/Button"
 
 interface Props {

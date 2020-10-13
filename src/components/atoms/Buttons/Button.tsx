@@ -1,6 +1,4 @@
 import React from "react"
-import { pushHistoryTo } from "../../../utils/history"
-import { useFirestore } from "react-redux-firebase"
 
 interface Props {
 	text: string;

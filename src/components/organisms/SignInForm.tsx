@@ -62,7 +62,6 @@ const SignInForm: React.FC = () => {
 							password: values.password,
 						})
 						.catch((e) => console.error(e))
-
 					pushHistoryTo("/")
 				}}
 			>

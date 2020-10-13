@@ -11,7 +11,12 @@ interface Props {
 	listTitle: string;
 	projects: any;
 }
-const ProjectList: React.FC<Props> = ({ projects, listTitle, auth }) => {
+
+const ProjectList: React.FC<Props> = ({ 
+	projects, 
+	listTitle, 
+	auth 
+}) => {
 	return (
 		<div data-testid="project-list">
 			<Title title={listTitle} />

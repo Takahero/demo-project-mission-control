@@ -56,7 +56,7 @@ const ToDoCheckList: React.FC<Props> = ({
                             text="Add to-do"
                             handleClick={() => setShowInput(true)}
                         />
-                : <></>
+                : null
             }
         </div>
     )

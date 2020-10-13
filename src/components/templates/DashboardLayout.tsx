@@ -8,7 +8,10 @@ import {
 } from 'react-router-dom'
 import ProjectForm from '../organisms/ProjectForm';
 import { useSelector } from "react-redux"
-import { authSelector, projectsSelector } from '../../store/selector'
+import {
+    authSelector,
+    projectsSelector
+} from '../../store/selector'
 import { isEmpty } from 'react-redux-firebase';
 
 const DashboardLayout: React.FC = () => {

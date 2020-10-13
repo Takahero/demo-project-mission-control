@@ -22,7 +22,6 @@ const toDoSchema = Yup.object().shape({
 		.required("Required"),
 })
 
-
 const ToDoForm = React.forwardRef<HTMLInputElement, Props>(({
     projectId,
     requiredResultId,
@@ -31,7 +30,6 @@ const ToDoForm = React.forwardRef<HTMLInputElement, Props>(({
     toDo
 }, ref) => {
     const firestore = useFirestore()
-
     return (
         <div
             data-testid="to-do-form"
@@ -41,9 +39,9 @@ const ToDoForm = React.forwardRef<HTMLInputElement, Props>(({
                 validateOnBlur={false}
                 validationSchema={toDoSchema}
                 onSubmit={(values, { setSubmitting }) => {
-                    update ? 
-                        updateToDo(firestore, projectId, requiredResultId, values.name, toDo) 
-                    : 
+                    update ?
+                        updateToDo(firestore, projectId, requiredResultId, values.name, toDo)
+                    :
                         addToDo(firestore, projectId, requiredResultId, values.name)
                     setShowInput()
                 }}

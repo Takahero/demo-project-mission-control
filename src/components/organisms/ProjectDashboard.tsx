@@ -50,7 +50,6 @@ const ProjectDashboard: React.FC<Props> = ({ projectId }) => {
         )
     }
     return <div data-testid="project-dashboard"></div>
-
 }
 
 export default ProjectDashboard

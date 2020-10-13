@@ -15,6 +15,7 @@ interface Props {
     name: string;
     dateRange: string;
     toDos: Array<{
+        id: string;
         name: string;
         completed: boolean;
     }>;

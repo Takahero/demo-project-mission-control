@@ -9,6 +9,7 @@ it('renders ToDoCheckList', () => {
             projectId="projectId"
             toDos={[
                 {
+                    id: "id",
                     name: '30 days of 100 pushups',
                     completed: false
                 }

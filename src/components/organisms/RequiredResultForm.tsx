@@ -100,10 +100,13 @@ const RequiredResultForm: React.FC<Props> = ({
 								<ErrorMessage name={requiredResultFormDatum.value} />
 							</div>
 						))}
-						<SubmitButton text={
-							isSubmitting ? "Loading..." :
+						<SubmitButton 
+							text={
+								isSubmitting ? "Loading..." :
 								requiredResultId ? "Update" : "Create"
-						} />
+							} 
+							disabled={isSubmitting}
+						/>
 					</Form>
 				)}
 			</Formik>

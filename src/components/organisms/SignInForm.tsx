@@ -84,7 +84,10 @@ const SignInForm: React.FC = () => {
 								<ErrorMessage name={signInFormDatum.value} />
 							</div>
 						))}
-						<SubmitButton text={isSubmitting ? "Loading..." : "Sign In"} />
+						<SubmitButton 
+							text={isSubmitting ? "Loading..." : "Sign In"} 
+							disabled={isSubmitting}
+						/>
 					</Form>
 				)}
 			</Formik>

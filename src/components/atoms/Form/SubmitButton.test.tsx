@@ -6,6 +6,7 @@ it('renders SubmitButton', () => {
     const { getByTestId } = render(
         <SubmitButton
             text="this is text"
+            disabled={false}
         />
     )
 

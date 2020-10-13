@@ -125,10 +125,13 @@ const ProjectForm: React.FC<Props> = ({ projectId }) => {
 								<ErrorMessage name={projectFormDatum.value} />
 							</div>
 						))}
-						<SubmitButton text={
-							isSubmitting ? "Loading..." :
-								projectId? "Update" : "Create"
-						} />
+						<SubmitButton
+							text={
+								isSubmitting ? "Loading..." :
+									projectId? "Update" : "Create"
+							}
+							disabled={isSubmitting}
+						/>
 					</Form>
 				)}
 			</Formik>

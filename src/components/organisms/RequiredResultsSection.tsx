@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { requiredResultsSelector } from '../../store/selector';
 import Button from '../atoms/Buttons/Button';
+import { sortToDosByDate } from '../../utils/toDosFirestore';
 
 interface Props {
     projectId: string;
@@ -32,7 +33,7 @@ const RequiredResultsSection: React.FC<Props | null> = ({
                             projectId={projectId}
                             name={requiredResult.name}
                             dateRange={projectDateRange(requiredResult.startDate, requiredResult.endDate)}
-                            toDos={requiredResult.toDos}
+                            toDos={sortToDosByDate(requiredResult.toDos)}
                             key={i}
                             authed={authed}
                             completed={requiredResult.completed}

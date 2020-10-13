@@ -1,8 +1,10 @@
 
 import { nanoid } from 'nanoid'
 
-const sortToDoByDate = () => {
-
+const sortToDosByDate = (toDos: any) => {
+    return toDos.slice().sort((a:any, b:any) => {
+        return a.createdAt - b.createdAt
+    })
 }
 
 const addToDo = (firestore: any, projectId: string, requiredResultId: string, name: string) => {
@@ -78,5 +80,6 @@ const addToDo = (firestore: any, projectId: string, requiredResultId: string, na
 
 
 export {
+    sortToDosByDate,
     addToDo,
 }

@@ -1,10 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Text from '../atoms/Texts/Text';
 import Button from '../atoms/Buttons/Button';
-import { useFirestore } from 'react-redux-firebase';
-import { nanoid } from 'nanoid'
 import ToDoForm from './ToDoForm';
-import Checkbox from '../atoms/Form/Checkbox';
 import ToDoListItem from './ToDoListItem';
 
 interface Props {
@@ -24,41 +20,12 @@ const ToDoCheckList: React.FC<Props> = ({
     toDos,
     authed,
 }) => {
-    const firestore = useFirestore()
     const [showInput, setShowInput] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
         inputRef && inputRef.current && inputRef.current.focus()
     })
-
-    const completeToDo = async (toDo: any) => {
-        await toDo && firestore.update({
-            collection: 'projects',
-            doc: projectId,
-            subcollections: [{
-                collection: 'requiredResults',
-                doc: requiredResultId
-            }],
-            storeAs: 'requiredResults'
-        }, {
-            toDos: firestore.FieldValue.arrayRemove(toDo)
-        }).catch((e: Error) => console.error(e))
-        firestore.update({
-            collection: 'projects',
-            doc: projectId,
-            subcollections: [{
-                collection: 'requiredResults',
-                doc: requiredResultId
-            }],
-            storeAs: 'requiredResults'
-        }, {
-            toDos: firestore.FieldValue.arrayUnion({
-                ...toDo,
-                completed: !toDo.completed,
-            })
-        }).catch((e: Error) => console.error(e))
-    }
 
     return (
         <div
@@ -71,7 +38,6 @@ const ToDoCheckList: React.FC<Props> = ({
                         projectId={projectId}
                         requiredResultId={requiredResultId}
                         toDo={toDo}
-                        completeToDo={() => completeToDo(toDo)}
                         authed={authed}
                     />
                 )

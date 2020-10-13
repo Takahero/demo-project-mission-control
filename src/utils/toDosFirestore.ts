@@ -88,4 +88,5 @@ export {
     deleteToDo,
     addToDo,
     updateToDo,
+    completeToDo
 }

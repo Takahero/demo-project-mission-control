@@ -18,6 +18,7 @@ import {
 import { useSelector } from "react-redux"
 import { RootState } from "../../store"
 import { Redirect } from "react-router-dom"
+import GoogleAuthButton from '../atoms/Buttons/GoogleAuthButton';
 
 interface Values {
 	email: string
@@ -90,6 +91,7 @@ const SignInForm: React.FC = () => {
 					</Form>
 				)}
 			</Formik>
+			<GoogleAuthButton firebase={firebase} />
 		</div>
 	)
 }

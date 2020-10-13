@@ -7,4 +7,11 @@ const pushHistoryTo = (path: string) => {
     history.push(path)
 }
 
-export { pushHistoryTo }
+const goBackHistory = (path: string) => {
+    history.go(-1)
+}
+
+export { 
+    pushHistoryTo,
+    goBackHistory
+}

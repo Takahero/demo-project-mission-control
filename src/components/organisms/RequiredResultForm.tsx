@@ -20,6 +20,7 @@ import { Redirect } from "react-router-dom"
 import { authSelector, requiredResultSelectorById } from "../../store/selector"
 import { RootState } from "../../store"
 import { addRequiredResult, updateRequiredResult } from "../../utils/requiredResultsFirestore"
+import Button from "../atoms/Buttons/Button"
 
 interface Props {
 	requiredResultId?: string;
@@ -110,6 +111,10 @@ const RequiredResultForm: React.FC<Props> = ({
 					</Form>
 				)}
 			</Formik>
+			<Button 
+				text="Cancel"
+				handleClick={setShowingForm}
+			/>
 		</div>
 	)
 }

@@ -10,7 +10,10 @@ import { projectFormData } from "../../utils/formData"
 import SubmitButton from "../atoms/Form/SubmitButton"
 import Label from "../atoms/Form/Label"
 import * as Yup from "yup"
-import { pushHistoryTo } from "../../utils/history"
+import { 
+	pushHistoryTo,
+	goBackHistory
+} from "../../utils/history"
 import {
 	isEmpty,
 	useFirestore,
@@ -19,6 +22,7 @@ import { useSelector, shallowEqual } from "react-redux"
 import { RootState } from "../../store"
 import { Redirect } from "react-router-dom"
 import { authSelector, projectSelectorById } from "../../store/selector"
+import Button from "../atoms/Buttons/Button"
 
 interface Props {
 	projectId?: string;
@@ -135,6 +139,10 @@ const ProjectForm: React.FC<Props> = ({ projectId }) => {
 					</Form>
 				)}
 			</Formik>
+			<Button
+				text="Cancel"
+				handleClick={goBackHistory}
+			/>
 		</div>
 	)
 }

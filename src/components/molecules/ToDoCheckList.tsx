@@ -32,34 +32,6 @@ const ToDoCheckList: React.FC<Props> = ({
         inputRef && inputRef.current && inputRef.current.focus()
     })
 
-    const updateToDo = async (name: string, toDo: any) => {
-        await toDo && firestore.update({
-            collection: 'projects',
-            doc: projectId,
-            subcollections: [{
-                collection: 'requiredResults',
-                doc: requiredResultId
-            }],
-            storeAs: 'requiredResults'
-        }, {
-            toDos: firestore.FieldValue.arrayRemove(toDo)
-        }).catch((e: Error) => console.error(e))
-        firestore.update({
-            collection: 'projects',
-            doc: projectId,
-            subcollections: [{
-                collection: 'requiredResults',
-                doc: requiredResultId
-            }],
-            storeAs: 'requiredResults'
-        }, {
-            toDos: firestore.FieldValue.arrayUnion({
-                ...toDo,
-                name
-            })
-        }).catch((e: Error) => console.error(e))
-    }
-
     const completeToDo = async (toDo: any) => {
         await toDo && firestore.update({
             collection: 'projects',
@@ -96,25 +68,29 @@ const ToDoCheckList: React.FC<Props> = ({
                 toDos && toDos.map((toDo, i) =>
                     <ToDoListItem
                         key={i}
+                        projectId={projectId}
+                        requiredResultId={requiredResultId}
                         toDo={toDo}
                         completeToDo={() => completeToDo(toDo)}
-                        updateToDo={() => {}}
+                        authed={authed}
                     />
                 )
             }
             {
-                authed && showInput ?
-                    <ToDoForm
-                        requiredResultId={requiredResultId}
-                        projectId={projectId}
-                        setShowInput={() => setShowInput(false)}
-                        ref={inputRef}
-                    />
-                :
-                    <Button
-                        text="Add to-do"
-                        handleClick={() => setShowInput(true)}
-                    />
+                authed ?
+                    showInput ?
+                        <ToDoForm
+                            requiredResultId={requiredResultId}
+                            projectId={projectId}
+                            setShowInput={() => setShowInput(false)}
+                            ref={inputRef}
+                        />
+                    :
+                        <Button
+                            text="Add to-do"
+                            handleClick={() => setShowInput(true)}
+                        />
+                : <></>
             }
         </div>
     )

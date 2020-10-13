@@ -32,25 +32,6 @@ const ToDoCheckList: React.FC<Props> = ({
         inputRef && inputRef.current && inputRef.current.focus()
     })
 
-    const addToDo = (projectId: string, requiredResultId: string, name: string) => {
-        firestore.update({
-            collection: 'projects',
-            doc: projectId,
-            subcollections: [{
-                collection: 'requiredResults',
-                doc: requiredResultId
-            }],
-            storeAs: 'requiredResults'
-        }, {
-            toDos: firestore.FieldValue.arrayUnion({
-                name,
-                completed: false,
-                id: nanoid(),
-                createdAt: new Date()
-            })
-        }).catch((e: Error) => console.error(e))
-    }
-
     const updateToDo = async (name: string, toDo: any) => {
         await toDo && firestore.update({
             collection: 'projects',
@@ -63,7 +44,7 @@ const ToDoCheckList: React.FC<Props> = ({
         }, {
             toDos: firestore.FieldValue.arrayRemove(toDo)
         }).catch((e: Error) => console.error(e))
-        await firestore.update({
+        firestore.update({
             collection: 'projects',
             doc: projectId,
             subcollections: [{
@@ -126,7 +107,6 @@ const ToDoCheckList: React.FC<Props> = ({
                     <ToDoForm
                         requiredResultId={requiredResultId}
                         projectId={projectId}
-                        addToDo={addToDo}
                         setShowInput={() => setShowInput(false)}
                         ref={inputRef}
                     />

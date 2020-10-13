@@ -7,7 +7,6 @@ it('renders ToDoForm', () => {
         <ToDoForm
             projectId="projectId"
             requiredResultId="requiredResultId"
-            addToDo={() => {}}
             setShowInput={() => {}}
         />
     )

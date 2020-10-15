@@ -1,38 +1,38 @@
 import React from "react"
-import { isEmpty } from "react-redux-firebase"
-import { useSelector } from "react-redux"
-import { 
-	projectsSelector, 
-	authSelector 
-} from "../../store/selector"
 import ProjectList from "../molecules/ProjectList"
 import authProjectsArraySplitter from '../../utils/authProjectsArraySplitter';
+import { ProjectType } from '../../utils/firestoreDocumentTypes';
 
-const ProjectListSection: React.FC = () => {
-	const auth = useSelector(authSelector)
-	const projects = useSelector(projectsSelector)
-	let signedIn: boolean = !isEmpty(auth)
+interface Props {
+	uid?: string;
+	projects: ProjectType[];
+}
+
+const ProjectListSection: React.FC<Props> = ({
+	uid,
+	projects
+}) => {
 	let sortedProjects: any = null
-	if (signedIn) {
-		sortedProjects = authProjectsArraySplitter(projects, auth.uid)
+	if (uid) {
+		sortedProjects = authProjectsArraySplitter(projects, uid)
 	}
 
 	return (
 		<div data-testid="project-list-section">
 			{
-				signedIn && sortedProjects ? (
+				uid && sortedProjects ? 
 					<>
 						<ProjectList
 							projects={sortedProjects.userProjects}
 							listTitle="Your Projects"
-							auth={signedIn}
+							authed={true}
 						/>
 						<ProjectList
 							projects={sortedProjects.otherProjects}
 							listTitle="People's Projects"
 						/>
 					</>
-				) :
+				:
 					<ProjectList
 						projects={projects}
 						listTitle="People's Projects"

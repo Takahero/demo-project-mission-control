@@ -1,34 +1,35 @@
-import React from "react"
+import React, { Key } from "react"
 import Title from "../atoms/Texts/Title"
 import ProjectCard from "../molecules/ProjectCard"
 import { shortFullName } from "../../utils/name"
 import { projectDateRange } from "../../utils/date"
 import { Link } from "react-router-dom"
 import NavButton from "../atoms/Buttons/NavButton"
+import { ProjectType } from '../../utils/firestoreDocumentTypes';
 
 interface Props {
-	auth?: boolean;
 	listTitle: string;
-	projects: any;
+	projects: ProjectType[];
+	authed?: boolean;
 }
 
-const ProjectList: React.FC<Props> = ({ 
-	projects, 
-	listTitle, 
-	auth 
+const ProjectList: React.FC<Props> = ({
+	listTitle,
+	projects,
+	authed
 }) => {
 	return (
 		<div data-testid="project-list">
 			<Title title={listTitle} />
 
-            { auth &&
+            { authed &&
 				<NavButton
 					text="Create a new project"
 					path="/project/create"
 				/>
 			}
 
-			{ projects && projects.length > 0 && projects.map((project: any, i: string) => (
+			{ projects && projects.length > 0 && projects.map((project: ProjectType, i: Key) =>
 				<Link to={`/project/${project.id}`} key={i}>
 					<ProjectCard
 						name={project.projectName}
@@ -42,7 +43,7 @@ const ProjectList: React.FC<Props> = ({
 						)}
 					/>
 				</Link>
-			))}
+			)}
 		</div>
 	)
 }

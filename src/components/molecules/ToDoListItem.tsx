@@ -5,15 +5,12 @@ import ToDoForm from './ToDoForm';
 import Button from '../atoms/Buttons/Button';
 import { completeToDo, deleteToDo } from '../../utils/toDosFirestore';
 import { useFirestore } from 'react-redux-firebase';
+import { ToDoType } from '../../utils/firestoreDocumentTypes';
 
 interface Props {
     projectId: string;
     requiredResultId: string;
-    toDo: {
-        id: string;
-        name: string;
-        completed: boolean;
-    }
+    toDo: ToDoType;
     authed: boolean;
 }
 

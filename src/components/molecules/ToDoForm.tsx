@@ -5,13 +5,14 @@ import * as Yup from "yup"
 import Button from '../atoms/Buttons/Button';
 import { addToDo, updateToDo } from '../../utils/toDosFirestore';
 import { useFirestore } from 'react-redux-firebase';
+import { ToDoType } from '../../utils/firestoreDocumentTypes';
 
 interface Props {
     projectId: string;
     requiredResultId: string;
-    setShowInput: any;
+    setShowInput: () => void;
     update?: boolean;
-    toDo?: any
+    toDo?: ToDoType;
 }
 
 const toDoSchema = Yup.object().shape({
@@ -35,11 +36,11 @@ const ToDoForm = React.forwardRef<HTMLInputElement, Props>(({
             data-testid="to-do-form"
         >
             <Formik
-                initialValues={{ name: update ? toDo.name :'' }}
+                initialValues={{ name: update && toDo ? toDo.name :'' }}
                 validateOnBlur={false}
                 validationSchema={toDoSchema}
                 onSubmit={(values, { setSubmitting }) => {
-                    update ?
+                    update && toDo ?
                         updateToDo(firestore, projectId, requiredResultId, values.name, toDo)
                     :
                         addToDo(firestore, projectId, requiredResultId, values.name)

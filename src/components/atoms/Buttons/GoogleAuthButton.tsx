@@ -16,17 +16,17 @@ const GoogleAuthButton: React.FC<Props> = ({
 				signInSuccessUrl: '/signedIn',
 				signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
 				callbacks: {
-				signInSuccessWithAuthResult: (authResult, redirectUrl: string) => {
-					firebase.handleRedirectResult(authResult).then(() => {
-						authResult.additionalUserInfo.isNewUser &&
-							firebase.updateProfile({
-								firstName: authResult.additionalUserInfo.profile.given_name,
-								lastName: authResult.additionalUserInfo.profile.family_name,
-							})
-						pushHistoryTo(redirectUrl)
-					});
-					return false;
-				},
+					signInSuccessWithAuthResult: (authResult, redirectUrl: string) => {
+						firebase.handleRedirectResult(authResult).then(() => {
+							(authResult.additionalUserInfo.isNewUser || !firebase.profile) && 
+								firebase.updateProfile({
+									firstName: authResult.additionalUserInfo.profile.given_name,
+									lastName: authResult.additionalUserInfo.profile.family_name,
+								})
+							pushHistoryTo(redirectUrl)
+						})
+						return false
+					},
 				},
 			}}
 			firebaseAuth={firebase.auth()}

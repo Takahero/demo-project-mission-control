@@ -10,22 +10,20 @@ import { projectFormData } from "../../utils/formData"
 import SubmitButton from "../atoms/Form/SubmitButton"
 import Label from "../atoms/Form/Label"
 import * as Yup from "yup"
-import { 
+import {
 	pushHistoryTo,
 	goBackHistory
 } from "../../utils/history"
-import {
-	isEmpty,
-	useFirestore,
-} from "react-redux-firebase"
+import { useFirestore } from "react-redux-firebase"
 import { useSelector, shallowEqual } from "react-redux"
 import { RootState } from "../../store"
 import { Redirect } from "react-router-dom"
-import { authSelector, projectSelectorById } from "../../store/selector"
 import Button from "../atoms/Buttons/Button"
+import { ProjectType } from '../../utils/firestoreDocumentTypes';
 
 interface Props {
-	projectId?: string;
+	uid: string;
+	project?: ProjectType;
 }
 
 interface Values {
@@ -53,14 +51,14 @@ const PropjectSchema = Yup.object().shape({
 		.required("Required"),
 })
 
-const ProjectForm: React.FC<Props> = ({ projectId }) => {
-
-	const auth = useSelector(authSelector)
+const ProjectForm: React.FC<Props> = ({
+	uid,
+	project,
+}) => {
 	const profile = useSelector((state: RootState) => state.firebase.profile, shallowEqual)
-    const project = useSelector((state: RootState) => projectId ? projectSelectorById(state, projectId) : null)
 	const firestore = useFirestore()
 
-	if (isEmpty(auth)) {
+	if (!uid) {
 		return <Redirect to="/" />
 	}
 
@@ -68,7 +66,7 @@ const ProjectForm: React.FC<Props> = ({ projectId }) => {
 		const result: any = await firestore.add({ collection: 'projects' }, {
 			...values,
 			author: {
-				uid: auth.uid,
+				uid,
 				firstName: profile.firstName,
 				lastName: profile.lastName,
 			},
@@ -80,13 +78,15 @@ const ProjectForm: React.FC<Props> = ({ projectId }) => {
 	}
 
 	const updateProject = async (values: Values) => {
-		await firestore.update({ collection: 'projects', doc: projectId }, {
-			...values,
-		}).catch(e => console.error(e))
-		pushHistoryTo(`/project/${projectId}`)
+		if (project) {
+			await firestore.update({ collection: 'projects', doc: project.id }, {
+				...values,
+			}).catch(e => console.error(e))
+			pushHistoryTo(`/project/${project.id}`)
+		}
 	}
 
-	const initialValues = projectId ? {
+	const initialValues = project ? {
 		projectName: project.projectName,
 		startDate: project.startDate,
 		endDate: project.endDate,
@@ -107,7 +107,7 @@ const ProjectForm: React.FC<Props> = ({ projectId }) => {
 					values: Values,
 					{ setSubmitting }: FormikHelpers<Values>,
 				) => {
-					projectId ? updateProject(values) : addProject(values)
+					project ? updateProject(values) : addProject(values)
 				}}
 			>
 				{({ isSubmitting }) => (
@@ -132,7 +132,7 @@ const ProjectForm: React.FC<Props> = ({ projectId }) => {
 						<SubmitButton
 							text={
 								isSubmitting ? "Loading..." :
-									projectId? "Update" : "Create"
+									project ? "Update" : "Create"
 							}
 							disabled={isSubmitting}
 						/>

@@ -4,7 +4,7 @@ import React from 'react'
 interface Props {
     name: string;
     checked: boolean;
-    handleInputChange: any;
+    handleInputChange: () => void;
 }
 
 const Checkbox: React.FC<Props> = ({

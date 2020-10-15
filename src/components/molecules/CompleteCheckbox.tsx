@@ -6,7 +6,7 @@ interface Props {
     label: string;
     value: string;
     checked: boolean;
-    handleInputChange: any;
+    handleInputChange: () => void;
 }
 
 const CompleteCheckbox: React.FC<Props> = ({

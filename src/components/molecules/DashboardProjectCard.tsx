@@ -10,49 +10,42 @@ import { requiredResultsSelector } from '../../store/selector';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { deleteRequiredResult } from '../../utils/requiredResultsFirestore';
+import { ProjectType } from '../../utils/firestoreDocumentTypes';
+import { fullName } from '../../utils/name';
+import { projectDateRange } from '../../utils/date';
 
 interface Props {
-    name: string;
-    author: string;
-    dateRange: string;
-    accomplishmentStatement: string;
-    completed: boolean;
-    handleInputChange: any;
+    project: ProjectType;
+    handleInputChange: () => void;
     authed: boolean;
-    projectId: string;
 }
 
 const DashboardProjectCard: React.FC<Props> = ({
-    name,
-    author,
-    dateRange,
-    accomplishmentStatement,
-    completed,
+    project,
     handleInputChange,
     authed,
-    projectId
 }) => {
     const firestore = useFirestore()
-    const requiredResults = useSelector((state: RootState) => requiredResultsSelector(state, projectId))
+    const requiredResults = useSelector((state: RootState) => requiredResultsSelector(state, project.id))
     return (
         <div
             data-testid="dashboard-project-card"
         >
-            <Title title={name} />
-            <Text text={author} />
-            <Text text={dateRange} />
-            <Text text={accomplishmentStatement} />
+            <Title title={project.projectName} />
+            <Text text={fullName(project.author.firstName, project.author.lastName)} />
+            <Text text={projectDateRange(project.startDate, project.endDate)} />
+            <Text text={project.accomplishmentStatement} />
             { authed &&
                 <>
                     <CompleteCheckbox
                         label="Complete"
                         value="completed"
-                        checked={completed}
+                        checked={project.completed}
                         handleInputChange={handleInputChange}
                     />
                     <NavButton
                         text="Edit Project"
-                        path={`/project/${projectId}/edit`}
+                        path={`/project/${project.id}/edit`}
                     />
                     <Button
                         text="Delete"
@@ -60,9 +53,9 @@ const DashboardProjectCard: React.FC<Props> = ({
                             // Due to firestore feature, although collection gets deleted, subcollections won't be deleted.
                             // Manually calling to delete each requiredResult
                             requiredResults.forEach((requredResult:any) => {
-                                deleteRequiredResult(firestore, projectId, requredResult.id)
+                                deleteRequiredResult(firestore, project.id, requredResult.id)
                             })
-                            firestore.delete({ collection: "projects", doc: projectId })
+                            firestore.delete({ collection: "projects", doc: project.id })
                             pushHistoryTo("/")
                         }}
                     />

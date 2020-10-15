@@ -1,16 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { Key, useEffect, useRef, useState } from 'react'
 import Button from '../atoms/Buttons/Button';
 import ToDoForm from './ToDoForm';
 import ToDoListItem from './ToDoListItem';
+import { ToDoType } from '../../utils/firestoreDocumentTypes';
 
 interface Props {
     requiredResultId: string;
     projectId: string;
-    toDos: Array<{
-        id: string;
-        name: string;
-        completed: boolean;
-    }>;
+    toDos: ToDoType[];
     authed: boolean;
 }
 
@@ -32,7 +29,7 @@ const ToDoCheckList: React.FC<Props> = ({
             data-testid="to-do-checklist"
         >
             {
-                toDos && toDos.map((toDo, i) =>
+                toDos && toDos.map((toDo: ToDoType, i: Key) =>
                     <ToDoListItem
                         key={i}
                         projectId={projectId}

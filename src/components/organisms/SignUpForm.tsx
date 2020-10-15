@@ -51,7 +51,7 @@ const SignUpForm: React.FC = () => {
 	const auth = useSelector((state: RootState) => state.firebase.auth)
 	const firebase = useFirebase()
 
-	if (!isEmpty(auth)) {
+	if (!isEmpty(firebase.auth)) {
 		return <Redirect to="/" />
 	}
 

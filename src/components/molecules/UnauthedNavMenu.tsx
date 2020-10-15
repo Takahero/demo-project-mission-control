@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Key } from 'react'
 import NavButton from '../atoms/Buttons/NavButton'
 
 const navMenuData = [
@@ -12,13 +12,18 @@ const navMenuData = [
     }
 ]
 
+interface NavMenuType {
+    text: string;
+    path: string;
+}
+
 const UnauthedNavMenu: React.FC = () => {
     return (
         <div
             data-testid="unauthed-nav-menu"
         >
-            { navMenuData.map((navMenuDatum, i) => 
-                <NavButton 
+            { navMenuData.map((navMenuDatum: NavMenuType, i: Key) =>
+                <NavButton
                     key={i}
                     text={navMenuDatum.text}
                     path={navMenuDatum.path}

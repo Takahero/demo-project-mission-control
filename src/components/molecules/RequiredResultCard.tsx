@@ -5,31 +5,27 @@ import RequiredResultForm from '../organisms/RequiredResultForm';
 import Button from '../atoms/Buttons/Button';
 import { useFirestore } from 'react-redux-firebase';
 import CompleteCheckbox from './CompleteCheckbox';
-import { completeRequiredResult, deleteRequiredResult } from '../../utils/requiredResultsFirestore';
+import {
+    completeRequiredResult,
+    deleteRequiredResult
+} from '../../utils/requiredResultsFirestore';
 import ToDoCheckList from './ToDoCheckList';
+import { RequiredResultType } from '../../utils/firestoreDocumentTypes';
+import { projectDateRange } from '../../utils/date';
+import { sortToDosByDate } from '../../utils/toDosFirestore';
 
 interface Props {
     requiredResultId: string;
     projectId: string;
-    name: string;
-    dateRange: string;
-    toDos: Array<{
-        id: string;
-        name: string;
-        completed: boolean;
-    }>;
     authed: boolean;
-    completed: boolean;
+    requiredResult: RequiredResultType;
 }
 
 const RequiredResultCard: React.FC<Props> = ({
     requiredResultId,
     projectId,
-    name,
-    dateRange,
-    toDos,
     authed,
-    completed
+    requiredResult,
 }) => {
     const [showingForm, setShowingForm] = useState(false)
     const firestore = useFirestore()
@@ -42,19 +38,20 @@ const RequiredResultCard: React.FC<Props> = ({
                 authed ? (
                     showingForm ?
                         <RequiredResultForm
-                            requiredResultId={requiredResultId}
+                            requiredResultId={requiredResult.id}
                             projectId={projectId}
+                            authed={authed}
                             setShowingForm={() => setShowingForm(false)}
                         />
                     :
                         <>
-                            <Title title={name} />
-                            <DateRange dateRange={dateRange} />
+                            <Title title={requiredResult.name} />
+                            <DateRange dateRange={projectDateRange(requiredResult.startDate, requiredResult.endDate)} />
                             <CompleteCheckbox
                                 label="Complete"
                                 value="completed"
-                                checked={completed}
-                                handleInputChange={() => completeRequiredResult(firestore, projectId, requiredResultId, completed)}
+                                checked={requiredResult.completed}
+                                handleInputChange={() => completeRequiredResult(firestore, projectId, requiredResult.id, requiredResult.completed)}
                             />
                             <Button
                                 text="Update Required Result"
@@ -62,7 +59,7 @@ const RequiredResultCard: React.FC<Props> = ({
                             />
                             <Button
                                 text="Delete"
-                                handleClick={() => deleteRequiredResult(firestore, projectId, requiredResultId)}
+                                handleClick={() => deleteRequiredResult(firestore, projectId, requiredResult.id)}
                             />
                         </>
                 ) : null
@@ -70,7 +67,7 @@ const RequiredResultCard: React.FC<Props> = ({
             <ToDoCheckList
                 requiredResultId={requiredResultId}
                 projectId={projectId}
-                toDos={toDos}
+                toDos={sortToDosByDate(requiredResult.toDos)}
                 authed={authed}
             />
         </div>

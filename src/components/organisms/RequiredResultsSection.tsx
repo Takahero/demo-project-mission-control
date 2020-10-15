@@ -1,25 +1,24 @@
-import React, { useState } from 'react'
+import React, { Key, useState } from 'react'
 import RequiredResultCard from '../molecules/RequiredResultCard';
 import Title from '../atoms/Texts/Title';
-import { projectDateRange } from '../../utils/date';
 import RequiredResultForm from './RequiredResultForm';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { requiredResultsSelector } from '../../store/selector';
 import Button from '../atoms/Buttons/Button';
-import { sortToDosByDate } from '../../utils/toDosFirestore';
+import { RequiredResultType } from '../../utils/firestoreDocumentTypes';
 
 interface Props {
     projectId: string;
     authed: boolean;
 }
 
-const RequiredResultsSection: React.FC<Props | null> = ({
+const RequiredResultsSection: React.FC<Props> = ({
     projectId,
     authed
 }) => {
-    const [showingForm, setShowingForm] = useState(false)
     const requiredResults = useSelector((state: RootState) => requiredResultsSelector(state, projectId))
+    const [showingForm, setShowingForm] = useState(false)
     return (
         <div
             data-testid="required-results-section"
@@ -27,16 +26,13 @@ const RequiredResultsSection: React.FC<Props | null> = ({
             <Title title="Required Results" />
             {
                 requiredResults && requiredResults.length > 0 &&
-                    requiredResults.map((requiredResult: any, i: string) =>
+                    requiredResults.map((requiredResult: RequiredResultType, i: Key) =>
                         <RequiredResultCard
+                            key={i}
                             requiredResultId={requiredResult.id}
                             projectId={projectId}
-                            name={requiredResult.name}
-                            dateRange={projectDateRange(requiredResult.startDate, requiredResult.endDate)}
-                            toDos={sortToDosByDate(requiredResult.toDos)}
-                            key={i}
+                            requiredResult={requiredResult}
                             authed={authed}
-                            completed={requiredResult.completed}
                         />
                     )
             }
@@ -45,7 +41,8 @@ const RequiredResultsSection: React.FC<Props | null> = ({
                     showingForm ?
                         <RequiredResultForm
                             projectId={projectId}
-                            setShowingForm={() => setShowingForm(false)}
+                            authed={authed}
+                            setShowingForm={() => {setShowingForm(false)}}
                         />
                     :
                         <Button

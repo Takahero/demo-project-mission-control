@@ -11,13 +11,11 @@ import SubmitButton from "../atoms/Form/SubmitButton"
 import Label from "../atoms/Form/Label"
 import * as Yup from "yup"
 import {
-	isEmpty,
 	useFirestore,
 } from "react-redux-firebase"
 import { useSelector } from "react-redux"
 import { Redirect } from "react-router-dom"
 import { 
-	authSelector, 
 	requiredResultSelectorById 
 } from "../../store/selector"
 import { RootState } from "../../store"
@@ -30,6 +28,7 @@ import Button from "../atoms/Buttons/Button"
 interface Props {
 	requiredResultId?: string;
 	projectId: string;
+	authed: boolean;
 	setShowingForm: any;
 }
 
@@ -55,13 +54,13 @@ const RequiredResultSchema = Yup.object().shape({
 const RequiredResultForm: React.FC<Props> = ({
 	requiredResultId,
 	projectId,
+	authed,
 	setShowingForm
 }) => {
-	const auth = useSelector(authSelector)
 	const firestore = useFirestore()
 	const requiredResult = useSelector((state: RootState) => requiredResultId ? requiredResultSelectorById(state, projectId, requiredResultId) : null)
 
-	if (isEmpty(auth)) {
+	if (authed) {
 		return <Redirect to="/" />
 	}
 
@@ -109,7 +108,7 @@ const RequiredResultForm: React.FC<Props> = ({
 						<SubmitButton 
 							text={
 								isSubmitting ? "Loading..." :
-								requiredResultId ? "Update" : "Create"
+									requiredResultId ? "Update" : "Create"
 							} 
 							disabled={isSubmitting}
 						/>

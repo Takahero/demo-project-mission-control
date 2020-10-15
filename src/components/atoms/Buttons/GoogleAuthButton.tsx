@@ -30,4 +30,4 @@ const GoogleAuthButton: React.FC = () => {
 	)
 }
 
-export default GoogleAuthButton
+export default React.memo(GoogleAuthButton)

@@ -33,4 +33,4 @@ const UnauthedNavMenu: React.FC = () => {
     )
 }
 
-export default UnauthedNavMenu
+export default React.memo(UnauthedNavMenu)

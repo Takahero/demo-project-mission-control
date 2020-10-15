@@ -20,4 +20,4 @@ const NavButton: React.FC<Props> = ({
     )
 }
 
-export default NavButton
+export default React.memo(NavButton)

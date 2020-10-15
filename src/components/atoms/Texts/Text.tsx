@@ -17,4 +17,4 @@ const Text: React.FC<Props> = ({
     )
 }
 
-export default Text
+export default React.memo(Text)

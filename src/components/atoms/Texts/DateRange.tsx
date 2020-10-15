@@ -16,4 +16,4 @@ const DateRange: React.FC<Props> = ({
     )
 }
 
-export default DateRange
+export default React.memo(DateRange)

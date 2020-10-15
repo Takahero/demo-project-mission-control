@@ -1,4 +1,4 @@
-import { nanoid } from 'nanoid'
+import { nanoid } from '@reduxjs/toolkit'
 
 const sortToDosByDate = (toDos: any) => {
     if (toDos) {

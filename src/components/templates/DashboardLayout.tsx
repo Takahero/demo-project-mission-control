@@ -10,27 +10,19 @@ import ProjectForm from '../organisms/ProjectForm'
 import { useSelector } from "react-redux"
 import {
     authSelector,
+    newestProjectIdSelector,
     projectsSelector
 } from '../../store/selector'
 import { isEmpty } from 'react-redux-firebase'
-import { ProjectType } from '../../utils/firestoreDocumentTypes';
+import { ProjectType } from '../../utils/firestoreDocumentTypes'
 
 const DashboardLayout: React.FC = () => {
     const auth = useSelector(authSelector)
     const projects = useSelector(projectsSelector)
+    const newestProjectId = useSelector(newestProjectIdSelector)
 
     const getProjectById: (projects: ProjectType[] , projectId: string) => ProjectType | undefined = (projects, projectId) => {
         return projects.find((project: ProjectType) => project.id === projectId)
-    }
-
-    let newestProjectId
-    if (projects && projects.length > 0) {
-        if (!isEmpty(auth)) {
-            const newestUserProject: any = projects.find((project: any) => project.author.uid === auth.uid)
-            newestProjectId = newestUserProject ? newestUserProject.id : projects[0].id
-        } else {
-            newestProjectId = projects[0].id
-        }
     }
 
     return (

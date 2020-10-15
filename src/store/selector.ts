@@ -1,45 +1,57 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { RootState } from '.'
+import { ProjectType } from '../utils/firestoreDocumentTypes';
 
-const authSelector = createSelector(
+export const authSelector = createSelector(
     (state: RootState) => state.firebase.auth,
     auth => auth
 )
 
-const isAuthedSelector = createSelector(
+export const isAuthedSelector = createSelector(
     (state: RootState) => state.firebase.auth,
     auth => !auth.isEmpty
 )
 
-const projectsSelector = createSelector(
-    (state: RootState) => state.firestore.ordered.projects,
-    projects => projects
+export const uidSelector = createSelector(
+    (state: RootState) => state.firebase.auth,
+    auth => auth.uid
 )
 
-const projectSelectorById = createSelector(
+
+export const projectsSelector = createSelector(
+    (state: RootState) => state.firestore.ordered.projects,
+    projects => projects
+    )
+
+export const projectSelectorById = createSelector(
     (state: RootState, projectId: string) => state.firestore.ordered.projects,
-    (state: RootState, projectId: string) => projectId,
+    (_, projectId: string) => projectId,
     (projects, projectId) => projects.find( (project: any) => project.id === projectId )
 )
 
-const requiredResultsSelector = createSelector(
+export const newestProjectIdSelector = createSelector(
+    projectsSelector,
+    uidSelector,
+    (projects, uid) => {
+        let newestProject
+        if (uid) {
+            newestProject = projects.find((project: ProjectType) => project.author.uid === uid)
+        } else {
+            newestProject = projects[0]
+        }
+        return newestProject.id
+    }
+)
+
+export const requiredResultsSelector = createSelector(
     (state: RootState, projectId: string) => state.firestore.ordered,
-    (state: RootState, projectId: string) => projectId,
+    (_, projectId: string) => projectId,
     (ordered, projectId) => ordered[`requiredResults/${projectId}`]
 )
 
-const requiredResultSelectorById = createSelector(
+export const requiredResultSelectorById = createSelector(
     (state: RootState, projectId: string, requiredResultId: string) => state.firestore.ordered,
-    (state: RootState, projectId: string, requiredResultId: string) => projectId,
-    (state: RootState, projectId: string, requiredResultId: string) => requiredResultId,
+    (_, projectId: string, __) => projectId,
+    (_, __, requiredResultId: string) => requiredResultId,
     (ordered, projectId, requiredResultId) => ordered[`requiredResults/${projectId}`].find( (requiredResult: any) => requiredResult.id === requiredResultId )
 )
-
-export {
-    authSelector,
-    isAuthedSelector,
-    projectsSelector,
-    projectSelectorById,
-    requiredResultsSelector,
-    requiredResultSelectorById
-}

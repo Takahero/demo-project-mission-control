@@ -19,6 +19,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../store"
 import { Redirect } from "react-router-dom"
 import GoogleAuthButton from '../atoms/Buttons/GoogleAuthButton';
+import { isAuthedSelector } from "../../store/selector"
 
 interface Values {
 	firstName: string
@@ -47,42 +48,43 @@ const SignupSchema = Yup.object().shape({
 		.required("Required"),
 })
 
+const initialValues: Values = {
+	firstName: "",
+	lastName: "",
+	email: "",
+	password: "",
+}
+
 const SignUpForm: React.FC = () => {
-	const auth = useSelector((state: RootState) => state.firebase.auth)
+	const authed: boolean = useSelector(isAuthedSelector)
 	const firebase = useFirebase()
 
-	if (!isEmpty(firebase.auth)) {
+	if (authed) {
 		return <Redirect to="/" />
+	}
+
+	const handleSubmit: (values: Values) => void = async (values) => {
+		await firebase
+			.createUser(
+				{
+					email: values.email,
+					password: values.password,
+				},
+				{
+					firstName: values.firstName,
+					lastName: values.lastName,
+				}
+			)
+			.catch((e) => console.error(e))
+		pushHistoryTo("/")
 	}
 
 	return (
 		<div data-testid="sign-up-form">
 			<Formik
-				initialValues={{
-					firstName: "",
-					lastName: "",
-					email: "",
-					password: "",
-				}}
+				initialValues={initialValues}
 				validationSchema={SignupSchema}
-				onSubmit={async (
-					values: Values,
-					{ setSubmitting }: FormikHelpers<Values>
-				) => {
-					await firebase
-						.createUser(
-							{
-								email: values.email,
-								password: values.password,
-							},
-							{
-								firstName: values.firstName,
-								lastName: values.lastName,
-							}
-						)
-						.catch((e) => console.error(e))
-					pushHistoryTo("/")
-				}}
+				onSubmit={handleSubmit}
 			>
 				{({ isSubmitting }) => (
 					<Form>
@@ -114,4 +116,4 @@ const SignUpForm: React.FC = () => {
 	)
 }
 
-export default SignUpForm
+export default React.memo(SignUpForm)

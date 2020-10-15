@@ -1,11 +1,8 @@
 import React, { Key } from "react"
 import Title from "../atoms/Texts/Title"
 import ProjectCard from "../molecules/ProjectCard"
-import { shortFullName } from "../../utils/name"
-import { projectDateRange } from "../../utils/date"
 import { Link } from "react-router-dom"
 import NavButton from "../atoms/Buttons/NavButton"
-import { ProjectType } from '../../utils/firestoreDocumentTypes'
 import { useSelector } from 'react-redux'
 import {
 	userProjectIdsSelector,
@@ -33,17 +30,10 @@ const ProjectList: React.FC<Props> = ({
 
 			{ projectIds && projectIds.length > 0 && projectIds.map((projectId: string, i: Key) =>
 				<Link to={`/project/${projectId}`} key={i}>
-					{/* <ProjectCard
-						name={project.projectName}
-						authorName={shortFullName(
-							project.author.firstName,
-							project.author.lastName
-						)}
-						dateRange={projectDateRange(
-							project.startDate,
-							project.endDate
-						)}
-					/> */}
+					<ProjectCard
+						key={i}
+						projectId={projectId}
+					/>
 				</Link>
 			)}
 		</div>

@@ -29,6 +29,11 @@ export const projectSelectorById = createSelector(
     (projects, projectId) => projects.find( (project: any) => project.id === projectId )
 )
 
+export const projectCardInfoSelectorById = createSelector(
+    projectSelectorById,
+    (project) => (({ projectName, startDate, endDate, author }) => ({ projectName, startDate, endDate, author }))(project)
+)
+
 export const newestProjectIdSelector = createSelector(
     projectsSelector,
     uidSelector,

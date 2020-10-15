@@ -6,6 +6,11 @@ const authSelector = createSelector(
     auth => auth
 )
 
+const isAuthedSelector = createSelector(
+    (state: RootState) => state.firebase.auth,
+    auth => !auth.isEmpty
+)
+
 const projectsSelector = createSelector(
     (state: RootState) => state.firestore.ordered.projects,
     projects => projects
@@ -32,6 +37,7 @@ const requiredResultSelectorById = createSelector(
 
 export {
     authSelector,
+    isAuthedSelector,
     projectsSelector,
     projectSelectorById,
     requiredResultsSelector,

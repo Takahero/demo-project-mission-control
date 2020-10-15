@@ -4,15 +4,11 @@ import SignUpForm from "../organisms/SignUpForm"
 import SignInForm from "../organisms/SignInForm"
 import NavButton from "../atoms/Buttons/NavButton"
 import { Route } from "react-router-dom"
-import { useSelector } from 'react-redux';
-import { isEmpty } from 'react-redux-firebase';
-import { authSelector } from "../../store/selector"
 
-const DashboardLayout: React.FC = () => {
-	const auth = useSelector(authSelector)
+const AuthLayout: React.FC = () => {
 	return (
 		<div data-testid="auth-layout">
-			<Header authed={!isEmpty(auth)} />
+			<Header />
 			<Route exact path="/signup" component={SignUpForm} />
 			<Route exact path="/signin" component={SignInForm} />
 			<NavButton text="Go back to home" path="/" />
@@ -20,4 +16,4 @@ const DashboardLayout: React.FC = () => {
 	)
 }
 
-export default DashboardLayout
+export default React.memo(AuthLayout)

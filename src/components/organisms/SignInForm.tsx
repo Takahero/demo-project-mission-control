@@ -19,6 +19,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../store"
 import { Redirect } from "react-router-dom"
 import GoogleAuthButton from '../atoms/Buttons/GoogleAuthButton';
+import { isAuthedSelector } from "../../store/selector"
 
 interface Values {
 	email: string
@@ -37,34 +38,35 @@ const SignInSchema = Yup.object().shape({
 		.required("Required"),
 })
 
+const initialValues: Values = {
+	email: "",
+	password: "",
+}
+
 const SignInForm: React.FC = () => {
-	const auth = useSelector((state: RootState) => state.firebase.auth)
+	const authed: boolean = useSelector(isAuthedSelector)
 	const firebase = useFirebase()
 
-	if (!isEmpty(auth)) {
+	if (authed) {
 		return <Redirect to="/" />
+	}
+
+	const handleSubmit: (values: Values) => void = async (values) => {
+		await firebase
+			.login({
+				email: values.email,
+				password: values.password,
+			})
+			.catch((e) => console.error(e))
+		pushHistoryTo("/")
 	}
 
 	return (
 		<div data-testid="sing-in-form">
 			<Formik
-				initialValues={{
-					email: "",
-					password: "",
-				}}
+				initialValues={initialValues}
 				validationSchema={SignInSchema}
-				onSubmit={async (
-					values: Values,
-					{ setSubmitting }: FormikHelpers<Values>
-				) => {
-					await firebase
-						.login({
-							email: values.email,
-							password: values.password,
-						})
-						.catch((e) => console.error(e))
-					pushHistoryTo("/")
-				}}
+				onSubmit={handleSubmit}
 			>
 				{({ isSubmitting }) => (
 					<Form>
@@ -96,4 +98,4 @@ const SignInForm: React.FC = () => {
 	)
 }
 
-export default SignInForm
+export default React.memo(SignInForm)

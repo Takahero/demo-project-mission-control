@@ -44,7 +44,7 @@ const DashboardLayout: React.FC = () => {
                 />
             }
 
-            <Header authed={!isEmpty(auth)} />
+            <Header />
             <ProjectListSection
                 uid={auth.uid}
                 projects={projects}

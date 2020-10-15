@@ -3,11 +3,7 @@ import { render } from '../../../utils/testUtils'
 import GoogleAuthButton from './GoogleAuthButton';
 
 it('renders GoogleAuthButton', () => {
-    const { getByTestId } = render(
-        <GoogleAuthButton
-            firebase="firebase"
-        />
-    )
+    const { getByTestId } = render(<GoogleAuthButton />)
 
     expect(getByTestId('button')).toBeTruthy()
 })

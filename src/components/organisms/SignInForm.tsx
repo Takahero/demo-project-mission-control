@@ -91,7 +91,7 @@ const SignInForm: React.FC = () => {
 					</Form>
 				)}
 			</Formik>
-			<GoogleAuthButton firebase={firebase} />
+			<GoogleAuthButton />
 		</div>
 	)
 }

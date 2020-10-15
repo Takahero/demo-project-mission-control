@@ -102,14 +102,14 @@ const SignUpForm: React.FC = () => {
 								<ErrorMessage name={signUpFormDatum.value} />
 							</div>
 						))}
-						<SubmitButton 
-							text={isSubmitting ? "Loading..." : "Sign Up"} 
+						<SubmitButton
+							text={isSubmitting ? "Loading..." : "Sign Up"}
 							disabled={isSubmitting}
 						/>
 					</Form>
 				)}
 			</Formik>
-			<GoogleAuthButton firebase={firebase} />
+			<GoogleAuthButton />
 		</div>
 	)
 }

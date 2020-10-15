@@ -1,5 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit'
 import { RootState } from '.'
+import authProjectIdsArraySplitter from '../utils/authProjectsArraySplitter';
 import { ProjectType } from '../utils/firestoreDocumentTypes';
 
 export const authSelector = createSelector(
@@ -16,7 +17,6 @@ export const uidSelector = createSelector(
     (state: RootState) => state.firebase.auth,
     auth => auth.uid
 )
-
 
 export const projectsSelector = createSelector(
     (state: RootState) => state.firestore.ordered.projects,
@@ -41,6 +41,22 @@ export const newestProjectIdSelector = createSelector(
         }
         return newestProject.id
     }
+)
+
+export const projectIdsOrderedByAuthSelector = createSelector(
+    projectsSelector,
+    uidSelector,
+    (projects, uid) => authProjectIdsArraySplitter(projects, uid)
+)
+
+export const userProjectIdsSelector = createSelector(
+    projectIdsOrderedByAuthSelector,
+    (sortedProjectObj) => sortedProjectObj.user
+)
+
+export const otherProjectIdsSelector = createSelector(
+    projectIdsOrderedByAuthSelector,
+    (sortedProjectObj) => sortedProjectObj.other
 )
 
 export const requiredResultsSelector = createSelector(

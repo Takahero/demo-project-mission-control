@@ -37,10 +37,7 @@ const DashboardLayout: React.FC = () => {
             }
 
             <Header />
-            <ProjectListSection
-                uid={auth.uid}
-                projects={projects}
-            />
+            <ProjectListSection />
             <Route
                 exact path="/project/:projectId"
                 render={({ match: { params: { projectId } } }) => {

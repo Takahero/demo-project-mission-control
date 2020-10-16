@@ -40,17 +40,7 @@ const DashboardLayout: React.FC = () => {
             <ProjectListSection />
             <Route
                 exact path="/project/:projectId"
-                render={({ match: { params: { projectId } } }) => {
-                    let project = getProjectById(projects, projectId)!
-                    if (project) {
-                        return (
-                            <ProjectDashboard
-                                project={project}
-                                authed={project.author.uid === auth.uid}
-                            />
-                        )
-                    }
-                }}
+                component={ProjectDashboard}
             />
             <Route
                 exact path="/project/:projectId/edit"
@@ -74,4 +64,4 @@ const DashboardLayout: React.FC = () => {
     )
 }
 
-export default DashboardLayout
+export default React.memo(DashboardLayout)

@@ -32,4 +32,4 @@ const CompleteCheckbox: React.FC<Props> = ({
     )
 }
 
-export default CompleteCheckbox
+export default React.memo(CompleteCheckbox)

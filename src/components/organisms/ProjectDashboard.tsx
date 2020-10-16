@@ -1,47 +1,41 @@
 import React from 'react'
 import DashboardProjectCard from '../molecules/DashboardProjectCard'
 import RequiredResultsSection from './RequiredResultsSection'
-import { useFirestore } from "react-redux-firebase"
-import { getAndListenRequiredResults } from '../../utils/requiredResultsFirestore'
-import { ProjectType } from '../../utils/firestoreDocumentTypes';
+import { useFirestore, useFirestoreConnect } from "react-redux-firebase"
+import { ProjectType } from '../../utils/firestoreDocumentTypes'
+import { useSelector } from 'react-redux'
+import { projectSelectorById } from '../../store/selector'
+import { useMemo } from 'react'
+import { RootState } from '../../store'
+import { useParams } from 'react-router-dom'
 
-interface Props {
-    project: ProjectType;
-    authed: boolean;
+interface Params {
+    projectId: string;
 }
 
-const ProjectDashboard: React.FC<Props> = ({
-    project,
-    authed
-}) => {
-    const firestore = useFirestore()
+const ProjectDashboard: React.FC = () => {
+    const { projectId } = useParams<Params>()
+    useFirestoreConnect([
+        {
+            collection: "projects",
+            doc: projectId,
+            subcollections: [{ collection: 'requiredResults' }],
+            storeAs: `requiredResults/${projectId}`,
+            orderBy: ['createdAt', 'asc']
+        }
+    ])
 
-    if (firestore) {
-        getAndListenRequiredResults(firestore, project.id)
-    }
-
-    const completeProject = () => {
-        firestore.update({ collection: "projects", doc: project.id }, { completed: !project.completed })
-    }
-
-    if (project) {
-        return (
-            <div
-                data-testid="project-dashboard"
-            >
-                <DashboardProjectCard
-                    project={project}
-                    handleInputChange={() => completeProject()}
-                    authed={authed}
-                />
-                <RequiredResultsSection
-                    projectId={project.id}
-                    authed={authed}
-                />
-            </div>
-        )
-    }
-    return <div data-testid="project-dashboard"></div>
+    return (
+        <div
+            data-testid="project-dashboard"
+        >
+            <DashboardProjectCard />
+            {/* <RequiredResultsSection
+                projectId={project.id}
+                authed={authed}
+            /> */}
+        </div>
+    )
 }
 
-export default ProjectDashboard
+export default React.memo(ProjectDashboard)

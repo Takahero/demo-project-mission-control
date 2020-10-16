@@ -1,22 +1,3 @@
-const getAndListenRequiredResults = (firestore: any, projectId: string) => {
-    firestore.get({
-        collection: 'projects',
-        doc: projectId,
-        subcollections: [{ collection: 'requiredResults' }],
-        storeAs: `requiredResults/${projectId}`,
-        orderBy: ['createdAt', 'asc']
-    })
-    firestore.setListeners([
-        {
-            collection: "projects",
-            doc: projectId,
-            subcollections: [{ collection: 'requiredResults' }],
-            storeAs: `requiredResults/${projectId}`,
-            orderBy: ['createdAt', 'asc']
-        },
-    ])
-}
-
 const addRequiredResult = (firestore: any, projectId: string, values: any) => {
     firestore.add({
         collection: 'projects',
@@ -71,7 +52,6 @@ const deleteRequiredResult = (firestore: any, projectId: string, requiredResultI
 }
 
 export {
-    getAndListenRequiredResults,
     addRequiredResult,
     updateRequiredResult,
     completeRequiredResult,

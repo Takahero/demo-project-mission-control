@@ -3,7 +3,6 @@ import {
 	Formik,
 	Field,
 	Form,
-	FormikHelpers,
 	ErrorMessage
 } from "formik"
 import { signUpFormData } from "../../utils/formData"
@@ -13,13 +12,11 @@ import * as Yup from "yup"
 import { pushHistoryTo } from "../../utils/history"
 import {
 	useFirebase,
-	isEmpty
 } from "react-redux-firebase"
 import { useSelector } from "react-redux"
-import { RootState } from "../../store"
-import { Redirect } from "react-router-dom"
-import GoogleAuthButton from '../atoms/Buttons/GoogleAuthButton';
+import GoogleAuthButton from "../atoms/Buttons/GoogleAuthButton"
 import { isAuthedSelector } from "../../store/selector"
+import { Redirect } from "react-router-dom"
 
 interface Values {
 	firstName: string

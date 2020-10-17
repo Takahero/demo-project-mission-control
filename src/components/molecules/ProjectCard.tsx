@@ -15,7 +15,7 @@ interface Props {
 const ProjectCard: React.FC<Props> = ({
     projectId
 }) => {
-    const memoProjectCardInfoSelectorById = useMemo(() => projectCardInfoSelectorById, [])
+    const memoProjectCardInfoSelectorById = useMemo(() => projectCardInfoSelectorById, [projectId])
     let projectInfo = useSelector((state: RootState) => memoProjectCardInfoSelectorById(state, projectId))
     return (
         <div

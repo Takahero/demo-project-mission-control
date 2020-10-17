@@ -1,13 +1,8 @@
-import React from 'react'
-import DashboardProjectCard from '../molecules/DashboardProjectCard'
-import RequiredResultsSection from './RequiredResultsSection'
-import { useFirestore, useFirestoreConnect } from "react-redux-firebase"
-import { ProjectType } from '../../utils/firestoreDocumentTypes'
-import { useSelector } from 'react-redux'
-import { projectSelectorById } from '../../store/selector'
-import { useMemo } from 'react'
-import { RootState } from '../../store'
-import { useParams } from 'react-router-dom'
+import React from "react"
+import DashboardProjectCard from "../molecules/DashboardProjectCard"
+import RequiredResultsSection from "./RequiredResultsSection"
+import {  useFirestoreConnect } from "react-redux-firebase"
+import { useParams } from "react-router-dom"
 
 interface Params {
     projectId: string;
@@ -19,9 +14,9 @@ const ProjectDashboard: React.FC = () => {
         {
             collection: "projects",
             doc: projectId,
-            subcollections: [{ collection: 'requiredResults' }],
+            subcollections: [{ collection: "requiredResults" }],
             storeAs: `requiredResults/${projectId}`,
-            orderBy: ['createdAt', 'asc']
+            orderBy: ["createdAt", "asc"]
         }
     ])
 
@@ -30,10 +25,7 @@ const ProjectDashboard: React.FC = () => {
             data-testid="project-dashboard"
         >
             <DashboardProjectCard />
-            {/* <RequiredResultsSection
-                projectId={project.id}
-                authed={authed}
-            /> */}
+            <RequiredResultsSection />
         </div>
     )
 }

@@ -1,47 +1,71 @@
-import React, { useState } from 'react'
-import Title from '../atoms/Texts/Title';
-import DateRange from '../atoms/Texts/DateRange';
-import RequiredResultForm from '../organisms/RequiredResultForm';
-import Button from '../atoms/Buttons/Button';
-import { useFirestore } from 'react-redux-firebase';
-import CompleteCheckbox from './CompleteCheckbox';
+import React, {
+    useCallback,
+    useMemo,
+    useState
+} from "react"
+import Title from "../atoms/Texts/Title"
+import DateRange from "../atoms/Texts/DateRange"
+import RequiredResultForm from "../organisms/RequiredResultForm"
+import Button from "../atoms/Buttons/Button"
+import { useFirestore } from "react-redux-firebase"
+import CompleteCheckbox from "./CompleteCheckbox"
 import {
     completeRequiredResult,
     deleteRequiredResult
-} from '../../utils/requiredResultsFirestore';
-import ToDoCheckList from './ToDoCheckList';
-import { RequiredResultType } from '../../utils/firestoreDocumentTypes';
-import { projectDateRange } from '../../utils/date';
-import { sortToDosByDate } from '../../utils/toDosFirestore';
+} from "../../utils/requiredResultsFirestore"
+import ToDoCheckList from "./ToDoCheckList"
+import { projectDateRange } from "../../utils/date"
+import {
+    isProjectAdminSelector,
+    requiredResultSelectorById
+} from "../../store/selector"
+import { RootState } from "../../store"
+import { useSelector } from "react-redux"
+import { useParams } from "react-router-dom"
 
 interface Props {
     requiredResultId: string;
-    projectId: string;
-    authed: boolean;
-    requiredResult: RequiredResultType;
 }
 
 const RequiredResultCard: React.FC<Props> = ({
     requiredResultId,
-    projectId,
-    authed,
-    requiredResult,
 }) => {
     const [showingForm, setShowingForm] = useState(false)
+    const hideForm = useCallback(() => setShowingForm(false), [])
+    const showForm = useCallback(() => setShowingForm(true), [])
+
     const firestore = useFirestore()
+    const { projectId } = useParams<{ projectId: string }>()
+
+    const memoRequiredResultSelectorById = useMemo(() => requiredResultSelectorById, [])
+    const requiredResult = useSelector((state: RootState) => memoRequiredResultSelectorById(state, projectId, requiredResultId))
+
+    const memoIsProjectAdminSelector = useMemo(() => isProjectAdminSelector, [])
+    const isProjectAdmin = useSelector((state: RootState) => memoIsProjectAdminSelector(state, projectId))
+
+
+    const memoCompleteRequiredResult = useCallback(() =>
+        completeRequiredResult(firestore, projectId, requiredResultId, requiredResult.completed),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [requiredResult.completed]
+    )
+
+    const memoDeleteRequiredResult = useCallback(() =>
+        deleteRequiredResult(firestore, projectId, requiredResultId),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        []
+    )
 
     return (
         <div
             data-testid="required-result-card"
         >
             {
-                authed ? (
+                isProjectAdmin ? (
                     showingForm ?
                         <RequiredResultForm
-                            requiredResultId={requiredResult.id}
-                            projectId={projectId}
-                            authed={authed}
-                            setShowingForm={() => setShowingForm(false)}
+                            requiredResultId={requiredResultId}
+                            setShowingForm={hideForm}
                         />
                     :
                         <>
@@ -51,28 +75,22 @@ const RequiredResultCard: React.FC<Props> = ({
                                 label="Complete"
                                 value="completed"
                                 checked={requiredResult.completed}
-                                handleInputChange={() => completeRequiredResult(firestore, projectId, requiredResult.id, requiredResult.completed)}
+                                handleInputChange={memoCompleteRequiredResult}
                             />
                             <Button
                                 text="Update Required Result"
-                                handleClick={() => setShowingForm(true)}
+                                handleClick={showForm}
                             />
                             <Button
                                 text="Delete"
-                                handleClick={() => deleteRequiredResult(firestore, projectId, requiredResult.id)}
+                                handleClick={memoDeleteRequiredResult}
                             />
                         </>
                 ) : null
             }
-            <ToDoCheckList
-                requiredResultId={requiredResultId}
-                projectId={projectId}
-                toDos={sortToDosByDate(requiredResult.toDos)}
-                authed={authed}
-            />
+            <ToDoCheckList requiredResultId={requiredResultId} />
         </div>
     )
 }
 
-export default RequiredResultCard
-
+export default React.memo(RequiredResultCard)

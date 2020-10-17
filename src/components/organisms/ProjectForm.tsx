@@ -1,9 +1,8 @@
-import React from "react"
+import React, { useMemo } from "react"
 import {
 	Formik,
 	Field,
 	Form,
-	FormikHelpers,
 	ErrorMessage
 } from "formik"
 import { projectFormData } from "../../utils/formData"
@@ -15,16 +14,15 @@ import {
 	goBackHistory
 } from "../../utils/history"
 import { useFirestore } from "react-redux-firebase"
-import { useSelector, shallowEqual } from "react-redux"
+import { useSelector } from "react-redux"
 import { RootState } from "../../store"
-import { Redirect } from "react-router-dom"
+import { Redirect, useParams } from "react-router-dom"
 import Button from "../atoms/Buttons/Button"
-import { ProjectType } from '../../utils/firestoreDocumentTypes';
-
-interface Props {
-	uid: string;
-	project?: ProjectType;
-}
+import {
+	uidSelector,
+	profileSelector,
+	projectSelectorById
+} from "../../store/selector"
 
 interface Values {
 	projectName: string;
@@ -51,19 +49,34 @@ const PropjectSchema = Yup.object().shape({
 		.required("Required"),
 })
 
-const ProjectForm: React.FC<Props> = ({
-	uid,
-	project,
-}) => {
-	const profile = useSelector((state: RootState) => state.firebase.profile, shallowEqual)
+const ProjectForm: React.FC = () => {
 	const firestore = useFirestore()
+
+	const { projectId } = useParams<{ projectId: string }>()
+	const memoProjectSelectorById = useMemo(() => projectSelectorById, [])
+    const project = useSelector((state: RootState) => memoProjectSelectorById(state, projectId))
+
+	const uid = useSelector(uidSelector)
+	const profile = useSelector(profileSelector)
 
 	if (!uid) {
 		return <Redirect to="/" />
 	}
 
-	const addProject = async (values: any) => {
-		const result: any = await firestore.add({ collection: 'projects' }, {
+	const initialValues = project ? {
+			projectName: project.projectName,
+			startDate: project.startDate,
+			endDate: project.endDate,
+			accomplishmentStatement: project.accomplishmentStatement,
+		} : {
+			projectName: "",
+			startDate: "",
+			endDate: "",
+			accomplishmentStatement: "",
+		}
+
+	const addProject = async (values: Values) => {
+		const result: any = await firestore.add({ collection: "projects" }, {
 			...values,
 			author: {
 				uid,
@@ -79,23 +92,17 @@ const ProjectForm: React.FC<Props> = ({
 
 	const updateProject = async (values: Values) => {
 		if (project) {
-			await firestore.update({ collection: 'projects', doc: project.id }, {
+			await firestore.update({ collection: "projects", doc: projectId }, {
 				...values,
 			}).catch(e => console.error(e))
-			pushHistoryTo(`/project/${project.id}`)
+			pushHistoryTo(`/project/${projectId}`)
 		}
 	}
 
-	const initialValues = project ? {
-		projectName: project.projectName,
-		startDate: project.startDate,
-		endDate: project.endDate,
-		accomplishmentStatement: project.accomplishmentStatement,
-	} : {
-		projectName: "",
-		startDate: "",
-		endDate: "",
-		accomplishmentStatement: "",
+	const handleSubmit = async (
+		values: Values
+	) => {
+		project ? updateProject(values) : addProject(values)
 	}
 
 	return (
@@ -103,12 +110,7 @@ const ProjectForm: React.FC<Props> = ({
 			<Formik
 				initialValues={initialValues}
 				validationSchema={PropjectSchema}
-				onSubmit={async (
-					values: Values,
-					{ setSubmitting }: FormikHelpers<Values>,
-				) => {
-					project ? updateProject(values) : addProject(values)
-				}}
+				onSubmit={handleSubmit}
 			>
 				{({ isSubmitting }) => (
 					<Form>
@@ -147,4 +149,4 @@ const ProjectForm: React.FC<Props> = ({
 	)
 }
 
-export default ProjectForm
+export default React.memo(ProjectForm)

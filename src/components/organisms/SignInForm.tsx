@@ -3,7 +3,6 @@ import {
 	Formik,
 	Field,
 	Form,
-	FormikHelpers,
 	ErrorMessage
 } from "formik"
 import { signInFormData } from "../../utils/formData"
@@ -11,15 +10,11 @@ import SubmitButton from "../atoms/Form/SubmitButton"
 import Label from "../atoms/Form/Label"
 import * as Yup from "yup"
 import { pushHistoryTo } from "../../utils/history"
-import {
-	useFirebase,
-	isEmpty
-} from "react-redux-firebase"
+import { useFirebase} from "react-redux-firebase"
 import { useSelector } from "react-redux"
-import { RootState } from "../../store"
-import { Redirect } from "react-router-dom"
-import GoogleAuthButton from '../atoms/Buttons/GoogleAuthButton';
+import GoogleAuthButton from "../atoms/Buttons/GoogleAuthButton"
 import { isAuthedSelector } from "../../store/selector"
+import { Redirect } from "react-router-dom"
 
 interface Values {
 	email: string
@@ -86,8 +81,8 @@ const SignInForm: React.FC = () => {
 								<ErrorMessage name={signInFormDatum.value} />
 							</div>
 						))}
-						<SubmitButton 
-							text={isSubmitting ? "Loading..." : "Sign In"} 
+						<SubmitButton
+							text={isSubmitting ? "Loading..." : "Sign In"}
 							disabled={isSubmitting}
 						/>
 					</Form>

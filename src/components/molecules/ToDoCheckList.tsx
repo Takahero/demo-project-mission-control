@@ -1,25 +1,35 @@
-import React, { Key, useEffect, useRef, useState } from 'react'
-import Button from '../atoms/Buttons/Button';
-import ToDoForm from './ToDoForm';
-import ToDoListItem from './ToDoListItem';
-import { ToDoType } from '../../utils/firestoreDocumentTypes';
+import React, { Key, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import Button from "../atoms/Buttons/Button"
+import ToDoForm from "./ToDoForm"
+import ToDoListItem from "./ToDoListItem"
+import { useParams } from "react-router-dom"
+import {
+    isProjectAdminSelector,
+    toDosIdSelector
+} from "../../store/selector"
+import { RootState } from "../../store"
+import { useSelector } from "react-redux"
 
 interface Props {
     requiredResultId: string;
-    projectId: string;
-    toDos: ToDoType[];
-    authed: boolean;
 }
 
 const ToDoCheckList: React.FC<Props> = ({
-    requiredResultId,
-    projectId,
-    toDos,
-    authed,
+    requiredResultId
 }) => {
     const [showInput, setShowInput] = useState(false)
-    const inputRef = useRef<HTMLInputElement>(null)
+    const memoHideInput = useCallback(() => setShowInput(false), [])
+    const memoShowInput = useCallback(() => setShowInput(true), [])
 
+    const { projectId } = useParams<{ projectId: string }>()
+
+    const memoToDoIdsSelector = useMemo(() => toDosIdSelector, [])
+    const toDoIds = useSelector((state: RootState) => memoToDoIdsSelector(state, projectId, requiredResultId))
+
+    const memoIsProjectAdminSelector = useMemo(() => isProjectAdminSelector, [])
+    const isProjectAdmin = useSelector((state: RootState) => memoIsProjectAdminSelector(state, projectId))
+
+    const inputRef = useRef<HTMLInputElement>(null)
     useEffect(() => {
         inputRef && inputRef.current && inputRef.current.focus()
     })
@@ -29,29 +39,26 @@ const ToDoCheckList: React.FC<Props> = ({
             data-testid="to-do-checklist"
         >
             {
-                toDos && toDos.map((toDo: ToDoType, i: Key) =>
+                toDoIds && toDoIds.map((toDoId: string, i: Key) =>
                     <ToDoListItem
                         key={i}
-                        projectId={projectId}
                         requiredResultId={requiredResultId}
-                        toDo={toDo}
-                        authed={authed}
+                        toDoId={toDoId}
                     />
                 )
             }
             {
-                authed ?
+                isProjectAdmin ?
                     showInput ?
                         <ToDoForm
                             requiredResultId={requiredResultId}
-                            projectId={projectId}
-                            setShowInput={() => setShowInput(false)}
+                            setShowInput={memoHideInput}
                             ref={inputRef}
                         />
                     :
                         <Button
                             text="Add to-do"
-                            handleClick={() => setShowInput(true)}
+                            handleClick={memoShowInput}
                         />
                 : null
             }
@@ -60,4 +67,3 @@ const ToDoCheckList: React.FC<Props> = ({
 }
 
 export default ToDoCheckList
-

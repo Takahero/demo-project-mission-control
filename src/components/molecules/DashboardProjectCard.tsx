@@ -1,27 +1,27 @@
-import React, { useCallback, useMemo } from 'react'
-import Title from '../atoms/Texts/Title'
-import Text from '../atoms/Texts/Text'
-import CompleteCheckbox from './CompleteCheckbox'
-import NavButton from '../atoms/Buttons/NavButton'
-import Button from '../atoms/Buttons/Button'
-import { useFirestore } from 'react-redux-firebase'
-import { pushHistoryTo } from '../../utils/history'
+import React, { useCallback, useMemo } from "react"
+import Title from "../atoms/Texts/Title"
+import Text from "../atoms/Texts/Text"
+import CompleteCheckbox from "./CompleteCheckbox"
+import NavButton from "../atoms/Buttons/NavButton"
+import Button from "../atoms/Buttons/Button"
+import { useFirestore } from "react-redux-firebase"
+import { pushHistoryTo } from "../../utils/history"
 import {
     isProjectAdminSelector,
     projectSelectorById,
     requiredResultIdsSelector
-} from '../../store/selector'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../store'
-import { deleteRequiredResult } from '../../utils/requiredResultsFirestore'
-import { fullName } from '../../utils/name'
-import { projectDateRange } from '../../utils/date'
-import { useParams } from 'react-router-dom'
+} from "../../store/selector"
+import { useSelector } from "react-redux"
+import { RootState } from "../../store"
+import { deleteRequiredResult } from "../../utils/requiredResultsFirestore"
+import { fullName } from "../../utils/name"
+import { projectDateRange } from "../../utils/date"
+import { Redirect, useParams } from "react-router-dom"
 
 const DashboardProjectCard: React.FC = () => {
     const firestore = useFirestore()
     const { projectId } = useParams<{ projectId: string }>()
-    
+
     const memoProjectSelectorById = useMemo(() => projectSelectorById, [])
     const project = useSelector((state: RootState) => memoProjectSelectorById(state, projectId))
 
@@ -34,16 +34,22 @@ const DashboardProjectCard: React.FC = () => {
     const deleteProject: () => void = useCallback(() => {
         // Due to firestore feature, although collection gets deleted, subcollections won't be deleted.
         // Manually calling to delete each requiredResult
-        requiredResultIds.forEach((requiredResultId: string) => {
-            deleteRequiredResult(firestore, projectId, requiredResultIds)
+        requiredResultIds.length > 0 && requiredResultIds.forEach((requiredResultId: string) => {
+            deleteRequiredResult(firestore, projectId, requiredResultId)
         })
         firestore.delete({ collection: "projects", doc: projectId })
         pushHistoryTo("/")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [requiredResultIds])
 
     const completeProject = useCallback(() => {
         firestore.update({ collection: "projects", doc: projectId }, { completed: !project.completed })
-    }, [project.completed])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [project?.completed])
+
+    if (!project) {
+        return <Redirect to="/" />
+    }
 
     return (
         <div

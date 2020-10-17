@@ -1,66 +1,98 @@
-import React, { useState } from 'react'
-import Checkbox from '../atoms/Form/Checkbox'
-import Text from '../atoms/Texts/Text';
-import ToDoForm from './ToDoForm';
-import Button from '../atoms/Buttons/Button';
-import { completeToDo, deleteToDo } from '../../utils/toDosFirestore';
-import { useFirestore } from 'react-redux-firebase';
-import { ToDoType } from '../../utils/firestoreDocumentTypes';
+import React, {
+    useCallback,
+    useMemo,
+    useState
+} from "react"
+import Checkbox from "../atoms/Form/Checkbox"
+import Text from "../atoms/Texts/Text"
+import ToDoForm from "./ToDoForm"
+import Button from "../atoms/Buttons/Button"
+import {
+    completeToDo,
+    deleteToDo
+} from "../../utils/toDosFirestore"
+import { useFirestore } from "react-redux-firebase"
+import { useParams } from "react-router-dom"
+import {
+    isProjectAdminSelector,
+    toDoSelectorById
+} from "../../store/selector"
+import { useSelector } from "react-redux"
+import { RootState } from "../../store"
 
 interface Props {
-    projectId: string;
     requiredResultId: string;
-    toDo: ToDoType;
-    authed: boolean;
+    toDoId: string;
 }
 
 const ToDoListItem: React.FC<Props> = ({
-    projectId,
     requiredResultId,
-    toDo,
-    authed
+    toDoId,
 })=> {
-    const firestore = useFirestore()
     const [showInput, setShowInput] = useState(false)
+    const memoHideInput = useCallback(() => setShowInput(false), [])
+    const memoShowInput = useCallback(() => setShowInput(true), [])
+
+    const firestore = useFirestore()
+    const { projectId } = useParams<{ projectId: string }>()
+
+    const memoToDosSelector = useMemo(() => toDoSelectorById, [])
+    const toDo = useSelector((state: RootState) => memoToDosSelector(state, projectId, requiredResultId, toDoId))
+
+    const memoIsProjectAdminSelector = useMemo(() => isProjectAdminSelector, [])
+    const isProjectAdmin = useSelector((state: RootState) => memoIsProjectAdminSelector(state, projectId))
+
+    const memoCompleteToDo = useCallback(() =>
+        toDo && completeToDo(firestore, projectId, requiredResultId, toDo),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [toDo?.name, toDo?.completed]
+    )
+
+    const memoDeleteToDo = useCallback(() =>
+        toDo && deleteToDo(firestore, projectId, requiredResultId, toDo),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        []
+    )
+
+    if (!toDo) {
+        return null
+    }
+
     return (
         <div
             data-testid="to-do-list-item"
         >
             {   showInput ?
                     <ToDoForm
-                        projectId={projectId}
                         requiredResultId={requiredResultId}
-                        setShowInput={() => setShowInput(false)}
+                        setShowInput={memoHideInput}
                         update={true}
-                        toDo={toDo}
+                        toDoId={toDoId}
                     />
-                : (
+                :
                     <>
                         <Checkbox
-                        name={toDo.id}
-                        checked={toDo.completed}
-                        handleInputChange={() => completeToDo(firestore, projectId, requiredResultId, toDo)}
+                            name={toDoId}
+                            checked={toDo.completed}
+                            handleInputChange={memoCompleteToDo}
                         />
-                        <Text
-                            text={toDo.name}
-                        />
-                        { authed &&
+                        <Text text={toDo.name} />
+                        { isProjectAdmin &&
                             <>
                                 <Button
                                     text="Edit"
-                                    handleClick={() => setShowInput(true)}
+                                    handleClick={memoShowInput}
                                 />
                                 <Button
                                     text="Delete"
-                                    handleClick={() => deleteToDo(firestore, projectId, requiredResultId, toDo)}
+                                    handleClick={memoDeleteToDo}
                                 />
                             </>
                         }
                     </>
-                )
             }
         </div>
     )
 }
 
-export default ToDoListItem
+export default React.memo(ToDoListItem)

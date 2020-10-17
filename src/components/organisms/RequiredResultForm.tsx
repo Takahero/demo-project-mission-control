@@ -1,34 +1,27 @@
-import React from "react"
+import React, { useMemo } from "react"
 import {
 	Formik,
 	Field,
 	Form,
-	FormikHelpers,
 	ErrorMessage
 } from "formik"
 import { requiredResultFormData } from "../../utils/formData"
 import SubmitButton from "../atoms/Form/SubmitButton"
 import Label from "../atoms/Form/Label"
 import * as Yup from "yup"
-import {
-	useFirestore,
-} from "react-redux-firebase"
+import { useFirestore } from "react-redux-firebase"
 import { useSelector } from "react-redux"
-import { Redirect } from "react-router-dom"
-import { 
-	requiredResultSelectorById 
-} from "../../store/selector"
+import { useParams } from "react-router-dom"
+import { requiredResultSelectorById } from "../../store/selector"
 import { RootState } from "../../store"
-import { 
-	addRequiredResult, 
-	updateRequiredResult 
+import {
+	addRequiredResult,
+	updateRequiredResult
 } from "../../utils/requiredResultsFirestore"
 import Button from "../atoms/Buttons/Button"
 
 interface Props {
 	requiredResultId?: string;
-	projectId: string;
-	authed: boolean;
 	setShowingForm: any;
 }
 
@@ -53,18 +46,15 @@ const RequiredResultSchema = Yup.object().shape({
 
 const RequiredResultForm: React.FC<Props> = ({
 	requiredResultId,
-	projectId,
-	authed,
 	setShowingForm
 }) => {
 	const firestore = useFirestore()
-	const requiredResult = useSelector((state: RootState) => requiredResultId ? requiredResultSelectorById(state, projectId, requiredResultId) : null)
+	const { projectId } = useParams<{ projectId: string }>()
 
-	if (authed) {
-		return <Redirect to="/" />
-	}
+	const memoRequiredResultSelectorById = useMemo(() => requiredResultSelectorById, [])
+	const requiredResult = useSelector((state: RootState) => requiredResultId ? memoRequiredResultSelectorById(state, projectId, requiredResultId) : null)
 
-	const initialValues = requiredResultId ? {
+	const initialValues = requiredResult ? {
 		name: requiredResult.name,
 		startDate: requiredResult.startDate,
 		endDate: requiredResult.endDate,
@@ -74,18 +64,19 @@ const RequiredResultForm: React.FC<Props> = ({
 		endDate: "",
 	}
 
+	const handleSubmit = async (
+		values: Values
+	) => {
+		requiredResultId ? updateRequiredResult(firestore, projectId, requiredResultId, values) : addRequiredResult(firestore, projectId, values)
+		setShowingForm()
+	}
+
 	return (
 		<div data-testid="required-result-form">
 			<Formik
 				initialValues={initialValues}
 				validationSchema={RequiredResultSchema}
-				onSubmit={async (
-					values: Values,
-					{ setSubmitting }: FormikHelpers<Values>,
-				) => {
-					requiredResultId ? updateRequiredResult(firestore, projectId, requiredResultId, values) : addRequiredResult(firestore, projectId, values)
-					setShowingForm()
-				}}
+				onSubmit={handleSubmit}
 			>
 				{({ isSubmitting }) => (
 					<Form>
@@ -105,17 +96,17 @@ const RequiredResultForm: React.FC<Props> = ({
 								<ErrorMessage name={requiredResultFormDatum.value} />
 							</div>
 						))}
-						<SubmitButton 
+						<SubmitButton
 							text={
 								isSubmitting ? "Loading..." :
 									requiredResultId ? "Update" : "Create"
-							} 
+							}
 							disabled={isSubmitting}
 						/>
 					</Form>
 				)}
 			</Formik>
-			<Button 
+			<Button
 				text="Cancel"
 				handleClick={setShowingForm}
 			/>
@@ -123,4 +114,4 @@ const RequiredResultForm: React.FC<Props> = ({
 	)
 }
 
-export default RequiredResultForm
+export default React.memo(RequiredResultForm)

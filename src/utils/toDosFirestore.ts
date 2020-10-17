@@ -1,9 +1,10 @@
-import { nanoid } from '@reduxjs/toolkit'
+import { nanoid } from "@reduxjs/toolkit"
+import { ToDoType } from "./firestoreDocumentTypes"
 
-const sortToDosByDate = (toDos: any) => {
+const sortToDosByDate = (toDos: ToDoType[]) => {
     if (toDos) {
-        return toDos.slice().sort((a:any, b:any) => {
-            return a.createdAt - b.createdAt
+        return toDos.slice().sort((a:ToDoType, b:ToDoType) => {
+            return +a.createdAt - +b.createdAt
         })
     }
     return null
@@ -11,13 +12,13 @@ const sortToDosByDate = (toDos: any) => {
 
 const addToDo = (firestore: any, projectId: string, requiredResultId: string, name: string) => {
     firestore.update({
-        collection: 'projects',
+        collection: "projects",
         doc: projectId,
         subcollections: [{
-            collection: 'requiredResults',
+            collection: "requiredResults",
             doc: requiredResultId
         }],
-        storeAs: 'requiredResults'
+        storeAs: "requiredResults"
     }, {
         toDos: firestore.FieldValue.arrayUnion({
             name,
@@ -28,31 +29,31 @@ const addToDo = (firestore: any, projectId: string, requiredResultId: string, na
     }).catch((e: Error) => console.error(e))
 }
 
-const deleteToDo = (firestore: any, projectId: string, requiredResultId: string, toDo: any) => {
+const deleteToDo = (firestore: any, projectId: string, requiredResultId: string, toDo: ToDoType) => {
     toDo && firestore.update({
-        collection: 'projects',
+        collection: "projects",
         doc: projectId,
         subcollections: [{
-            collection: 'requiredResults',
+            collection: "requiredResults",
             doc: requiredResultId
         }],
-        storeAs: 'requiredResults'
+        storeAs: "requiredResults"
     }, {
         toDos: firestore.FieldValue.arrayRemove(toDo)
     }).catch((e: Error) => console.error(e))
 }
 
-const updateToDo = async (firestore: any, projectId: string, requiredResultId: string, name: string, toDo: any) => {
+const updateToDo = async (firestore: any, projectId: string, requiredResultId: string, name: string, toDo: ToDoType) => {
     if (toDo) {
         await deleteToDo(firestore, projectId, requiredResultId, toDo)
         firestore.update({
-            collection: 'projects',
+            collection: "projects",
             doc: projectId,
             subcollections: [{
-                collection: 'requiredResults',
+                collection: "requiredResults",
                 doc: requiredResultId
             }],
-            storeAs: 'requiredResults'
+            storeAs: "requiredResults"
         }, {
             toDos: firestore.FieldValue.arrayUnion({
                 ...toDo,
@@ -62,17 +63,17 @@ const updateToDo = async (firestore: any, projectId: string, requiredResultId: s
     }
 }
 
-const completeToDo = async (firestore: any, projectId: string, requiredResultId: string, toDo: any) => {
+const completeToDo = async (firestore: any, projectId: string, requiredResultId: string, toDo: ToDoType) => {
     if (toDo) {
         await deleteToDo(firestore, projectId, requiredResultId, toDo)
         firestore.update({
-            collection: 'projects',
+            collection: "projects",
             doc: projectId,
             subcollections: [{
-                collection: 'requiredResults',
+                collection: "requiredResults",
                 doc: requiredResultId
             }],
-            storeAs: 'requiredResults'
+            storeAs: "requiredResults"
         }, {
             toDos: firestore.FieldValue.arrayUnion({
                 ...toDo,

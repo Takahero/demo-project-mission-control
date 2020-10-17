@@ -1,9 +1,9 @@
-import React from 'react';
-import { render } from '../../../utils/testUtils'
-import Logo from './Logo';
+import React from "react"
+import { render } from "../../../utils/testUtils"
+import Logo from "./Logo"
 
-it('renders Logo', () => {
+it("renders Logo", () => {
     const { getByTestId } = render(<Logo/>)
 
-    expect(getByTestId('logo')).toBeTruthy()
+    expect(getByTestId("logo")).toBeTruthy()
 })

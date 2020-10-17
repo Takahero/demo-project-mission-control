@@ -1,9 +1,9 @@
-import React from 'react';
-import { render } from '../../utils/testUtils'
-import Header from './Header';
+import React from "react"
+import { render } from "../../utils/testUtils"
+import Header from "./Header"
 
-it('renders Header', () => {
+it("renders Header", () => {
     const { getByTestId } = render(<Header/>)
 
-    expect(getByTestId('header')).toBeTruthy()
+    expect(getByTestId("header")).toBeTruthy()
 })

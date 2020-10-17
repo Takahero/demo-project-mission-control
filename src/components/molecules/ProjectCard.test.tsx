@@ -1,15 +1,9 @@
-import React from 'react';
-import { render } from '../../utils/testUtils'
-import ProjectCard from './ProjectCard';
+import React from "react"
+import { render } from "../../utils/testUtils"
+import ProjectCard from "./ProjectCard"
 
-it('renders ProjectCard', () => {
-    const { getByTestId } = render(
-        <ProjectCard 
-            name='This is the project'
-            dateRange='Oct 1st 2020 - Dec 12th 2020'
-            authorName='Leonard D.'
-        />
-    )
+it("renders ProjectCard", () => {
+    const { getByTestId } = render(<ProjectCard projectId="projectId" />)
 
-    expect(getByTestId('project-card')).toBeTruthy()
+    expect(getByTestId("project-card")).toBeTruthy()
 })

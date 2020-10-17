@@ -1,8 +1,8 @@
-import React from 'react';
-import { render } from '../../utils/testUtils'
-import ToDoForm from './ToDoForm';
+import React from "react"
+import { render } from "../../utils/testUtils"
+import ToDoForm from "./ToDoForm"
 
-it('renders ToDoForm', () => {
+it("renders ToDoForm", () => {
     const { getByTestId } = render(
         <ToDoForm
             requiredResultId="requiredResultId"
@@ -10,5 +10,5 @@ it('renders ToDoForm', () => {
         />
     )
 
-    expect(getByTestId('to-do-form')).toBeTruthy()
+    expect(getByTestId("to-do-form")).toBeTruthy()
 })

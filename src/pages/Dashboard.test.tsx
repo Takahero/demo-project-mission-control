@@ -1,8 +1,8 @@
-import React from 'react';
-import { render } from '../utils/testUtils';
-import Dashboard from './Dashboard';
+import React from "react"
+import { render } from "../utils/testUtils"
+import Dashboard from "./Dashboard"
 
-it.only('renders Main page', () => {
+it.only("renders Main page", () => {
     let { queryByTestId } = render(<Dashboard />)
-    expect(queryByTestId('dashboard-page')).toBeTruthy()
+    expect(queryByTestId("dashboard-page")).toBeTruthy()
 })

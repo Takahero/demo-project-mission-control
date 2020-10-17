@@ -1,14 +1,9 @@
-import React from 'react';
-import { render } from '../../utils/testUtils'
-import ProjectList from './ProjectList';
+import React from "react"
+import { render } from "../../utils/testUtils"
+import ProjectList from "./ProjectList"
 
-it('renders ProjectList', () => {
-    const { getByTestId } = render(
-        <ProjectList
-            projects={[]}
-            listTitle="This is listTitle"
-        />
-    )
+it("renders ProjectList", () => {
+    const { getByTestId } = render(<ProjectList user={true}/>)
 
-    expect(getByTestId('project-list')).toBeTruthy()
+    expect(getByTestId("project-list")).toBeTruthy()
 })

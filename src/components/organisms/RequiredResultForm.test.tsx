@@ -1,14 +1,14 @@
-import React from 'react';
-import { render } from '../../utils/testUtils'
-import RequiredResultForm from './RequiredResultForm';
+import React from "react"
+import { render } from "../../utils/testUtils"
+import RequiredResultForm from "./RequiredResultForm"
 
-it('renders RequiredResultForm', () => {
+it("renders RequiredResultForm", () => {
     const { getByTestId } = render(
         <RequiredResultForm
-            projectId="projectId"
+            requiredResultId="requiredResultId"
             setShowingForm={() => {}}
         />
     )
 
-    expect(getByTestId('required-result-form')).toBeTruthy()
+    expect(getByTestId("required-result-form")).toBeTruthy()
 })

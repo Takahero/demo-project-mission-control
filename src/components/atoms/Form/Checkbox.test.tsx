@@ -1,8 +1,8 @@
-import React from 'react';
-import { render } from '../../../utils/testUtils'
-import Checkbox from './Checkbox';
+import React from "react"
+import { render } from "../../../utils/testUtils"
+import Checkbox from "./Checkbox"
 
-it('renders Checkbox', () => {
+it("renders Checkbox", () => {
     const { getByTestId } = render(
         <Checkbox
             name="checkbox"
@@ -11,5 +11,5 @@ it('renders Checkbox', () => {
         />
     )
 
-    expect(getByTestId('checkbox')).toBeTruthy()
+    expect(getByTestId("checkbox")).toBeTruthy()
 })

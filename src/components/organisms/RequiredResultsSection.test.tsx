@@ -1,17 +1,9 @@
-import React from 'react';
-import { render } from '../../utils/testUtils'
-import RequiredResultsSection from './RequiredResultsSection';
-import { mockProjects } from '../../utils/mockProjectsData';
+import React from "react"
+import { render } from "../../utils/testUtils"
+import RequiredResultsSection from "./RequiredResultsSection"
 
-const { requiredResults } = mockProjects[0]
-it('renders RequiredResultsSection', () => {
-    const { getByTestId } = render(
-        <RequiredResultsSection
-            requiredResults={requiredResults}
-            projectId="projectId"
-            authed={true}
-        />
-    )
+it("renders RequiredResultsSection", () => {
+    const { getByTestId } = render(<RequiredResultsSection />)
 
-    expect(getByTestId('required-results-section')).toBeTruthy()
+    expect(getByTestId("required-results-section")).toBeTruthy()
 })

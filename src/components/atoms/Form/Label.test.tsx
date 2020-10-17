@@ -1,25 +1,25 @@
-import React from 'react';
-import { render } from '../../../utils/testUtils'
-import Label from './Label';
+import React from "react"
+import { render } from "../../../utils/testUtils"
+import Label from "./Label"
 
-it('renders Label', () => {
+it("renders Label", () => {
     const { getByTestId } = render(
-        <Label 
-            label='This is the label' 
-            value='Value'
+        <Label
+            label="This is the label"
+            value="Value"
         />
     )
 
-    expect(getByTestId('label')).toBeTruthy()
+    expect(getByTestId("label")).toBeTruthy()
 })
 
-it('renders label', () => {
+it("renders label", () => {
     const { getByText } = render(
-        <Label 
-            label='This is the label' 
-            value='Value'
+        <Label
+            label="This is the label"
+            value="Value"
         />
     )
 
-    expect(getByText('This is the label')).toBeTruthy()
+    expect(getByText("This is the label")).toBeTruthy()
 })

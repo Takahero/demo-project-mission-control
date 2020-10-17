@@ -1,9 +1,9 @@
-import React from 'react';
-import { render } from '../../utils/testUtils'
-import SignInForm from './SignInForm';
+import React from "react"
+import { render } from "../../utils/testUtils"
+import SignInForm from "./SignInForm"
 
-it('renders SignInForm', () => {
-    const { getByTestId } = render(<SignInForm/>)
+it("renders SignInForm", () => {
+    const { getByTestId } = render(<SignInForm />)
 
-    expect(getByTestId('sing-in-form')).toBeTruthy()
+    expect(getByTestId("sing-in-form")).toBeTruthy()
 })

@@ -60,32 +60,35 @@ const RequiredResultCard: React.FC<Props> = ({
             data-testid="required-result-card"
         >
             {
-                isProjectAdmin ? (
-                    showingForm ?
-                        <RequiredResultForm
-                            requiredResultId={requiredResultId}
-                            setShowingForm={hideForm}
-                        />
-                    :
-                        <>
-                            <Title title={requiredResult.name} />
-                            <DateRange dateRange={projectDateRange(requiredResult.startDate, requiredResult.endDate)} />
-                            <CompleteCheckbox
-                                label="Complete"
-                                value="completed"
-                                checked={requiredResult.completed}
-                                handleInputChange={memoCompleteRequiredResult}
-                            />
-                            <Button
+                showingForm ?
+                    <RequiredResultForm
+                        requiredResultId={requiredResultId}
+                        setShowingForm={hideForm}
+                    />
+                : (
+                    <>
+                        <Title title={requiredResult.name} />
+                        <DateRange dateRange={projectDateRange(requiredResult.startDate, requiredResult.endDate)} />
+                        {isProjectAdmin &&
+                            <>
+                                <CompleteCheckbox
+                                    label="Complete"
+                                    value="completed"
+                                    checked={requiredResult.completed}
+                                    handleInputChange={memoCompleteRequiredResult}
+                                />
+                                <Button
                                 text="Update Required Result"
                                 handleClick={showForm}
-                            />
-                            <Button
-                                text="Delete"
-                                handleClick={memoDeleteRequiredResult}
-                            />
-                        </>
-                ) : null
+                                />
+                                <Button
+                                    text="Delete"
+                                    handleClick={memoDeleteRequiredResult}
+                                />
+                            </>
+                        }
+                    </>
+                )
             }
             <ToDoCheckList requiredResultId={requiredResultId} />
         </div>

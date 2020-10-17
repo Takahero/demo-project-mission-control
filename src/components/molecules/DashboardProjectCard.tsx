@@ -1,4 +1,7 @@
-import React, { useCallback, useMemo } from "react"
+import React, {
+    useCallback,
+    useMemo
+} from "react"
 import Title from "../atoms/Texts/Title"
 import Text from "../atoms/Texts/Text"
 import CompleteCheckbox from "./CompleteCheckbox"
@@ -16,7 +19,10 @@ import { RootState } from "../../store"
 import { deleteRequiredResult } from "../../utils/requiredResultsFirestore"
 import { fullName } from "../../utils/name"
 import { projectDateRange } from "../../utils/date"
-import { Redirect, useParams } from "react-router-dom"
+import {
+    Redirect,
+    useParams
+} from "react-router-dom"
 
 const DashboardProjectCard: React.FC = () => {
     const firestore = useFirestore()

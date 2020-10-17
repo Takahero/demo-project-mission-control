@@ -1,29 +1,32 @@
 import React from "react"
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 import { pushHistoryTo } from "../../../utils/history"
-import { useFirebase } from 'react-redux-firebase'
+import { useFirebase } from "react-redux-firebase"
 
 const GoogleAuthButton: React.FC = () => {
 	const firebase: any = useFirebase() // Need to set type any instead of ExtendedFirebaseInstance due to type issue in package
 	//https://github.com/prescottprue/react-redux-firebase/issues/909
+
+	const callback = {
+		signInSuccessWithAuthResult: (authResult: any, redirectUrl: string) => {
+			firebase.handleRedirectResult(authResult).then(() => {
+				(authResult.additionalUserInfo.isNewUser || !firebase.profile) &&
+					firebase.updateProfile({
+						firstName: authResult.additionalUserInfo.profile.given_name,
+						lastName: authResult.additionalUserInfo.profile.family_name,
+					})
+				pushHistoryTo(redirectUrl)
+			})
+			return false
+		},
+	}
+
 	return (
 		<StyledFirebaseAuth
 			uiConfig={{
-				signInFlow: 'popup',
+				signInFlow: "popup",
 				signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
-				callbacks: {
-					signInSuccessWithAuthResult: (authResult, redirectUrl: string) => {
-						firebase.handleRedirectResult(authResult).then(() => {
-							(authResult.additionalUserInfo.isNewUser || !firebase.profile) &&
-								firebase.updateProfile({
-									firstName: authResult.additionalUserInfo.profile.given_name,
-									lastName: authResult.additionalUserInfo.profile.family_name,
-								})
-							pushHistoryTo(redirectUrl)
-						})
-						return false
-					},
-				},
+				callbacks: callback,
 			}}
 			firebaseAuth={firebase.auth()}
 		/>

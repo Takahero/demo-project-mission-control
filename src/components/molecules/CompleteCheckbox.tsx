@@ -1,6 +1,6 @@
-import React from 'react'
-import Label from '../atoms/Form/Label'
-import Checkbox from '../atoms/Form/Checkbox'
+import React from "react"
+import Label from "../atoms/Form/Label"
+import Checkbox from "../atoms/Form/Checkbox"
 
 interface Props {
     label: string;

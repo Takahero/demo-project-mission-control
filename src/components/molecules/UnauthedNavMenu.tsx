@@ -1,5 +1,5 @@
-import React, { Key } from 'react'
-import NavButton from '../atoms/Buttons/NavButton'
+import React, { Key } from "react"
+import NavButton from "../atoms/Buttons/NavButton"
 
 const navMenuData = [
     {

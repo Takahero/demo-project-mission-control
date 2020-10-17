@@ -1,12 +1,12 @@
-import React, { ReactElement } from "react";
-import { 
-  render as rtlRender, 
-  RenderOptions 
+import React, { ReactElement } from "react"
+import {
+  render as rtlRender,
+  RenderOptions
 } from "@testing-library/react"
 import { Provider } from "react-redux"
-import store from "../store";
+import store from "../store"
 import { Router } from "react-router-dom"
-import history from './history'
+import history from "./history"
 
 export interface WrapperProps {
   children: ReactElement;
@@ -25,4 +25,4 @@ export const render = (ui: ReactElement, renderOptions?: RenderOptions) => {
   return rtlRender(ui, { wrapper: Wrapper as React.ComponentType, ...renderOptions });
 };
 
-export * from "@testing-library/react";
+export * from "@testing-library/react"

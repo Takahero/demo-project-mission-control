@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react'
-import DateRange from '../atoms/Texts/DateRange'
-import Text from '../atoms/Texts/Text'
-import Title from '../atoms/Texts/Title'
-import { useSelector } from 'react-redux'
-import { projectCardInfoSelectorById } from '../../store/selector'
-import { RootState } from '../../store'
+import React, { useMemo } from "react"
+import DateRange from "../atoms/Texts/DateRange"
+import Text from "../atoms/Texts/Text"
+import Title from "../atoms/Texts/Title"
+import { useSelector } from "react-redux"
+import { projectCardInfoSelectorById } from "../../store/selector"
+import { RootState } from "../../store"
 import { shortFullName } from "../../utils/name"
 import { projectDateRange } from "../../utils/date"
 

@@ -1,5 +1,5 @@
-import React from 'react'
-import AuthLayout from '../components/templates/AuthLayout'
+import React from "react"
+import AuthLayout from "../components/templates/AuthLayout"
 
 const SignUp: React.FC = () => {
     return (

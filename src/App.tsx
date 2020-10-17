@@ -12,9 +12,9 @@ import {
 } from "react-redux-firebase"
 import { useSelector } from "react-redux"
 import { RootState } from "./store"
-import { 
-	projectsSelector, 
-	authSelector 
+import {
+	projectsSelector,
+	authSelector
 } from "./store/selector"
 
 
@@ -34,12 +34,12 @@ const App: React.FC = () => {
 	if (firestore) {
 		firestore.get({
 			collection: "projects",
-			orderBy: ['createdAt', 'desc'],
+			orderBy: ["createdAt", "desc"],
 		})
 		firestore.setListeners([
 			{
 				collection: "projects",
-				orderBy: ['createdAt', 'desc']
+				orderBy: ["createdAt", "desc"]
 			},
 		])
 	}

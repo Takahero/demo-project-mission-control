@@ -1,14 +1,14 @@
-import React, { useMemo } from 'react'
-import { Formik, Form, Field, ErrorMessage } from 'formik'
-import SubmitButton from '../atoms/Form/SubmitButton'
+import React, { useMemo } from "react"
+import { Formik, Form, Field, ErrorMessage } from "formik"
+import SubmitButton from "../atoms/Form/SubmitButton"
 import * as Yup from "yup"
-import Button from '../atoms/Buttons/Button'
-import { addToDo, updateToDo } from '../../utils/toDosFirestore'
-import { useFirestore } from 'react-redux-firebase'
-import { useParams } from 'react-router-dom'
-import { toDoSelectorById } from '../../store/selector'
-import { RootState } from '../../store'
-import { useSelector } from 'react-redux'
+import Button from "../atoms/Buttons/Button"
+import { addToDo, updateToDo } from "../../utils/toDosFirestore"
+import { useFirestore } from "react-redux-firebase"
+import { useParams } from "react-router-dom"
+import { toDoSelectorById } from "../../store/selector"
+import { RootState } from "../../store"
+import { useSelector } from "react-redux"
 
 interface Props {
     requiredResultId: string;

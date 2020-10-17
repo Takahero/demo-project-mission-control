@@ -3,11 +3,11 @@ import Title from "../atoms/Texts/Title"
 import ProjectCard from "../molecules/ProjectCard"
 import { Link } from "react-router-dom"
 import NavButton from "../atoms/Buttons/NavButton"
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux"
 import {
 	userProjectIdsSelector,
 	otherProjectIdsSelector
-} from '../../store/selector'
+} from "../../store/selector"
 
 interface Props {
 	user?: boolean;

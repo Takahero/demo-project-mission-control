@@ -1,4 +1,4 @@
-import { ProjectType } from './firestoreDocumentTypes';
+import { ProjectType } from "./firestoreDocumentTypes"
 
 const authProjectIdsArraySplitter = (projects: ProjectType[], uid?: string) => {
     return projects.reduce(( accumulator: any, currentValue: ProjectType ) => {

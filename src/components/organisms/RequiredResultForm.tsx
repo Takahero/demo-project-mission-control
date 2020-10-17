@@ -40,7 +40,7 @@ const RequiredResultSchema = Yup.object().shape({
 	startDate: Yup.date()
 		.required("Required"),
 	endDate: Yup.date()
-		.min(Yup.ref('startDate'), "End date should be after start date")
+		.min(Yup.ref("startDate"), "End date should be after start date")
 		.required("Required"),
 })
 

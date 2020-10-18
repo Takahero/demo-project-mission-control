@@ -25,3 +25,16 @@ it("should be checked when value is true", () => {
 
     expect(getByTestId("checkbox")).toBeChecked()
 })
+
+it("should disable", () => {
+    const { getByTestId } = render(
+        <Checkbox
+            name="checkbox"
+            checked={false}
+            handleInputChange={() => {}}
+            disabled={true}
+        />
+    )
+
+    expect(getByTestId("checkbox")).toBeDisabled()
+})

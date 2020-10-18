@@ -23,3 +23,14 @@ it("renders button text", () => {
 
     expect(getByText("this is text")).toBeTruthy()
 })
+
+it("should disable", () => {
+    const { getByTestId } = render(
+        <SubmitButton
+            text="this is text"
+            disabled={true}
+        />
+    )
+
+    expect(getByTestId("submit-button")).toBeDisabled()
+})

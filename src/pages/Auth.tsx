@@ -1,7 +1,7 @@
 import React from "react"
 import AuthLayout from "../components/templates/AuthLayout"
 
-const SignUp: React.FC = () => {
+const Auth: React.FC = () => {
     return (
         <div
             data-testid="auth-page"
@@ -11,4 +11,4 @@ const SignUp: React.FC = () => {
     )
 }
 
-export default SignUp
+export default Auth

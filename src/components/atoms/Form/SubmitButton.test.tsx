@@ -12,3 +12,14 @@ it("renders SubmitButton", () => {
 
     expect(getByTestId("submit-button")).toBeTruthy()
 })
+
+it("renders button text", () => {
+    const { getByText } = render(
+        <SubmitButton
+            text="this is text"
+            disabled={false}
+        />
+    )
+
+    expect(getByText("this is text")).toBeTruthy()
+})

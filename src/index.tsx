@@ -4,11 +4,10 @@ import "./index.css"
 import App from "./App"
 import * as serviceWorker from "./serviceWorker"
 import { Provider } from "react-redux"
-import store from "./store/"
+import store, { rrfProps } from "./store"
 import { Router } from "react-router-dom"
 import history from "./utils/history"
 import { ReactReduxFirebaseProvider } from "react-redux-firebase"
-import { rrfProps } from "./store"
 
 ReactDOM.render(
 	<React.StrictMode>

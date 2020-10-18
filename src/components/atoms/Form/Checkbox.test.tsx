@@ -13,3 +13,15 @@ it("renders Checkbox", () => {
 
     expect(getByTestId("checkbox")).toBeTruthy()
 })
+
+it("should be checked when value is true", () => {
+    const { getByTestId } = render(
+        <Checkbox
+            name="checkbox"
+            checked={true}
+            handleInputChange={() => {}}
+        />
+    )
+
+    expect(getByTestId("checkbox")).toBeChecked()
+})

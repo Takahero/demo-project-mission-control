@@ -6,7 +6,6 @@ import { useFirebase } from "react-redux-firebase"
 const GoogleAuthButton: React.FC = () => {
 	const firebase: any = useFirebase() // Need to set type any instead of ExtendedFirebaseInstance due to type issue in package
 	//https://github.com/prescottprue/react-redux-firebase/issues/909
-
 	const callback = {
 		signInSuccessWithAuthResult: (authResult: any, redirectUrl: string) => {
 			firebase.handleRedirectResult(authResult).then(() => {

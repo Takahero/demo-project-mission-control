@@ -1,9 +1,9 @@
 import React from "react"
 import { render } from "../../utils/testUtils"
-import SignUpForm from "./SignUpForm"
+import ProjectForm from "./ProjectForm"
 
-it("renders SignUpForm", () => {
-    const { getByTestId } = render(<SignUpForm/>)
+it("renders ProjectForm", () => {
+    const { getByTestId } = render(<ProjectForm/>)
 
-    expect(getByTestId("sign-up-form")).toBeTruthy()
+    expect(getByTestId("project-form")).toBeTruthy()
 })

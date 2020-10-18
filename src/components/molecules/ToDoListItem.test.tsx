@@ -7,6 +7,7 @@ it("renders ToDoInput", () => {
         <ToDoInput
             requiredResultId="requiredResultId"
             toDoId="toDoId"
+        />
     )
 
     expect(getByTestId("to-do-list-item")).toBeTruthy()

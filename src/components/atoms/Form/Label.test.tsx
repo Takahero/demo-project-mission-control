@@ -13,7 +13,7 @@ it("renders Label", () => {
     expect(getByTestId("label")).toBeTruthy()
 })
 
-it("renders label", () => {
+it("renders label text", () => {
     const { getByText } = render(
         <Label
             label="This is the label"

@@ -75,6 +75,7 @@ const ToDoListItem: React.FC<Props> = ({
                             name={toDoId}
                             checked={toDo.completed}
                             handleInputChange={memoCompleteToDo}
+                            disabled={!isProjectAdmin}
                         />
                         <Text text={toDo.name} />
                         { isProjectAdmin &&

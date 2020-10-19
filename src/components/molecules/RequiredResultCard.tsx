@@ -43,13 +43,13 @@ const RequiredResultCard: React.FC<Props> = ({
     const memoIsProjectAdminSelector = useMemo(() => isProjectAdminSelector, [])
     const isProjectAdmin = useSelector((state: RootState) => memoIsProjectAdminSelector(state, projectId))
 
-    const memoCompleteRequiredResult = useCallback(() =>
+    const memoCompleteRequiredResult: () => void = useCallback(() =>
         completeRequiredResult(firestore, projectId, requiredResultId, requiredResult.completed),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [requiredResult.completed]
     )
 
-    const memoDeleteRequiredResult = useCallback(() =>
+    const memoDeleteRequiredResult: () => void = useCallback(() =>
         deleteRequiredResult(firestore, projectId, requiredResultId),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         []

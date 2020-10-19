@@ -48,7 +48,7 @@ const DashboardProjectCard: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [requiredResultIds])
 
-    const completeProject = useCallback(() => {
+    const completeProject: () => void = useCallback(() => {
         firestore.update({ collection: "projects", doc: projectId }, { completed: !project.completed })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [project?.completed])

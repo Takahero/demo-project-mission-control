@@ -42,13 +42,13 @@ const ToDoListItem: React.FC<Props> = ({
     const memoIsProjectAdminSelector = useMemo(() => isProjectAdminSelector, [])
     const isProjectAdmin = useSelector((state: RootState) => memoIsProjectAdminSelector(state, projectId))
 
-    const memoCompleteToDo = useCallback(() =>
+    const memoCompleteToDo: () => void = useCallback(() =>
         isProjectAdmin && toDo && completeToDo(firestore, projectId, requiredResultId, toDo),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [toDo?.name, toDo?.completed]
     )
 
-    const memoDeleteToDo = useCallback(() =>
+    const memoDeleteToDo: () => void = useCallback(() =>
         toDo && deleteToDo(firestore, projectId, requiredResultId, toDo),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         []

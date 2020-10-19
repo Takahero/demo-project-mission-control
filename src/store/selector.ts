@@ -10,9 +10,9 @@ import { sortToDosByDate } from "../utils/toDosFirestore"
 
 // Auth selectors
 
-export const authSelector = createSelector(
+export const isAuthSelector = createSelector(
     (state: RootState) => state.firebase.auth,
-    auth => auth
+    auth => auth.isLoaded
 )
 
 export const isAuthedSelector = createSelector(

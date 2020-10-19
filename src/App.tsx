@@ -14,15 +14,15 @@ import { useSelector } from "react-redux"
 import { RootState } from "./store"
 import {
 	projectsSelector,
-	authSelector
+	isAuthSelector
 } from "./store/selector"
 
 const FirebaseLoaded: React.FC<{ children: any }>= ({ children }) => {
-	const auth = useSelector(authSelector)
+	const isAuthLoaded = useSelector(isAuthSelector)
 	const projects = useSelector(projectsSelector)
 	const isInitializing = useSelector((state: RootState) => state.firebase.isInitializing)
 
-	if (!isLoaded(auth) || isInitializing || !isLoaded(projects)) {
+	if (!isAuthLoaded || isInitializing || !isLoaded(projects)) {
 		return <div>loading...</div>
 	}
 	return children

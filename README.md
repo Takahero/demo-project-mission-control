@@ -1,3 +1,14 @@
+## Intention
+
+This project was developed to demonstrate my skills of:
+
+- React
+- Redux
+- Typescript
+- Firebase Auth
+- Cloud Firestore (NoSQL)
+- react-testing-library
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

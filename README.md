@@ -1,5 +1,5 @@
 ## Intention
-
+Hi, welcome!
 This project was developed to demonstrate my skills of:
 
 - React
@@ -8,6 +8,8 @@ This project was developed to demonstrate my skills of:
 - Firebase Auth
 - Cloud Firestore (NoSQL)
 - react-testing-library
+- Atomic Design
+- React Performance Optimization
 
 ## Project Description
 

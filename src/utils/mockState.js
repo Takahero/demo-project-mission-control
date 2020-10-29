@@ -10,7 +10,7 @@ export const leoProject = {
         firstName: "Leo",
         lastName: "Decaprio",
     },
-    createdASt: {
+    createdAt: {
         seconds: 1602935126,
         nanoseconds: 924000000,
     },
@@ -29,7 +29,7 @@ export const leoProject2 = {
         firstName: "Leo",
         lastName: "Decaprio",
     },
-    createdASt: {
+    createdAt: {
         seconds: 1602376351,
         nanoseconds: 652000000,
     },
@@ -49,7 +49,7 @@ export const mattProject = {
         firstName: "Matt",
         lastName: "Damon",
     },
-    createdASt: {
+    createdAt: {
         seconds: 1602376351,
         nanoseconds: 652000000,
     },
@@ -59,11 +59,39 @@ export const mattProject = {
     completed: true,
 }
 
+export const mattProjectRequiredResultId = "69V71oEuHJ8lOZDEufkU"
+export const mattToDoId = "FwOfB15QAK9qgJvXCCf4I"
+export const mattToDo = {
+    completed: true,
+    name: "10 pushups a day",
+    id: mattToDoId,
+}
+export const mattToDos = [
+    mattToDo,
+]
+export const mattProjectRequiredResult = {
+    id: mattProjectRequiredResultId,
+    name: "100 pushups",
+    startDate: "2020-10-06",
+    endDate: "2020-10-29",
+    completed: true,
+    toDos: mattToDos
+}
+
+export const mattProjectRequiredResults = [
+    mattProjectRequiredResult,
+]
+
 export const orderedProjects = [
     mattProject,
     leoProject,
     leoProject2,
 ]
+
+export const ordered = {
+    projects: orderedProjects,
+    "requiredResults/uoQYjq1ialrvicXfByJu": mattProjectRequiredResults
+}
 
 export const authedState = {
     firebase: {

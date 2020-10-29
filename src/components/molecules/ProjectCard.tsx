@@ -17,6 +17,8 @@ const ProjectCard: React.FC<Props> = ({
 }) => {
     const memoProjectCardInfoSelectorById = useMemo(() => projectCardInfoSelectorById, [])
     let projectInfo = useSelector((state: RootState) => memoProjectCardInfoSelectorById(state, projectId))
+
+    if (!projectInfo) return <div data-testid="project-card"></div>
     return (
         <div
             data-testid="project-card"

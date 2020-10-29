@@ -1,7 +1,7 @@
 import { orderedProjects, leoUid, leoProjectId, leoProject2Id, mattProjectId, randomUid } from "./mockState"
 import authProjectIdsArraySplitter from "./authProjectsArraySplitter"
 
-const leoSortedProjects = {
+export const leoSortedProjects = {
     user: [
         leoProjectId,
         leoProject2Id
@@ -10,7 +10,8 @@ const leoSortedProjects = {
         mattProjectId
     ]
 }
-const noUserProjects = {
+
+export const noUserProjects = {
     user: [],
     other: [
         mattProjectId,

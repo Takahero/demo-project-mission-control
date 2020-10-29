@@ -46,7 +46,7 @@ const RequiredResultCard: React.FC<Props> = ({
     const memoCompleteRequiredResult: () => void = useCallback(() =>
         completeRequiredResult(firestore, projectId, requiredResultId, requiredResult.completed),
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [requiredResult.completed]
+        [requiredResult?.completed]
     )
 
     const memoDeleteRequiredResult: () => void = useCallback(() =>
@@ -55,6 +55,7 @@ const RequiredResultCard: React.FC<Props> = ({
         []
     )
 
+    if (!requiredResult) return <div data-testid="required-result-card"></div>
     return (
         <div
             data-testid="required-result-card"

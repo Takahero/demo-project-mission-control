@@ -36,8 +36,8 @@ const ToDoListItem: React.FC<Props> = ({
     const firestore = useFirestore()
     const { projectId } = useParams<{ projectId: string }>()
 
-    const memoToDosSelector = useMemo(() => toDoSelectorById, [])
-    const toDo = useSelector((state: RootState) => memoToDosSelector(state, projectId, requiredResultId, toDoId))
+    const memoToDoSelector = useMemo(() => toDoSelectorById, [])
+    const toDo = useSelector((state: RootState) => memoToDoSelector(state, projectId, requiredResultId, toDoId))
 
     const memoIsProjectAdminSelector = useMemo(() => isProjectAdminSelector, [])
     const isProjectAdmin = useSelector((state: RootState) => memoIsProjectAdminSelector(state, projectId))
@@ -54,10 +54,7 @@ const ToDoListItem: React.FC<Props> = ({
         []
     )
 
-    if (!toDo) {
-        return null
-    }
-
+    if (!toDo) return <div data-testid="to-do-list-item"></div>
     return (
         <div
             data-testid="to-do-list-item"

@@ -5,7 +5,7 @@ import ToDoListItem from "./ToDoListItem"
 import { useParams } from "react-router-dom"
 import {
     isProjectAdminSelector,
-    toDosIdSelector
+    toDoIdsSelector,
 } from "../../store/selector"
 import { RootState } from "../../store"
 import { useSelector } from "react-redux"
@@ -23,7 +23,7 @@ const ToDoCheckList: React.FC<Props> = ({
 
     const { projectId } = useParams<{ projectId: string }>()
 
-    const memoToDoIdsSelector = useMemo(() => toDosIdSelector, [])
+    const memoToDoIdsSelector = useMemo(() => toDoIdsSelector, [])
     const toDoIds = useSelector((state: RootState) => memoToDoIdsSelector(state, projectId, requiredResultId))
 
     const memoIsProjectAdminSelector = useMemo(() => isProjectAdminSelector, [])

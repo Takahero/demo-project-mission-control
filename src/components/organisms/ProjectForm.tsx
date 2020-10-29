@@ -59,9 +59,7 @@ const ProjectForm: React.FC = () => {
 	const uid = useSelector(uidSelector)
 	const profile = useSelector(profileSelector)
 
-	if (!uid) {
-		return <Redirect to="/" />
-	}
+	if (!uid) return <div data-testid="project-form"><Redirect to="/" /></div>
 
 	const initialValues = project ? {
 			projectName: project.projectName,

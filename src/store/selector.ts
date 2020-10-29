@@ -39,7 +39,7 @@ export const projectsSelector = createSelector(
 export const projectSelectorById = createSelector(
     (state: RootState, projectId: string) => state.firestore.ordered.projects,
     (_, projectId: string) => projectId,
-    (projects, projectId) => projects.find( (project: ProjectType) => project.id === projectId )
+    (projects, projectId) => projects && projects.find( (project: ProjectType) => project.id === projectId )
 )
 
 export const isProjectAdminSelector = createSelector(
@@ -57,28 +57,30 @@ export const newestProjectIdSelector = createSelector(
     projectsSelector,
     uidSelector,
     (projects, uid) => {
-        if (uid) {
+        if (projects) {
+            if (uid) {
             const newUserProject = projects.find((project: ProjectType) => project.author.uid === uid)
             if (newUserProject) return newUserProject.id
         }
-        return projects[0].id
+            return projects[0].id
+        }
     }
 )
 
 export const projectIdsOrderedByAuthSelector = createSelector(
     projectsSelector,
     uidSelector,
-    (projects, uid) => authProjectIdsArraySplitter(projects, uid)
+    (projects, uid) => projects && authProjectIdsArraySplitter(projects, uid)
 )
 
 export const userProjectIdsSelector = createSelector(
     projectIdsOrderedByAuthSelector,
-    (sortedProjectObj) => sortedProjectObj.user
+    (sortedProjectObj) => sortedProjectObj && sortedProjectObj.user
 )
 
 export const otherProjectIdsSelector = createSelector(
     projectIdsOrderedByAuthSelector,
-    (sortedProjectObj) => sortedProjectObj.other
+    (sortedProjectObj) => sortedProjectObj && sortedProjectObj.other
 )
 
 // RequiredResult selectors
@@ -102,27 +104,23 @@ export const requiredResultSelectorById = createSelector(
 
 // ToDo selectors
 
-export const toDosIdSelector = createSelector(
-    requiredResultSelectorById,
-    (requiredResult: RequiredResultType) => {
-        if (requiredResult) {
-            const toDos = requiredResult.toDos
-            if (toDos) {
-                const sortedToDos = sortToDosByDate(toDos)
-                const toDoIds = sortedToDos?.map((toDo: ToDoType) => toDo.id)
-                return toDoIds
-            }
-        } else return null
-    }
-)
-
 export const toDosSelector = createSelector(
     requiredResultSelectorById,
-    (requiredResult: RequiredResultType) => requiredResult.toDos
+    (requiredResult: RequiredResultType) => requiredResult && requiredResult.toDos
+)
+
+export const toDoIdsSelector = createSelector(
+    toDosSelector,
+    (toDos: ToDoType[] | undefined) => {
+        if (toDos) {
+            const sortedToDos = sortToDosByDate(toDos)
+            return sortedToDos?.map((toDo: ToDoType) => toDo.id)
+        }
+    }
 )
 
 export const toDoSelectorById = createSelector(
     toDosSelector,
     (_, __, ___, toDoId: string) => toDoId,
-    (toDos: ToDoType[] | undefined, toDoId: string) => toDos && toDos.find( (toDo: ToDoType) => toDo.id === toDoId )
+    (toDos: ToDoType[] | undefined, toDoId: string) => toDos && toDos.find((toDo: ToDoType) => toDo.id === toDoId)
 )

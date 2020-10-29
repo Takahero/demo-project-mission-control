@@ -54,7 +54,7 @@ const DashboardProjectCard: React.FC = () => {
     }, [project?.completed])
 
     if (!project) {
-        return <Redirect to="/" />
+        return <div data-testid="dashboard-project-card"><Redirect to="/" /></div>
     }
 
     return (

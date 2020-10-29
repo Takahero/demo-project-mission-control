@@ -10,10 +10,10 @@ interface Params {
 
 const ProjectDashboard: React.FC = () => {
     const { projectId } = useParams<Params>()
-    useFirestoreConnect([
+    useFirestoreConnect(projectId && [
         {
             collection: "projects",
-            doc: projectId,
+            doc: projectId && projectId,
             subcollections: [{ collection: "requiredResults" }],
             storeAs: `requiredResults/${projectId}`,
             orderBy: ["createdAt", "asc"]

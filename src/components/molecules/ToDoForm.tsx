@@ -34,8 +34,8 @@ const ToDoForm = React.forwardRef<HTMLInputElement, Props>(({
     const firestore = useFirestore()
     const { projectId } = useParams<{ projectId: string }>()
 
-    const memoToDosSelector = useMemo(() => toDoSelectorById, [])
-    const toDo = useSelector((state: RootState) => memoToDosSelector(state, projectId, requiredResultId, toDoId))
+    const memoToDoSelector = useMemo(() => toDoSelectorById, [])
+    const toDo = useSelector((state: RootState) => memoToDoSelector(state, projectId, requiredResultId, toDoId))
 
     const initialValue = { name: update && toDo ? toDo.name : '' }
     const handleSubmit = ({ name }: { name: string}) => {

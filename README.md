@@ -9,6 +9,30 @@ This project was developed to demonstrate my skills of:
 - Cloud Firestore (NoSQL)
 - react-testing-library
 
+## Project Description
+
+This application helps people:
+
+1. Create projects/goals
+2. Break down projects/goals into results that would be required in order to complete projects
+3. Break down required results into smallest tasks and track them
+
+## Behavior
+
+### Auth
+
+Signup, Signin, Singout
+
+### Projects, Required Results, To-Dos
+
+Create, edit, delete, complete/uncomplete
+
+### DB
+
+As users update data in the app, application listens to DB and reflect in real time.
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

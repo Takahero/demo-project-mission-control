@@ -11,7 +11,7 @@ const goBackHistory = (path: string) => {
     history.go(-1)
 }
 
-export { 
+export {
     pushHistoryTo,
     goBackHistory
 }

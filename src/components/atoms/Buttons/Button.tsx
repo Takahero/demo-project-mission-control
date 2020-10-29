@@ -8,7 +8,7 @@ interface Props {
 const Button: React.FC<Props> = ({
 	text,
 	handleClick
- }) => {
+}) => {
 	return (
 		<button
 			data-testid="button"

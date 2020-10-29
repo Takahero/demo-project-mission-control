@@ -1,7 +1,6 @@
 import { projectDateRange } from './date';
-import { mockProjectDates } from './mockProjectsData'
 
 it('creates project date range string', () => {
 
-    expect(projectDateRange(mockProjectDates.startDate, mockProjectDates.endDate)).toBe('Oct 1st 2020 - Dec 12th 2020')
+    expect(projectDateRange(new Date(2020, 9, 1), new Date(2020, 11, 12))).toBe('Oct 1st 2020 - Dec 12th 2020')
 })

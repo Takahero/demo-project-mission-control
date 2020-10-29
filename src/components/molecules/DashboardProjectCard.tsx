@@ -53,9 +53,7 @@ const DashboardProjectCard: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [project?.completed])
 
-    if (!project) {
-        return <div data-testid="dashboard-project-card"><Redirect to="/" /></div>
-    }
+    if (!project) return <div data-testid="dashboard-project-card"><Redirect to="/" /></div>
 
     return (
         <div

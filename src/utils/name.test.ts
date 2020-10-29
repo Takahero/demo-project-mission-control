@@ -1,7 +1,7 @@
-import { 
+import {
     shortFullName,
     fullName
- } from './name';
+} from './name';
 
 it('creates short full name', () => {
     expect(shortFullName('Leonardo', 'Dicaprio')).toBe('Leonardo D.')
@@ -10,5 +10,3 @@ it('creates short full name', () => {
 it('creates full name', () => {
     expect(fullName('Leonardo', 'Dicaprio')).toBe('Leonardo Dicaprio')
 })
-
-

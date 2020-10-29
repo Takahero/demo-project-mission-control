@@ -15,7 +15,7 @@ This application helps people:
 
 1. Create projects/goals
 2. Break down projects/goals into results that would be required in order to complete projects
-3. Break down required results into smallest tasks and track them
+3. Break down required results into smallest gtasks and track them
 
 ## Behavior
 

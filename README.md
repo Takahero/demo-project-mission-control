@@ -7,7 +7,6 @@ This project was developed to demonstrate my skills of:
 - Typescript
 - Firebase Auth
 - Cloud Firestore (NoSQL)
-- react-testing-library
 - Atomic Design
 - React Performance Optimization
 
